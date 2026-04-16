@@ -23,6 +23,29 @@
 
   --tag-purple-bg: rgba(168, 85, 247, 0.1);
   --tag-purple-text: #A855F7;
+  
+  --hero-glow-1: rgba(168, 85, 247, 0.25);
+  --hero-glow-2: rgba(59, 130, 246, 0.15);
+  --hero-glow-bg: rgba(7, 11, 20, 0);
+  
+  --overlay-bg: rgba(0, 0, 0, 0.3);
+}
+
+body.light-mode {
+  --bg-dark: #F2EFE9;
+  --bg-card: #FAF8F2;
+  --bg-hover: #E8E4DB;
+  --border-color: #D5CFC4;
+  --text-main: #36312B;
+  --text-muted: #736C61;
+  
+  --brand-gradient: linear-gradient(135deg, #9333EA 0%, #2563EB 100%);
+  
+  --hero-glow-1: rgba(168, 85, 247, 0.15);
+  --hero-glow-2: rgba(59, 130, 246, 0.10);
+  --hero-glow-bg: rgba(242, 239, 233, 0);
+  
+  --overlay-bg: rgba(232, 228, 219, 0.7);
 }
 
 * {
@@ -93,7 +116,7 @@ body {
   transform: translateX(-50%);
   width: 900px;
   height: 600px;
-  background: radial-gradient(ellipse at top, rgba(168, 85, 247, 0.25) 0%, rgba(59, 130, 246, 0.15) 30%, rgba(7, 11, 20, 0) 70%);
+  background: radial-gradient(ellipse at top, var(--hero-glow-1) 0%, var(--hero-glow-2) 30%, var(--hero-glow-bg) 70%);
   z-index: 0;
   pointer-events: none;
 }
@@ -313,7 +336,7 @@ body {
 }
 .row-content .desc {
   font-size: 0.85rem;
-  color: #CBD5E1;
+  color: var(--text-muted);
   margin-bottom: 12px;
 }
 
@@ -556,7 +579,7 @@ body {
 
 .project-row:hover, .project-row.active {
   border-color: #3B82F6;
-  background: #151a2e;
+  background: var(--bg-hover);
 }
 
 .project-summary {
@@ -589,7 +612,7 @@ body {
 
 .col-type {
   font-size: 0.85rem;
-  color: #CBD5E1;
+  color: var(--text-muted);
   font-weight: 500;
 }
 
@@ -622,7 +645,7 @@ body {
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.4s ease-out;
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--overlay-bg);
 }
 
 .project-row.active .project-details {
