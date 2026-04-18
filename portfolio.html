@@ -910,17 +910,11 @@ body {
     margin-bottom: 8px;
   }
 }
-.view-section {
-    animation: fadeIn 0.4s ease-in-out;
-}
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
+.view-section { animation: fadeIn 0.4s ease-in-out; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 </style>
 </head>
 <body>
-
 <!-- Navbar -->
     <nav class="navbar">
         <a href="#" onclick="showView('home'); return false;" class="nav-brand" style="text-decoration: none; color: inherit;"><span>Mehedi
@@ -938,7 +932,6 @@ body {
                     class="fas fa-envelope"></i> Contact Me</a>
         </div>
     </nav>
-
 <div id="spa-container">
 <div id="view-home" class="view-section" >
 <!-- Hero -->
@@ -1598,10 +1591,14 @@ body {
             </div>
 
             <div class="sidebar-panel" style="background: var(--bg-card); border: 1px solid var(--border-color);">
-                <h3 style="color: #5A92E6; font-size: 1.35rem; margin-bottom: 20px; font-weight: 600; text-transform: none;"><i class="fas fa-code-branch" style="display:none;"></i> Most Used Languages</h3>
-                
+                <h3
+                    style="color: #5A92E6; font-size: 1.35rem; margin-bottom: 20px; font-weight: 600; text-transform: none;">
+                    <i class="fas fa-code-branch" style="display:none;"></i> Most Used Languages (Git)
+                </h3>
+
                 <!-- Progress Bar -->
-                <div style="display: flex; width: 100%; height: 12px; border-radius: 6px; overflow: hidden; margin-bottom: 24px;">
+                <div
+                    style="display: flex; width: 100%; height: 12px; border-radius: 6px; overflow: hidden; margin-bottom: 24px;">
                     <div style="width: 30.71%; background-color: #f1e05a;" title="JavaScript 30.71%"></div>
                     <div style="width: 27.00%; background-color: #563d7c;" title="CSS 27.00%"></div>
                     <div style="width: 17.02%; background-color: #e34c26;" title="HTML 17.02%"></div>
@@ -1611,30 +1608,37 @@ body {
                 </div>
 
                 <!-- Legend -->
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px 10px; font-size: 0.9rem; font-weight: 500;">
+                <div
+                    style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px 10px; font-size: 0.9rem; font-weight: 500;">
                     <div style="display: flex; align-items: center; gap: 8px;">
-                        <span style="width: 12px; height: 12px; border-radius: 50%; background-color: #f1e05a; display: inline-block;"></span>
+                        <span
+                            style="width: 12px; height: 12px; border-radius: 50%; background-color: #f1e05a; display: inline-block;"></span>
                         <span style="color: var(--text-main);">JavaScript 30.71%</span>
                     </div>
                     <div style="display: flex; align-items: center; gap: 8px;">
-                        <span style="width: 12px; height: 12px; border-radius: 50%; background-color: #178600; display: inline-block;"></span>
+                        <span
+                            style="width: 12px; height: 12px; border-radius: 50%; background-color: #178600; display: inline-block;"></span>
                         <span style="color: var(--text-main);">C# 15.17%</span>
                     </div>
                     <div style="display: flex; align-items: center; gap: 8px;">
-                        <span style="width: 12px; height: 12px; border-radius: 50%; background-color: #563d7c; display: inline-block;"></span>
+                        <span
+                            style="width: 12px; height: 12px; border-radius: 50%; background-color: #563d7c; display: inline-block;"></span>
                         <span style="color: var(--text-main);">CSS 27.00%</span>
                     </div>
                     <div style="display: flex; align-items: center; gap: 8px;">
-                        <span style="width: 12px; height: 12px; border-radius: 50%; background-color: #4F5D95; display: inline-block;"></span>
+                        <span
+                            style="width: 12px; height: 12px; border-radius: 50%; background-color: #4F5D95; display: inline-block;"></span>
                         <span style="color: var(--text-main);">PHP 5.83%</span>
                     </div>
                     <div style="display: flex; align-items: center; gap: 8px;">
-                        <span style="width: 12px; height: 12px; border-radius: 50%; background-color: #e34c26; display: inline-block;"></span>
-                        <span style="color: white;">HTML 17.02%</span>
+                        <span
+                            style="width: 12px; height: 12px; border-radius: 50%; background-color: #e34c26; display: inline-block;"></span>
+                        <span style="color: var(--text-main);">HTML 17.02%</span>
                     </div>
                     <div style="display: flex; align-items: center; gap: 8px;">
-                        <span style="width: 12px; height: 12px; border-radius: 50%; background-color: #b07219; display: inline-block;"></span>
-                        <span style="color: white;">Java 4.28%</span>
+                        <span
+                            style="width: 12px; height: 12px; border-radius: 50%; background-color: #b07219; display: inline-block;"></span>
+                        <span style="color: var(--text-main);">Java 4.28%</span>
                     </div>
                 </div>
             </div>
@@ -2430,37 +2434,26 @@ body {
     </main>
 </div>
 </div>
-
-<!-- Footer -->
 <footer style="text-align: center; padding: 40px 20px; border-top: 1px solid var(--border-color); color: var(--text-muted); font-size: 0.9rem;">
     <div style="margin-bottom: 20px;">
         <a href="#" onclick="showView('contact'); return false;" class="btn btn-outline" style="font-size: 0.85rem; padding: 8px 16px;"><i class="fas fa-envelope"></i> Contact Me</a>
     </div>
     <p>&copy; 2024 Mehedi Hasan Shihab. All rights reserved.</p>
 </footer>
-
 <script>
-// SPA Routing Logic
 function showView(viewId) {
-    document.querySelectorAll('.view-section').forEach(view => {
-        view.style.display = 'none';
-    });
-    
+    document.querySelectorAll('.view-section').forEach(view => { view.style.display = 'none'; });
     document.getElementById('view-' + viewId).style.display = 'block';
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
-
 document.addEventListener('click', function(e) {
     const link = e.target.closest('a');
     if (link && (link.getAttribute('href') === './#experience' || link.getAttribute('href') === '#experience')) {
         e.preventDefault();
         showView('home');
-        setTimeout(() => {
-            document.getElementById('experience').scrollIntoView({ behavior: 'smooth' });
-        }, 100);
+        setTimeout(() => { document.getElementById('experience').scrollIntoView({ behavior: 'smooth' }); }, 100);
     }
 });
-
 
         function toggleAccordion(element) {
             const row = element.parentElement;
@@ -2488,7 +2481,6 @@ document.addEventListener('click', function(e) {
             }
         }
     
-
 document.addEventListener('DOMContentLoaded', () => {
     const themeBtn = document.getElementById('theme-toggle');
     if (!themeBtn) return;
