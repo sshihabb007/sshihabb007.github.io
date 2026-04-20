@@ -1,25 +1,27 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const themeBtn = document.getElementById('theme-toggle');
-    if (!themeBtn) return;
+const mehedi_initTheme = () => {
+    const shihab_themeBtn = document.getElementById('sshihabb007-theme-toggle');
+    if (!shihab_themeBtn) return;
     
-    const themeIcon = themeBtn.querySelector('i');
-    const currentTheme = localStorage.getItem('theme');
+    const mehedi_themeIcon = shihab_themeBtn.querySelector('i');
+    const sshihabb007_currentTheme = localStorage.getItem('mehedi_theme');
     
     // Default is dark. If light mode is stored, apply it.
-    if (currentTheme === 'light') {
+    if (sshihabb007_currentTheme === 'light') {
         document.body.classList.add('light-mode');
-        themeIcon.classList.replace('fa-moon', 'fa-sun');
+        mehedi_themeIcon.classList.replace('fa-moon', 'fa-sun');
     }
 
-    themeBtn.addEventListener('click', () => {
+    shihab_themeBtn.addEventListener('click', () => {
         document.body.classList.toggle('light-mode');
         
         if (document.body.classList.contains('light-mode')) {
-            localStorage.setItem('theme', 'light');
-            themeIcon.classList.replace('fa-moon', 'fa-sun');
+            localStorage.setItem('mehedi_theme', 'light');
+            mehedi_themeIcon.classList.replace('fa-moon', 'fa-sun');
         } else {
-            localStorage.setItem('theme', 'dark');
-            themeIcon.classList.replace('fa-sun', 'fa-moon');
+            localStorage.setItem('mehedi_theme', 'dark');
+            mehedi_themeIcon.classList.replace('fa-sun', 'fa-moon');
         }
     });
-});
+};
+
+document.addEventListener('DOMContentLoaded', mehedi_initTheme);
