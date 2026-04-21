@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3JN6PYW17Z"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-3JN6PYW17Z');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mehedi Hasan Shihab | Portfolio</title>
+    <link rel="icon" type="image/png" href="/asset/fav.png">
+    <link rel="stylesheet" href="/css/style.css?v=2.0">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+      // Make theme init available globally for React to call on mount
+      window.mehedi_initTheme = () => {
+          const shihab_themeBtn = document.getElementById('sshihabb007-theme-toggle');
+          if (!shihab_themeBtn) return;
+          
+          // clear old listeners if any by cloning
+          const newBtn = shihab_themeBtn.cloneNode(true);
+          shihab_themeBtn.parentNode.replaceChild(newBtn, shihab_themeBtn);
+          
+          const mehedi_themeIcon = newBtn.querySelector('i');
+          const sshihabb007_currentTheme = localStorage.getItem('mehedi_theme');
+          
+          if (sshihabb007_currentTheme === 'light') {
+              document.body.classList.add('light-mode');
+              mehedi_themeIcon.classList.replace('fa-moon', 'fa-sun');
+          } else {
+              document.body.classList.remove('light-mode');
+              mehedi_themeIcon.classList.replace('fa-sun', 'fa-moon');
+          }
+
+          newBtn.addEventListener('click', () => {
+              document.body.classList.toggle('light-mode');
+              
+              if (document.body.classList.contains('light-mode')) {
+                  localStorage.setItem('mehedi_theme', 'light');
+                  mehedi_themeIcon.classList.replace('fa-moon', 'fa-sun');
+              } else {
+                  localStorage.setItem('mehedi_theme', 'dark');
+                  mehedi_themeIcon.classList.replace('fa-sun', 'fa-moon');
+              }
+          });
+      };
+      
+      // Initial load
+      const initThemeLight = localStorage.getItem('mehedi_theme');
+      if (initThemeLight === 'light') {
+          document.documentElement.classList.add('light-mode'); // Avoid flash
+      }
+    </script>
+  <script type="module" crossorigin src="/assets/index-DQI1fEdT.js"></script>
+</head>
+
+<body>
+    <div id="root"></div>
+    <script src="/js/shihab-security.js"></script>
+</body>
+</html>
