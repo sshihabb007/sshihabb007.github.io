@@ -701,7 +701,42 @@
             </div>
         </div>
 
-        
+        <!-- Project 20 -->
+        <div class="project-row">
+            <div class="project-summary" onclick="toggleAccordion(this)">
+                <div class="col-title">
+                    <h3>Locus Services</h3>
+                    <div class="tech-stack">WordPress • PHP • Cyber Security</div>
+                </div>
+                <div class="col-tags">
+                    <span class="tag tag-pink">WORDPRESS</span>
+                    <span class="tag tag-green">SECURITY</span>
+                </div>
+                <div class="col-type">Malware Recovery & Customisation</div>
+                <div class="col-link">
+                    <a href="https://locusservices.com.au/" target="_blank" onclick="event.stopPropagation();"><i class="fas fa-shield-alt"></i> Visit Website</a>
+                </div>
+                <div class="col-toggle">
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </div>
+            <div class="project-details">
+                <div class="project-details-content">
+                    <h4>Overview</h4>
+                    <p>Engineered comprehensive WordPress theme plugin customization and executed a major malware recovery operation. Successfully rescued the platform from hackers by identifying malicious payloads, stripping out remote backdoors, and thoroughly securing the server environment against future intrusions.</p>
+                    <br>
+                    <h4>Cyber Security & Technical Implementations</h4>
+                    <ul>
+                        <li><strong>Removed "Tiny File Manager" Backdoors:</strong> Tracked down and deleted full-featured file manager scripts masquerading as legitimate WordPress files (e.g., <code>wp-content/plugins/index-info.php</code>, <code>wp-content/themes/twentytwentyfour/functions-dns.php</code>, <code>wp-content/themes/expert-healthcare/functions-character.php</code>) which allowed attackers remote browsing and editing.</li>
+                        <li><strong>Eradicated PHP "Dropper" Malware:</strong> Identified and wiped heavily obfuscated PHP droppers hidden deep within the uploads directory (such as <code>scorpion.php</code>, <code>skunk.php</code>, and <code>gorilla.php</code>) that were generating further payloads.</li>
+                        <li><strong>Cleaned SEO Spam Injection & Restored Dashboard:</strong> Excised massive malicious hook codes targeting <code>pre_get_posts</code> inside <code>hello-elementor/functions.php</code>. This malicious code was specifically hiding hundreds of generated spam pages from the WordPress Admin dashboard. Removing it immediately restored page visibility and management.</li>
+                        <li><strong>Performed Deep System & User Audit:</strong> Querying the database directly to confirm 'Locusadmin' remained the sole authorized user. Manually verified all critical WordPress core files (like <code>wp-config.php</code> and <code>.htaccess</code>) for integrity and scanned the entire <code>wp-content</code> directory for known malware signatures (eval, base64_decode, wp_vcd).</li>
+                        <li><strong>Fixed WPvivid Backup Plugin Crash:</strong> Modified the server's <code>php.ini</code> environment to enable the native PHP zip extension. This eliminated the slow PclZip fallbacks and allowed successfully offloading large 143MB database dumps. Also cleared stuck garbage tmp files.</li>
+                        <li><strong>Deleted Hacker Output:</strong> Located and hard-deleted over 19,000+ blog posts generated via the hacker's spam-bot networks.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
 
     </main>
 
