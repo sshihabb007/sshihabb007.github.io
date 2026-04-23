@@ -884,6 +884,201 @@ body {
 
 @media (max-width: 768px) {
   .project-summary {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .btn-group {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .btn {
+    width: 100%;
+  }
+
+  .hero::before {
+    width: 100%;
+    height: 400px;
+  }
+}
+
+/* ------------------------------------- */
+/* Projects.html Accordion List Styles   */
+/* ------------------------------------- */
+.projects-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 9px 20px 80px;
+}
+
+.projects-header-row {
+  display: grid;
+  grid-template-columns: 3fr 2fr 2fr 1.5fr 50px;
+  gap: 15px;
+  padding: 10px 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 20px;
+}
+
+.project-row {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  margin-bottom: 12px;
+  overflow: hidden;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.project-row:hover,
+.project-row.active {
+  border-color: #3B82F6;
+  background: var(--bg-hover);
+}
+
+.project-summary {
+  display: grid;
+  grid-template-columns: 3fr 2fr 2fr 1.5fr 50px;
+  gap: 15px;
+  padding: 16px 20px;
+  align-items: center;
+  cursor: pointer;
+}
+
+.col-title h3 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text-main);
+  margin-bottom: 4px;
+}
+
+.col-title .tech-stack {
+  font-size: 0.8rem;
+  color: var(--tag-blue-text);
+  font-weight: 500;
+}
+
+.col-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.col-type {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.col-link a {
+  background: rgba(16, 185, 129, 0.1);
+  color: #10B981;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-transform: uppercase;
+  transition: all 0.2s;
+}
+
+.col-link a:hover {
+  background: #10B981;
+  color: #fff;
+}
+
+.col-toggle {
+  text-align: right;
+  color: var(--text-muted);
+}
+
+.project-details {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease-out;
+  background: var(--overlay-bg);
+}
+
+.project-row.active .project-details {
+  border-top: 1px solid var(--border-color);
+}
+
+.project-details-content {
+  padding: 24px 20px;
+  color: var(--text-muted);
+}
+
+.project-details-content h4 {
+  color: var(--text-main);
+  font-size: 1rem;
+  margin-bottom: 8px;
+}
+
+.project-details-content p {
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.project-details-content ul {
+  padding-left: 20px;
+  margin-top: 8px;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.project-details-content li {
+  margin-bottom: 6px;
+}
+
+/* Responsive Overrides */
+@media (max-width: 992px) {
+  .projects-header-row {
+    display: none;
+  }
+
+  .project-summary {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 15px;
+    grid-template-columns: none;
+  }
+
+  .col-title {
+    flex: 1 1 250px;
+  }
+
+  .col-tags {
+    flex: 1 1 auto;
+  }
+
+  .col-type {
+    flex: 1 1 auto;
+  }
+
+  .col-link {
+    flex: 0 0 auto;
+    margin-left: auto;
+  }
+
+  .col-toggle {
+    display: none;
+  }
+
+  .col-title .tech-stack {
+    margin-bottom: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .project-summary {
     flex-direction: column;
     align-items: flex-start;
     gap: 12px;
@@ -905,14 +1100,52 @@ body {
     margin-bottom: 8px;
   }
 }
- / *   A n t i - C o p y   a n d   P e r s o n a   s p e c i f i c   C S S   b y   s s h i h a b b 0 0 7   * / 
- . m e h e d i - p r o t e c t e d   { 
-     - w e b k i t - u s e r - s e l e c t :   n o n e ;   / *   S a f a r i   * / 
-     - m s - u s e r - s e l e c t :   n o n e ;   / *   I E   1 0   a n d   I E   1 1   * / 
-     u s e r - s e l e c t :   n o n e ;   / *   S t a n d a r d   s y n t a x   * / 
- } 
- 
- # s s h i h a b b 0 0 7 - b o d y   { 
-     / *   M a i n   p r o t e c t e d   a r e a   r o o t   * / 
- }  
- 
+
+/* Anti-Copy and Persona specific CSS by sshihabb007 */
+.mehedi-protected {
+    /* Removed user-select: none to allow text copying */
+}
+
+#sshihabb007-body {
+    /* Main protected area root */
+}
+
+/* --- Custom Cursor --- */
+html, body, a, button {
+  cursor: none !important;
+}
+
+.cursor-dot,
+.cursor-outline {
+  position: fixed;
+  top: 0;
+  left: 0;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  z-index: 99999;
+  pointer-events: none; /* Crucial: clicks pass through these divs */
+}
+
+.cursor-dot {
+  width: 8px;
+  height: 8px;
+  background-color: #00a8ff;
+  transition: opacity 0.15s ease-out;
+}
+
+.cursor-outline {
+  width: 34px;
+  height: 34px;
+  border: 2px solid #00599c;
+  /* Add left and top to transition for the lag effect when using left/top in JS */
+  transition: transform 0.15s ease-out, left 0.15s ease-out, top 0.15s ease-out, background-color 0.15s ease-out;
+}
+
+@media (pointer: coarse) {
+  html, body, a, button {
+    cursor: auto !important;
+  }
+  .cursor-dot, .cursor-outline {
+    display: none !important;
+  }
+}
