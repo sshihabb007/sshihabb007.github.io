@@ -57,11 +57,11 @@ const mehedi_initTheme = () => {
     if (colorBtns.length > 0) {
         const applyColor = (colorHex) => {
             if (colorHex === 'default') {
-                document.documentElement.style.removeProperty('--primary-color');
-                document.documentElement.style.removeProperty('--text-main');
+                document.body.style.removeProperty('--primary-color');
+                document.body.style.removeProperty('--text-main');
             } else {
-                document.documentElement.style.setProperty('--primary-color', colorHex);
-                document.documentElement.style.setProperty('--text-main', colorHex);
+                document.body.style.setProperty('--primary-color', colorHex);
+                document.body.style.setProperty('--text-main', colorHex);
             }
             localStorage.setItem('mehedi_color', colorHex);
             
