@@ -270,6 +270,13 @@ body {
   margin-bottom: 12px;
 }
 
+.hero h2 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: var(--text-main);
+}
+
 .hero p {
   font-size: 1.1rem;
   color: var(--text-muted);
