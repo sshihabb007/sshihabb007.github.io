@@ -8,6 +8,7 @@
   --text-muted: #94A3B8;
 
   --primary-color: #3B82F6;
+  --cursor-color: #3B82F6;
   --brand-gradient: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-color) 100%);
 
   --tag-green-bg: rgba(16, 185, 129, 0.1);
@@ -1130,14 +1131,14 @@ html, body, a, button {
 .cursor-dot {
   width: 8px;
   height: 8px;
-  background-color: var(--text-main);
+  background-color: var(--cursor-color);
   transition: opacity 0.15s ease-out;
 }
 
 .cursor-outline {
   width: 34px;
   height: 34px;
-  border: 2px solid var(--text-main);
+  border: 2px solid var(--cursor-color);
   /* Add left and top to transition for the lag effect when using left/top in JS */
   transition: transform 0.15s ease-out, left 0.15s ease-out, top 0.15s ease-out, background-color 0.15s ease-out;
 }

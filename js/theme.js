@@ -59,9 +59,11 @@ const mehedi_initTheme = () => {
             if (colorHex === 'default') {
                 document.body.style.removeProperty('--primary-color');
                 document.body.style.removeProperty('--text-main');
+                document.body.style.removeProperty('--cursor-color');
             } else {
                 document.body.style.setProperty('--primary-color', colorHex);
                 document.body.style.setProperty('--text-main', colorHex);
+                document.body.style.setProperty('--cursor-color', colorHex);
             }
             localStorage.setItem('mehedi_color', colorHex);
             
