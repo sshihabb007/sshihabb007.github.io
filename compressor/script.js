@@ -56,7 +56,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Global state variables
     let Shihab_currentFile = null;
+    let Shihab_currentFiles = [];
     let Mehedi_currentBlobUrl = null;
+    let Mehedi_currentBlobUrls = [];
     let sshihabb007_currentBlob = null;
     
     // Audio Specific State
@@ -275,89 +277,122 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Audio Logic End ---
 
     // Core Processing Engine for Images
-    const Mehedi_processImage = () => {
-        if (!Shihab_currentFile || Mehedi_isAudio) return;
+    const Mehedi_processImage = async () => {
+        if (!Shihab_currentFiles.length || Mehedi_isAudio) return;
 
         const sshihabb007_format = Mehedi_formatSelect.value;
         const Shihab_quality = parseInt(sshihabb007_qualitySlider.value, 10) / 100;
         const Mehedi_doResize = Mehedi_resizeCheckbox.checked;
 
-        const sshihabb007_reader = new FileReader();
-        sshihabb007_reader.readAsDataURL(Shihab_currentFile);
+        Mehedi_currentBlobUrls.forEach(item => URL.revokeObjectURL(item.blobUrl));
+        Mehedi_currentBlobUrls = [];
         
-        sshihabb007_reader.onload = (Shihab_event) => {
-            const Mehedi_img = new Image();
-            Mehedi_img.src = Shihab_event.target.result;
-            
-            Mehedi_img.onload = () => {
-                const sshihabb007_canvas = document.createElement('canvas');
-                const Shihab_ctx = sshihabb007_canvas.getContext('2d');
+        let totalOriginalSize = 0;
+        let totalConvertedSize = 0;
+
+        const processSingleImage = (file) => {
+            return new Promise((resolve) => {
+                const sshihabb007_reader = new FileReader();
+                sshihabb007_reader.readAsDataURL(file);
                 
-                let Mehedi_targetWidth = Mehedi_img.width;
-                let sshihabb007_targetHeight = Mehedi_img.height;
+                sshihabb007_reader.onload = (Shihab_event) => {
+                    const Mehedi_img = new Image();
+                    Mehedi_img.src = Shihab_event.target.result;
+                    
+                    Mehedi_img.onload = () => {
+                        const sshihabb007_canvas = document.createElement('canvas');
+                        const Shihab_ctx = sshihabb007_canvas.getContext('2d');
+                        
+                        let Mehedi_targetWidth = Mehedi_img.width;
+                        let sshihabb007_targetHeight = Mehedi_img.height;
 
-                if (Mehedi_doResize) {
-                    const Shihab_maxSize = 2000;
-                    if (Mehedi_targetWidth > Shihab_maxSize || sshihabb007_targetHeight > Shihab_maxSize) {
-                        if (Mehedi_targetWidth > sshihabb007_targetHeight) {
-                            sshihabb007_targetHeight = (sshihabb007_targetHeight / Mehedi_targetWidth) * Shihab_maxSize;
-                            Mehedi_targetWidth = Shihab_maxSize;
-                        } else {
-                            Mehedi_targetWidth = (Mehedi_targetWidth / sshihabb007_targetHeight) * Shihab_maxSize;
-                            sshihabb007_targetHeight = Shihab_maxSize;
+                        if (Mehedi_doResize) {
+                            const Shihab_maxSize = 2000;
+                            if (Mehedi_targetWidth > Shihab_maxSize || sshihabb007_targetHeight > Shihab_maxSize) {
+                                if (Mehedi_targetWidth > sshihabb007_targetHeight) {
+                                    sshihabb007_targetHeight = (sshihabb007_targetHeight / Mehedi_targetWidth) * Shihab_maxSize;
+                                    Mehedi_targetWidth = Shihab_maxSize;
+                                } else {
+                                    Mehedi_targetWidth = (Mehedi_targetWidth / sshihabb007_targetHeight) * Shihab_maxSize;
+                                    sshihabb007_targetHeight = Shihab_maxSize;
+                                }
+                            }
                         }
-                    }
-                }
 
-                sshihabb007_canvas.width = Mehedi_targetWidth;
-                sshihabb007_canvas.height = sshihabb007_targetHeight;
+                        sshihabb007_canvas.width = Mehedi_targetWidth;
+                        sshihabb007_canvas.height = sshihabb007_targetHeight;
 
-                if (sshihabb007_format === 'jpeg') {
-                    Shihab_ctx.fillStyle = "#FFFFFF"; 
-                    Shihab_ctx.fillRect(0, 0, sshihabb007_canvas.width, sshihabb007_canvas.height);
-                }
+                        if (sshihabb007_format === 'jpeg') {
+                            Shihab_ctx.fillStyle = "#FFFFFF"; 
+                            Shihab_ctx.fillRect(0, 0, sshihabb007_canvas.width, sshihabb007_canvas.height);
+                        }
 
-                Shihab_ctx.drawImage(Mehedi_img, 0, 0, Mehedi_targetWidth, sshihabb007_targetHeight);
+                        Shihab_ctx.drawImage(Mehedi_img, 0, 0, Mehedi_targetWidth, sshihabb007_targetHeight);
 
-                sshihabb007_originalDimensions.textContent = `${Mehedi_img.width} x ${Mehedi_img.height}`;
-                sshihabb007_convertedDimensions.textContent = `${Math.round(Mehedi_targetWidth)} x ${Math.round(sshihabb007_targetHeight)}`;
-
-                sshihabb007_canvas.toBlob((Mehedi_blob) => {
-                    if (Mehedi_currentBlobUrl) {
-                        URL.revokeObjectURL(Mehedi_currentBlobUrl);
-                    }
-                    
-                    Mehedi_currentBlobUrl = URL.createObjectURL(Mehedi_blob);
-                    sshihabb007_currentBlob = Mehedi_blob;
-                    
-                    Mehedi_convertedImg.src = Mehedi_currentBlobUrl;
-                    Shihab_convertedSize.textContent = Shihab_formatBytes(Mehedi_blob.size);
-                    
-                    sshihabb007_previewArea.classList.remove('hidden');
-                    Shihab_settingsPanel.classList.remove('hidden');
-                    Shihab_downloadBtnText.textContent = "Download Converted Image";
-                    Mehedi_downloadBtn.classList.remove('hidden');
-                }, `image/${sshihabb007_format}`, Shihab_quality);
-            };
+                        sshihabb007_canvas.toBlob((Mehedi_blob) => {
+                            resolve({
+                                file: file,
+                                blob: Mehedi_blob,
+                                targetWidth: Mehedi_targetWidth,
+                                targetHeight: sshihabb007_targetHeight,
+                                img: Mehedi_img
+                            });
+                        }, `image/${sshihabb007_format}`, Shihab_quality);
+                    };
+                };
+            });
         };
+
+        const results = await Promise.all(Shihab_currentFiles.map(file => processSingleImage(file)));
+
+        results.forEach(result => {
+            const blobUrl = URL.createObjectURL(result.blob);
+            Mehedi_currentBlobUrls.push({
+                originalName: result.file.name.split('.')[0],
+                blobUrl: blobUrl,
+                ext: sshihabb007_format === 'jpeg' ? 'jpg' : sshihabb007_format
+            });
+            totalOriginalSize += result.file.size;
+            totalConvertedSize += result.blob.size;
+        });
+
+        if (results.length > 0) {
+            const firstResult = results[0];
+            Shihab_originalImg.src = URL.createObjectURL(firstResult.file);
+            Mehedi_originalSize.textContent = Shihab_formatBytes(totalOriginalSize) + (results.length > 1 ? ` (${results.length} files)` : '');
+            sshihabb007_originalDimensions.textContent = `${firstResult.img.width} x ${firstResult.img.height}`;
+
+            Mehedi_convertedImg.src = Mehedi_currentBlobUrls[0].blobUrl;
+            Shihab_convertedSize.textContent = Shihab_formatBytes(totalConvertedSize) + (results.length > 1 ? ` (${results.length} files)` : '');
+            sshihabb007_convertedDimensions.textContent = `${Math.round(firstResult.targetWidth)} x ${Math.round(firstResult.targetHeight)}`;
+
+            sshihabb007_previewArea.classList.remove('hidden');
+            Shihab_settingsPanel.classList.remove('hidden');
+            Shihab_downloadBtnText.textContent = results.length > 1 ? `Download All (${results.length}) Images` : "Download Converted Image";
+            Mehedi_downloadBtn.classList.remove('hidden');
+        }
     };
 
     // Input Events
     sshihabb007_fileInput.addEventListener('change', (Mehedi_e) => {
-        if (Mehedi_e.target.files && Mehedi_e.target.files[0]) {
-            Shihab_currentFile = Mehedi_e.target.files[0];
+        if (Mehedi_e.target.files && Mehedi_e.target.files.length > 0) {
+            const files = Array.from(Mehedi_e.target.files);
+            const firstFile = files[0];
             
-            if (Shihab_currentFile.type.startsWith('audio/') || Shihab_currentFile.type.startsWith('video/') || Shihab_currentFile.name.toLowerCase().endsWith('.m4a') || Shihab_currentFile.name.toLowerCase().endsWith('.ts')) {
+            if (firstFile.type.startsWith('audio/') || firstFile.type.startsWith('video/') || firstFile.name.toLowerCase().endsWith('.m4a') || firstFile.name.toLowerCase().endsWith('.ts')) {
+                Shihab_currentFile = firstFile;
+                Shihab_currentFiles = [firstFile];
                 Mehedi_handleAudioFile();
-            } else if (Shihab_currentFile.type.startsWith('image/')) {
+            } else if (files.every(f => f.type.startsWith('image/'))) {
+                Shihab_currentFiles = files;
+                Shihab_currentFile = firstFile;
                 Mehedi_hideAllPanels();
                 Mehedi_isAudio = false;
                 
-                Shihab_originalImg.src = URL.createObjectURL(Shihab_currentFile);
-                Mehedi_originalSize.textContent = Shihab_formatBytes(Shihab_currentFile.size);
-
                 Shihab_settingsPanel.classList.remove('hidden');
                 Mehedi_processImage();
+            } else {
+                alert("Please select only image files, or a single audio/video file.");
             }
         }
     });
@@ -377,12 +412,9 @@ document.addEventListener('DOMContentLoaded', () => {
         Mehedi_e.preventDefault();
         Mehedi_dropZone.classList.remove('border-blue-500', 'bg-gray-700');
         
-        if (Mehedi_e.dataTransfer.files && Mehedi_e.dataTransfer.files[0]) {
-            const sshihabb007_file = Mehedi_e.dataTransfer.files[0];
-            if (sshihabb007_file.type.startsWith('image/') || sshihabb007_file.type.startsWith('audio/') || sshihabb007_file.type.startsWith('video/') || sshihabb007_file.name.toLowerCase().endsWith('.m4a') || sshihabb007_file.name.toLowerCase().endsWith('.ts')) {
-                sshihabb007_fileInput.files = Mehedi_e.dataTransfer.files;
-                sshihabb007_fileInput.dispatchEvent(new Event('change'));
-            }
+        if (Mehedi_e.dataTransfer.files && Mehedi_e.dataTransfer.files.length > 0) {
+            sshihabb007_fileInput.files = Mehedi_e.dataTransfer.files;
+            sshihabb007_fileInput.dispatchEvent(new Event('change'));
         }
     });
 
@@ -401,24 +433,30 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Download Trigger
-    Mehedi_downloadBtn.addEventListener('click', () => {
-        if (Mehedi_currentBlobUrl && Shihab_currentFile) {
-            const sshihabb007_a = document.createElement('a');
-            sshihabb007_a.href = Mehedi_currentBlobUrl;
-            
-            const Shihab_originalName = Shihab_currentFile.name.split('.')[0];
-            let Mehedi_ext = "";
-            if (Mehedi_isAudio) {
-                Mehedi_ext = Mehedi_audioFormatSelect.value;
-            } else {
-                Mehedi_ext = Mehedi_formatSelect.value === 'jpeg' ? 'jpg' : Mehedi_formatSelect.value;
+    Mehedi_downloadBtn.addEventListener('click', async () => {
+        if (Mehedi_isAudio) {
+            if (Mehedi_currentBlobUrl && Shihab_currentFile) {
+                const sshihabb007_a = document.createElement('a');
+                sshihabb007_a.href = Mehedi_currentBlobUrl;
+                const Shihab_originalName = Shihab_currentFile.name.split('.')[0];
+                sshihabb007_a.download = `${Shihab_originalName}_converted.${Mehedi_audioFormatSelect.value}`;
+                document.body.appendChild(sshihabb007_a);
+                sshihabb007_a.click();
+                document.body.removeChild(sshihabb007_a);
             }
-            
-            sshihabb007_a.download = `${Shihab_originalName}_converted.${Mehedi_ext}`;
-            
-            document.body.appendChild(sshihabb007_a);
-            sshihabb007_a.click();
-            document.body.removeChild(sshihabb007_a);
+        } else {
+            if (Mehedi_currentBlobUrls.length > 0) {
+                for (let i = 0; i < Mehedi_currentBlobUrls.length; i++) {
+                    const item = Mehedi_currentBlobUrls[i];
+                    const a = document.createElement('a');
+                    a.href = item.blobUrl;
+                    a.download = `${item.originalName}_converted.${item.ext}`;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    await new Promise(resolve => setTimeout(resolve, 300));
+                }
+            }
         }
     });
 });
