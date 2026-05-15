@@ -20,13 +20,13 @@
     <!-- PWA and SEO tags -->
     <link rel="canonical" href="https://sshihabb007.github.io/qr-generator/" />
     <meta name="theme-color" content="#3B82F6">
-    <link rel="icon" type="image/png" href="../asset/fav.png">
-    <link rel="apple-touch-icon" href="../asset/fav.png">
-    <link rel="manifest" href="../manifest.json">
+    <link rel="icon" type="image/png" href="icon.png">
+    <link rel="apple-touch-icon" href="icon.png">
+    <link rel="manifest" href="manifest.json">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="QR Generator">
+    <meta name="apple-mobile-web-app-title" content="QR Gen Pro">
 
     <!-- Structured Data -->
     <script type="application/ld+json">
@@ -755,10 +755,10 @@
         // Init icons
         lucide.createIcons();
 
-        // Register SW — scope set to root so the QR sub-page is covered
+        // Register SW — scoped to root so all tools share the same SW
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('../sw.js', { scope: '../' })
+                navigator.serviceWorker.register('../sw.js', { scope: '/' })
                     .then(reg => console.log('SW registered, scope:', reg.scope))
                     .catch(err => console.log('SW registration failed:', err));
             });
