@@ -3,7 +3,7 @@
 // ==========================================
 // CONFIGURATION
 // Change to 'false' to easily enable right-click and inspect element for development
-const ENABLE_SECURITY_PROTECTION = true;
+const ENABLE_SECURITY_PROTECTION = fale;
 // ==========================================
 
 document.addEventListener('DOMContentLoaded', () => {

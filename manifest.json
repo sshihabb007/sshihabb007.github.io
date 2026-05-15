@@ -1,15 +1,53 @@
 {
-  "name": "Mehedi Hasan Shihab Portfolio",
-  "short_name": "Portfolio",
+  "name": "Mehedi Hasan Shihab — Portfolio & Tools",
+  "short_name": "MHS Tools",
+  "id": "/",
   "start_url": "./",
+  "scope": "./",
   "display": "standalone",
-  "background_color": "#18181b",
-  "theme_color": "#6366f1",
+  "orientation": "portrait-primary",
+  "background_color": "#070B14",
+  "theme_color": "#3B82F6",
+  "description": "Professional portfolio and free web tools by Mehedi Hasan Shihab — QR Generator, Calculator, Currency Converter, and more.",
+  "categories": ["utilities", "productivity"],
   "icons": [
     {
       "src": "asset/fav.png",
-      "sizes": "192x192 512x512",
-      "type": "image/png"
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "asset/fav.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "asset/fav.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "QR Code Generator",
+      "short_name": "QR Gen",
+      "url": "./qr-generator/",
+      "description": "Free custom QR code generator with logo support"
+    },
+    {
+      "name": "Advanced Calculator",
+      "short_name": "Calculator",
+      "url": "./advanced-calculator/",
+      "description": "Scientific and graphing calculator"
+    },
+    {
+      "name": "Currency Converter",
+      "short_name": "Currency",
+      "url": "./currency-converter/",
+      "description": "Live currency converter"
     }
   ]
 }
