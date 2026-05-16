@@ -44,6 +44,22 @@ async function loadSiteComponents() {
         mehedi_initTheme();
     }
 
+    // Remove any duplicate color switcher / back-to-top elements that were hardcoded on old pages
+    // (the shared header now injects these elements, so page-level copies must be removed)
+    const allPalettes = document.querySelectorAll('.color-switcher-container');
+    if (allPalettes.length > 1) {
+        // Keep only the first one (injected by header) and remove the rest
+        for (let i = 1; i < allPalettes.length; i++) {
+            allPalettes[i].remove();
+        }
+    }
+    const allBackTops = document.querySelectorAll('#back-to-top');
+    if (allBackTops.length > 1) {
+        for (let i = 1; i < allBackTops.length; i++) {
+            allBackTops[i].remove();
+        }
+    }
+
     // PWA Install Popup Logic
     let deferredPrompt;
     

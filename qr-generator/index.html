@@ -1447,8 +1447,25 @@
             svgEl.appendChild(g);
         }
 
+        function getQrFileName() {
+            // Find the currently visible field panel (the one without 'hidden' class)
+            const activePanel = document.querySelector('#mehedi-input-fields > div:not(.hidden)');
+            let name = 'qr-code';
+            if (activePanel) {
+                const firstInput = activePanel.querySelector('input, textarea, select');
+                if (firstInput && firstInput.value.trim()) {
+                    // Sanitize: strip non-alphanumeric (except spaces/dashes), trim, replace spaces with dashes
+                    name = firstInput.value.trim()
+                        .replace(/[^a-zA-Z0-9\s\-_]/g, '')
+                        .replace(/\s+/g, '-')
+                        .substring(0, 60) || 'qr-code';
+                }
+            }
+            return name;
+        }
+
         function mehediDownload(ext) {
-            sshihabb007QrCode.download({ name: "sshihabb007-qr", extension: ext });
+            sshihabb007QrCode.download({ name: getQrFileName(), extension: ext });
         }
 
         async function downloadPDF() {
@@ -1469,7 +1486,7 @@
                     });
                     
                     doc.addImage(img, 'PNG', 0, 0, size, size);
-                    doc.save('sshihabb007-qr.pdf');
+                    doc.save(getQrFileName() + '.pdf');
                     URL.revokeObjectURL(url);
                 };
                 img.src = url;
@@ -1544,7 +1561,7 @@ ${formattedHex}>
                     const epsUrl = URL.createObjectURL(epsBlob);
                     const a = document.createElement("a");
                     a.href = epsUrl;
-                    a.download = "sshihabb007-qr.eps";
+                    a.download = getQrFileName() + '.eps';
                     a.click();
                     URL.revokeObjectURL(epsUrl);
                 };
