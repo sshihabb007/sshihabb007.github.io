@@ -1,21 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Create custom QR codes for free with our advanced QR Code Generator. Generate QR codes for URLs, WhatsApp, WiFi, vCard, and more. Add logos and colors instantly.">
-    <meta name="keywords" content="qr code generator, free qr code maker, custom qr code with logo, create qr code online, whatsapp qr code, wifi qr code generator, vcard qr code">
+    <meta name="description"
+        content="Create custom QR codes for free with our advanced QR Code Generator. Generate QR codes for URLs, WhatsApp, WiFi, vCard, and more. Add logos and colors instantly.">
+    <meta name="keywords"
+        content="qr code generator, free qr code maker, custom qr code with logo, create qr code online, whatsapp qr code, wifi qr code generator, vcard qr code">
     <meta name="author" content="Mehedi Hasan Shihab">
     <title>Free Custom QR Code Generator Online | Add Logo & Colors</title>
-    
+
     <!-- OpenGraph & Twitter SEO -->
     <meta property="og:title" content="Free Custom QR Code Generator Online | Add Logo & Colors">
-    <meta property="og:description" content="Create custom QR codes for free with our advanced QR Code Generator. Generate QR codes for URLs, WhatsApp, WiFi, vCard, and more. Add logos and colors instantly.">
+    <meta property="og:description"
+        content="Create custom QR codes for free with our advanced QR Code Generator. Generate QR codes for URLs, WhatsApp, WiFi, vCard, and more. Add logos and colors instantly.">
     <meta property="og:url" content="https://sshihabb007.github.io/qr-generator/">
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Free Custom QR Code Generator Online">
-    <meta name="twitter:description" content="Generate high-quality, custom QR codes for free. Add your own logo, change colors, and download in SVG or PNG format.">
+    <meta name="twitter:description"
+        content="Generate high-quality, custom QR codes for free. Add your own logo, change colors, and download in SVG or PNG format.">
 
     <!-- PWA and SEO tags -->
     <link rel="canonical" href="https://sshihabb007.github.io/qr-generator/" />
@@ -56,36 +61,42 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/svg2pdf.js/2.2.3/svg2pdf.umd.min.js"></script>
-    
+
     <style>
         body {
             background-color: var(--bg-dark);
             color: var(--text-main);
         }
+
         .mehedi-container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
         }
+
         .mehedi-card {
             background-color: var(--bg-card);
             border-color: var(--border-color);
         }
+
         .mehedi-input {
             background-color: var(--bg-dark);
             border-color: var(--border-color);
             color: var(--text-main);
         }
+
         .mehedi-input:focus {
             border-color: var(--primary-color);
         }
+
         .mehedi-text-muted {
             color: var(--text-muted);
         }
+
         .mehedi-border {
             border-color: var(--border-color);
         }
-        
+
         /* === Tab Bar === */
         #sshihabb007-tabs {
             display: flex;
@@ -100,8 +111,15 @@
             scrollbar-width: thin;
             scrollbar-color: var(--border-color) transparent;
         }
-        #sshihabb007-tabs::-webkit-scrollbar { height: 3px; }
-        #sshihabb007-tabs::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 10px; }
+
+        #sshihabb007-tabs::-webkit-scrollbar {
+            height: 3px;
+        }
+
+        #sshihabb007-tabs::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 10px;
+        }
 
         .mehedi-tab {
             padding: 11px 0;
@@ -118,7 +136,11 @@
             transition: color 0.2s, border-color 0.2s, background-color 0.2s;
             user-select: none;
         }
-        .mehedi-tab:hover { color: var(--text-main); }
+
+        .mehedi-tab:hover {
+            color: var(--text-main);
+        }
+
         .mehedi-tab.active {
             color: var(--primary-color);
             border-bottom: 2px solid var(--primary-color);
@@ -149,11 +171,15 @@
             background-color: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: 8px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
             z-index: 99999;
             overflow: hidden;
         }
-        #shihab-more-dropdown.open { display: flex; }
+
+        #shihab-more-dropdown.open {
+            display: flex;
+        }
+
         #shihab-more-dropdown .mehedi-tab {
             flex: none;
             text-align: left;
@@ -162,14 +188,28 @@
             border-left: none;
             font-size: 0.82rem;
         }
-        #shihab-more-dropdown .mehedi-tab:last-child { border-bottom: none; }
-        #shihab-more-dropdown .mehedi-tab:hover { background-color: var(--bg-hover); }
+
+        #shihab-more-dropdown .mehedi-tab:last-child {
+            border-bottom: none;
+        }
+
+        #shihab-more-dropdown .mehedi-tab:hover {
+            background-color: var(--bg-hover);
+        }
 
         /* Mobile-first responsive */
         @media (max-width: 768px) {
-            .mehedi-container { padding: 10px; }
-            .mehedi-accordion-header { padding: 12px 14px; }
-            .mehedi-accordion-content { padding: 14px; }
+            .mehedi-container {
+                padding: 10px;
+            }
+
+            .mehedi-accordion-header {
+                padding: 12px 14px;
+            }
+
+            .mehedi-accordion-content {
+                padding: 14px;
+            }
 
             /* On mobile: wrap tabs into 2 rows of 5 */
             #sshihabb007-tabs {
@@ -179,8 +219,10 @@
                 border-top-left-radius: 8px;
                 border-top-right-radius: 8px;
             }
+
             .mehedi-tab {
-                flex: 0 0 20%; /* exactly 5 per row */
+                flex: 0 0 20%;
+                /* exactly 5 per row */
                 padding: 9px 2px;
                 font-size: 0.68rem;
                 letter-spacing: 0;
@@ -188,21 +230,32 @@
                 text-align: center;
                 border-right: 1px solid var(--border-color);
             }
+
             /* 2nd row tabs get a top border separator */
             #sshihabb007-tabs .mehedi-tab:nth-child(n+6) {
                 border-top: 1px solid var(--border-color);
             }
+
             /* Show extra-tab entries on mobile */
-            .shihab-extra-tab { display: block; }
+            .shihab-extra-tab {
+                display: block;
+            }
+
             /* Hide MORE button and its dropdown on mobile */
-            #shihab-more-btn { display: none !important; }
-            #shihab-more-dropdown { display: none !important; }
+            #shihab-more-btn {
+                display: none !important;
+            }
+
+            #shihab-more-dropdown {
+                display: none !important;
+            }
         }
 
         /* Accordion */
         .mehedi-accordion-item {
             border-bottom: 1px solid var(--border-color);
         }
+
         .mehedi-accordion-header {
             padding: 15px 20px;
             display: flex;
@@ -212,12 +265,15 @@
             background-color: var(--bg-card);
             transition: background-color 0.2s;
         }
+
         .mehedi-accordion-header:hover {
             background-color: var(--bg-hover);
         }
+
         .mehedi-accordion-header.active {
             background-color: var(--bg-hover);
         }
+
         .mehedi-accordion-header h3 {
             font-size: 1rem;
             font-weight: 600;
@@ -225,52 +281,63 @@
             align-items: center;
             gap: 10px;
         }
+
         .mehedi-accordion-content {
             padding: 20px;
             background-color: var(--bg-card);
             display: none;
         }
+
         .mehedi-accordion-item.active .mehedi-accordion-content {
             display: block;
         }
+
         .mehedi-accordion-icon {
             transition: transform 0.3s;
         }
+
         .mehedi-accordion-item.active .mehedi-accordion-icon {
             transform: rotate(180deg);
         }
-        
+
         #mehedi-canvas-container svg,
-        #mehedi-canvas-container canvas { 
-            max-width: 100%; 
-            height: auto !important; 
+        #mehedi-canvas-container canvas {
+            max-width: 100%;
+            height: auto !important;
             aspect-ratio: 1 / 1;
-            border-radius: 12px; 
+            border-radius: 12px;
             margin: 0 auto;
             display: block;
         }
     </style>
 </head>
+
 <body class="font-sans">
 
     <div id="site-header" data-basepath="../"></div>
 
     <div class="mehedi-container flex-grow">
         <div class="text-center space-y-2 mt-4 mb-8">
-            <h1 class="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500">
+            <h1
+                class="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500">
                 Free Custom QR Code Generator
             </h1>
-            <p class="font-medium mehedi-text-muted text-sm max-w-2xl mx-auto">Create highly customizable, professional QR codes for URLs, WhatsApp, WiFi, and more. Add your own logo and download instantly in SVG or PNG format.</p>
+            <p class="font-medium mehedi-text-muted text-sm max-w-2xl mx-auto">Create highly customizable, professional
+                QR codes for URLs, WhatsApp, WiFi, and more. Add your own logo and download instantly in SVG or PNG
+                format.</p>
             <p class="text-xs font-semibold mehedi-text-muted mt-2 inline-flex items-center justify-center gap-1">
-                Developed by <a href="https://www.linkedin.com/in/mehedi-hasan-shihab" target="_blank" rel="noopener noreferrer" class="hover:underline transition-all" style="color: var(--primary-color);">Mehedi Hasan Shihab</a> <i class="fab fa-linkedin" style="color: #0A66C2;"></i>
+                Developed by <a href="https://www.linkedin.com/in/mehedi-hasan-shihab" target="_blank"
+                    rel="noopener noreferrer" class="hover:underline transition-all"
+                    style="color: var(--primary-color);">Mehedi Hasan Shihab</a> <i class="fab fa-linkedin"
+                    style="color: #0A66C2;"></i>
             </p>
         </div>
         <!-- Main Layout Split -->
         <div class="flex flex-col lg:flex-row gap-6 mt-6">
-            
+
             <!-- Left Panel (Accordion & Content) -->
             <div class="flex-1 mehedi-card border rounded-lg shadow-sm min-w-0">
-                
+
                 <!-- Horizontal Tabs: scrollable on desktop, 2-row grid on mobile -->
                 <div id="sshihabb007-tabs">
                     <div class="mehedi-tab active" data-type="url">URL</div>
@@ -304,7 +371,7 @@
 
                 <!-- Accordion Container -->
                 <div class="w-full">
-                    
+
                     <!-- Accordion 1: Content -->
                     <div class="mehedi-accordion-item active" id="mehedi-acc-content">
                         <div class="mehedi-accordion-header" onclick="shihabToggleAccordion('mehedi-acc-content')">
@@ -314,83 +381,115 @@
                         <div class="mehedi-accordion-content">
                             <!-- Dynamic Inputs container -->
                             <div id="mehedi-input-fields">
-                                
+
                                 <!-- URL -->
                                 <div id="shihab-field-url" class="space-y-3">
                                     <label class="block text-xs font-bold uppercase mehedi-text-muted">Your URL</label>
-                                    <input type="text" id="sshihabb007-url-val" placeholder="https://sshihabb007.github.io" class="w-full p-3 border mehedi-input rounded-md outline-none">
+                                    <input type="text" id="sshihabb007-url-val"
+                                        placeholder="https://sshihabb007.github.io"
+                                        class="w-full p-3 border mehedi-input rounded-md outline-none">
                                 </div>
 
                                 <!-- TEXT -->
                                 <div id="shihab-field-text" class="hidden space-y-3">
                                     <label class="block text-xs font-bold uppercase mehedi-text-muted">Your Text</label>
-                                    <textarea id="sshihabb007-text-val" rows="4" placeholder="Enter your text here..." class="w-full p-3 border mehedi-input rounded-md outline-none"></textarea>
+                                    <textarea id="sshihabb007-text-val" rows="4" placeholder="Enter your text here..."
+                                        class="w-full p-3 border mehedi-input rounded-md outline-none"></textarea>
                                 </div>
 
                                 <!-- EMAIL -->
                                 <div id="shihab-field-email" class="hidden space-y-3">
                                     <div>
-                                        <label class="block text-xs font-bold uppercase mehedi-text-muted mb-1">Email Address</label>
-                                        <input type="email" id="sshihabb007-email-val" placeholder="name@mail.com" class="w-full p-3 border mehedi-input rounded-md outline-none">
+                                        <label class="block text-xs font-bold uppercase mehedi-text-muted mb-1">Email
+                                            Address</label>
+                                        <input type="email" id="sshihabb007-email-val" placeholder="name@mail.com"
+                                            class="w-full p-3 border mehedi-input rounded-md outline-none">
                                     </div>
                                     <div>
-                                        <label class="block text-xs font-bold uppercase mehedi-text-muted mb-1">Subject</label>
-                                        <input type="text" id="sshihabb007-email-subject" placeholder="Email Subject" class="w-full p-3 border mehedi-input rounded-md outline-none">
+                                        <label
+                                            class="block text-xs font-bold uppercase mehedi-text-muted mb-1">Subject</label>
+                                        <input type="text" id="sshihabb007-email-subject" placeholder="Email Subject"
+                                            class="w-full p-3 border mehedi-input rounded-md outline-none">
                                     </div>
                                     <div>
-                                        <label class="block text-xs font-bold uppercase mehedi-text-muted mb-1">Message</label>
-                                        <textarea id="sshihabb007-email-body" rows="3" placeholder="Email Body" class="w-full p-3 border mehedi-input rounded-md outline-none"></textarea>
+                                        <label
+                                            class="block text-xs font-bold uppercase mehedi-text-muted mb-1">Message</label>
+                                        <textarea id="sshihabb007-email-body" rows="3" placeholder="Email Body"
+                                            class="w-full p-3 border mehedi-input rounded-md outline-none"></textarea>
                                     </div>
                                 </div>
 
                                 <!-- PHONE -->
                                 <div id="shihab-field-phone" class="hidden space-y-3">
                                     <div class="flex gap-4 mb-2">
-                                        <label class="flex items-center gap-2 cursor-pointer text-sm font-semibold" style="color: var(--text-main);">
-                                            <input type="radio" name="mehedi_phone_type" value="tel" checked onchange="sshihabb007UpdateQR()" class="cursor-pointer" style="accent-color: var(--primary-color);"> Regular Call
+                                        <label class="flex items-center gap-2 cursor-pointer text-sm font-semibold"
+                                            style="color: var(--text-main);">
+                                            <input type="radio" name="mehedi_phone_type" value="tel" checked
+                                                onchange="sshihabb007UpdateQR()" class="cursor-pointer"
+                                                style="accent-color: var(--primary-color);"> Regular Call
                                         </label>
-                                        <label class="flex items-center gap-2 cursor-pointer text-sm font-semibold" style="color: var(--text-main);">
-                                            <input type="radio" name="mehedi_phone_type" value="whatsapp" onchange="sshihabb007UpdateQR()" class="cursor-pointer" style="accent-color: var(--primary-color);"> WhatsApp Chat
+                                        <label class="flex items-center gap-2 cursor-pointer text-sm font-semibold"
+                                            style="color: var(--text-main);">
+                                            <input type="radio" name="mehedi_phone_type" value="whatsapp"
+                                                onchange="sshihabb007UpdateQR()" class="cursor-pointer"
+                                                style="accent-color: var(--primary-color);"> WhatsApp Chat
                                         </label>
                                     </div>
                                     <div>
-                                        <label class="block text-xs font-bold uppercase mehedi-text-muted mb-1">Phone Number</label>
-                                        <input type="tel" id="sshihabb007-phone-val" placeholder="+12345678900" class="w-full p-3 border mehedi-input rounded-md outline-none">
-                                        <p class="text-[10px] mt-1 mehedi-text-muted">Include country code (e.g., +1 for US, +44 for UK).</p>
+                                        <label class="block text-xs font-bold uppercase mehedi-text-muted mb-1">Phone
+                                            Number</label>
+                                        <input type="tel" id="sshihabb007-phone-val" placeholder="+12345678900"
+                                            class="w-full p-3 border mehedi-input rounded-md outline-none">
+                                        <p class="text-[10px] mt-1 mehedi-text-muted">Include country code (e.g., +1 for
+                                            US, +44 for UK).</p>
                                     </div>
                                 </div>
 
                                 <!-- SMS -->
                                 <div id="shihab-field-sms" class="hidden space-y-3">
                                     <div>
-                                        <label class="block text-xs font-bold uppercase mehedi-text-muted mb-1">Phone Number</label>
-                                        <input type="tel" id="sshihabb007-sms-phone" placeholder="+1 234 567 8900" class="w-full p-3 border mehedi-input rounded-md outline-none">
+                                        <label class="block text-xs font-bold uppercase mehedi-text-muted mb-1">Phone
+                                            Number</label>
+                                        <input type="tel" id="sshihabb007-sms-phone" placeholder="+1 234 567 8900"
+                                            class="w-full p-3 border mehedi-input rounded-md outline-none">
                                     </div>
                                     <div>
-                                        <label class="block text-xs font-bold uppercase mehedi-text-muted mb-1">Message</label>
-                                        <textarea id="sshihabb007-sms-text" rows="3" placeholder="Text Message" class="w-full p-3 border mehedi-input rounded-md outline-none"></textarea>
+                                        <label
+                                            class="block text-xs font-bold uppercase mehedi-text-muted mb-1">Message</label>
+                                        <textarea id="sshihabb007-sms-text" rows="3" placeholder="Text Message"
+                                            class="w-full p-3 border mehedi-input rounded-md outline-none"></textarea>
                                     </div>
                                 </div>
 
                                 <!-- VCARD -->
                                 <div id="shihab-field-vcard" class="hidden space-y-3">
                                     <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                                        <input type="text" id="mehedi-vc-name" placeholder="Full Name" class="w-full p-3 border mehedi-input rounded-md outline-none">
-                                        <input type="text" id="mehedi-vc-role" placeholder="Role (e.g. Architect)" class="w-full p-3 border mehedi-input rounded-md outline-none">
-                                        <input type="text" id="mehedi-vc-comp" placeholder="Company Name" class="w-full p-3 border mehedi-input rounded-md outline-none">
-                                        <input type="tel" id="mehedi-vc-phone" placeholder="Phone Number" class="w-full p-3 border mehedi-input rounded-md outline-none">
-                                        <input type="email" id="mehedi-vc-email" placeholder="Email Address" class="w-full p-3 border mehedi-input rounded-md outline-none">
-                                        <input type="text" id="mehedi-vc-website" placeholder="Website" class="w-full p-3 border mehedi-input rounded-md outline-none">
+                                        <input type="text" id="mehedi-vc-name" placeholder="Full Name"
+                                            class="w-full p-3 border mehedi-input rounded-md outline-none">
+                                        <input type="text" id="mehedi-vc-role" placeholder="Role (e.g. Architect)"
+                                            class="w-full p-3 border mehedi-input rounded-md outline-none">
+                                        <input type="text" id="mehedi-vc-comp" placeholder="Company Name"
+                                            class="w-full p-3 border mehedi-input rounded-md outline-none">
+                                        <input type="tel" id="mehedi-vc-phone" placeholder="Phone Number"
+                                            class="w-full p-3 border mehedi-input rounded-md outline-none">
+                                        <input type="email" id="mehedi-vc-email" placeholder="Email Address"
+                                            class="w-full p-3 border mehedi-input rounded-md outline-none">
+                                        <input type="text" id="mehedi-vc-website" placeholder="Website"
+                                            class="w-full p-3 border mehedi-input rounded-md outline-none">
                                     </div>
                                 </div>
 
                                 <!-- MECARD -->
                                 <div id="shihab-field-mecard" class="hidden space-y-3">
                                     <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                                        <input type="text" id="mehedi-mc-name" placeholder="Name" class="w-full p-3 border mehedi-input rounded-md outline-none">
-                                        <input type="tel" id="mehedi-mc-phone" placeholder="Phone" class="w-full p-3 border mehedi-input rounded-md outline-none">
-                                        <input type="email" id="mehedi-mc-email" placeholder="Email" class="w-full p-3 border mehedi-input rounded-md outline-none">
-                                        <input type="text" id="mehedi-mc-url" placeholder="Website URL" class="w-full p-3 border mehedi-input rounded-md outline-none">
+                                        <input type="text" id="mehedi-mc-name" placeholder="Name"
+                                            class="w-full p-3 border mehedi-input rounded-md outline-none">
+                                        <input type="tel" id="mehedi-mc-phone" placeholder="Phone"
+                                            class="w-full p-3 border mehedi-input rounded-md outline-none">
+                                        <input type="email" id="mehedi-mc-email" placeholder="Email"
+                                            class="w-full p-3 border mehedi-input rounded-md outline-none">
+                                        <input type="text" id="mehedi-mc-url" placeholder="Website URL"
+                                            class="w-full p-3 border mehedi-input rounded-md outline-none">
                                     </div>
                                 </div>
 
@@ -398,48 +497,70 @@
                                 <div id="shihab-field-location" class="hidden space-y-3">
                                     <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                                         <div>
-                                            <label class="block text-xs font-bold uppercase mehedi-text-muted mb-1">Latitude</label>
-                                            <input type="number" id="sshihabb007-loc-lat" placeholder="40.7128" step="any" class="w-full p-3 border mehedi-input rounded-md outline-none">
+                                            <label
+                                                class="block text-xs font-bold uppercase mehedi-text-muted mb-1">Latitude</label>
+                                            <input type="number" id="sshihabb007-loc-lat" placeholder="40.7128"
+                                                step="any"
+                                                class="w-full p-3 border mehedi-input rounded-md outline-none">
                                         </div>
                                         <div>
-                                            <label class="block text-xs font-bold uppercase mehedi-text-muted mb-1">Longitude</label>
-                                            <input type="number" id="sshihabb007-loc-lng" placeholder="-74.0060" step="any" class="w-full p-3 border mehedi-input rounded-md outline-none">
+                                            <label
+                                                class="block text-xs font-bold uppercase mehedi-text-muted mb-1">Longitude</label>
+                                            <input type="number" id="sshihabb007-loc-lng" placeholder="-74.0060"
+                                                step="any"
+                                                class="w-full p-3 border mehedi-input rounded-md outline-none">
                                         </div>
                                     </div>
                                 </div>
 
                                 <!-- FACEBOOK -->
                                 <div id="shihab-field-facebook" class="hidden space-y-3">
-                                    <label class="block text-xs font-bold uppercase mehedi-text-muted">Facebook Profile/Page URL</label>
-                                    <input type="text" id="sshihabb007-fb-url" placeholder="https://facebook.com/yourpage" class="w-full p-3 border mehedi-input rounded-md outline-none">
+                                    <label class="block text-xs font-bold uppercase mehedi-text-muted">Facebook
+                                        Profile/Page URL</label>
+                                    <input type="text" id="sshihabb007-fb-url"
+                                        placeholder="https://facebook.com/yourpage"
+                                        class="w-full p-3 border mehedi-input rounded-md outline-none">
                                 </div>
 
                                 <!-- TWITTER -->
                                 <div id="shihab-field-twitter" class="hidden space-y-3">
-                                    <label class="block text-xs font-bold uppercase mehedi-text-muted">Twitter Profile/Tweet URL</label>
-                                    <input type="text" id="sshihabb007-tw-url" placeholder="https://twitter.com/yourprofile" class="w-full p-3 border mehedi-input rounded-md outline-none">
+                                    <label class="block text-xs font-bold uppercase mehedi-text-muted">Twitter
+                                        Profile/Tweet URL</label>
+                                    <input type="text" id="sshihabb007-tw-url"
+                                        placeholder="https://twitter.com/yourprofile"
+                                        class="w-full p-3 border mehedi-input rounded-md outline-none">
                                 </div>
 
                                 <!-- YOUTUBE -->
                                 <div id="shihab-field-youtube" class="hidden space-y-3">
-                                    <label class="block text-xs font-bold uppercase mehedi-text-muted">YouTube Video/Channel URL</label>
-                                    <input type="text" id="sshihabb007-yt-url" placeholder="https://youtube.com/c/yourchannel" class="w-full p-3 border mehedi-input rounded-md outline-none">
+                                    <label class="block text-xs font-bold uppercase mehedi-text-muted">YouTube
+                                        Video/Channel URL</label>
+                                    <input type="text" id="sshihabb007-yt-url"
+                                        placeholder="https://youtube.com/c/yourchannel"
+                                        class="w-full p-3 border mehedi-input rounded-md outline-none">
                                 </div>
 
                                 <!-- WIFI -->
                                 <div id="shihab-field-wifi" class="hidden space-y-3">
                                     <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
                                         <div>
-                                            <label class="block text-xs font-bold uppercase mehedi-text-muted mb-1">Network Name</label>
-                                            <input type="text" id="sshihabb007-wf-ssid" placeholder="SSID" class="w-full p-3 border mehedi-input rounded-md outline-none">
+                                            <label
+                                                class="block text-xs font-bold uppercase mehedi-text-muted mb-1">Network
+                                                Name</label>
+                                            <input type="text" id="sshihabb007-wf-ssid" placeholder="SSID"
+                                                class="w-full p-3 border mehedi-input rounded-md outline-none">
                                         </div>
                                         <div>
-                                            <label class="block text-xs font-bold uppercase mehedi-text-muted mb-1">Password</label>
-                                            <input type="text" id="sshihabb007-wf-pass" placeholder="Password" class="w-full p-3 border mehedi-input rounded-md outline-none">
+                                            <label
+                                                class="block text-xs font-bold uppercase mehedi-text-muted mb-1">Password</label>
+                                            <input type="text" id="sshihabb007-wf-pass" placeholder="Password"
+                                                class="w-full p-3 border mehedi-input rounded-md outline-none">
                                         </div>
                                         <div>
-                                            <label class="block text-xs font-bold uppercase mehedi-text-muted mb-1">Encryption</label>
-                                            <select id="sshihabb007-wf-enc" class="w-full p-3 border mehedi-input rounded-md outline-none">
+                                            <label
+                                                class="block text-xs font-bold uppercase mehedi-text-muted mb-1">Encryption</label>
+                                            <select id="sshihabb007-wf-enc"
+                                                class="w-full p-3 border mehedi-input rounded-md outline-none">
                                                 <option value="WPA">WPA/WPA2</option>
                                                 <option value="WEP">WEP</option>
                                                 <option value="nopass">None</option>
@@ -451,25 +572,36 @@
                                 <!-- EVENT -->
                                 <div id="shihab-field-event" class="hidden space-y-3">
                                     <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                                        <input type="text" id="mehedi-ev-title" placeholder="Event Title" class="w-full p-3 border mehedi-input rounded-md outline-none col-span-2">
+                                        <input type="text" id="mehedi-ev-title" placeholder="Event Title"
+                                            class="w-full p-3 border mehedi-input rounded-md outline-none col-span-2">
                                         <div>
-                                            <label class="block text-xs font-bold uppercase mehedi-text-muted mb-1">Start Date/Time</label>
-                                            <input type="datetime-local" id="mehedi-ev-start" class="w-full p-3 border mehedi-input rounded-md outline-none">
+                                            <label
+                                                class="block text-xs font-bold uppercase mehedi-text-muted mb-1">Start
+                                                Date/Time</label>
+                                            <input type="datetime-local" id="mehedi-ev-start"
+                                                class="w-full p-3 border mehedi-input rounded-md outline-none">
                                         </div>
                                         <div>
-                                            <label class="block text-xs font-bold uppercase mehedi-text-muted mb-1">End Date/Time</label>
-                                            <input type="datetime-local" id="mehedi-ev-end" class="w-full p-3 border mehedi-input rounded-md outline-none">
+                                            <label class="block text-xs font-bold uppercase mehedi-text-muted mb-1">End
+                                                Date/Time</label>
+                                            <input type="datetime-local" id="mehedi-ev-end"
+                                                class="w-full p-3 border mehedi-input rounded-md outline-none">
                                         </div>
-                                        <input type="text" id="mehedi-ev-location" placeholder="Location" class="w-full p-3 border mehedi-input rounded-md outline-none col-span-2">
+                                        <input type="text" id="mehedi-ev-location" placeholder="Location"
+                                            class="w-full p-3 border mehedi-input rounded-md outline-none col-span-2">
                                     </div>
                                 </div>
 
                                 <!-- BITCOIN -->
                                 <div id="shihab-field-bitcoin" class="hidden space-y-3">
-                                    <label class="block text-xs font-bold uppercase mehedi-text-muted">Bitcoin Address</label>
-                                    <input type="text" id="sshihabb007-btc-addr" placeholder="Bitcoin Address" class="w-full p-3 border mehedi-input rounded-md outline-none">
-                                    <label class="block text-xs font-bold uppercase mehedi-text-muted mt-3 mb-1">Amount (Optional)</label>
-                                    <input type="number" id="sshihabb007-btc-amt" placeholder="0.00" step="any" class="w-full p-3 border mehedi-input rounded-md outline-none">
+                                    <label class="block text-xs font-bold uppercase mehedi-text-muted">Bitcoin
+                                        Address</label>
+                                    <input type="text" id="sshihabb007-btc-addr" placeholder="Bitcoin Address"
+                                        class="w-full p-3 border mehedi-input rounded-md outline-none">
+                                    <label class="block text-xs font-bold uppercase mehedi-text-muted mt-3 mb-1">Amount
+                                        (Optional)</label>
+                                    <input type="number" id="sshihabb007-btc-amt" placeholder="0.00" step="any"
+                                        class="w-full p-3 border mehedi-input rounded-md outline-none">
                                 </div>
 
                             </div>
@@ -485,32 +617,51 @@
                         <div class="mehedi-accordion-content space-y-4">
                             <div class="space-y-4">
                                 <div class="flex gap-4">
-                                    <label class="flex items-center gap-2 cursor-pointer text-sm font-semibold" style="color: var(--text-main);">
-                                        <input type="radio" name="mehedi_color_type" value="single" checked onchange="shihabToggleGradient()" class="cursor-pointer" style="accent-color: var(--primary-color);"> Single Color
+                                    <label class="flex items-center gap-2 cursor-pointer text-sm font-semibold"
+                                        style="color: var(--text-main);">
+                                        <input type="radio" name="mehedi_color_type" value="single" checked
+                                            onchange="shihabToggleGradient()" class="cursor-pointer"
+                                            style="accent-color: var(--primary-color);"> Single Color
                                     </label>
-                                    <label class="flex items-center gap-2 cursor-pointer text-sm font-semibold" style="color: var(--text-main);">
-                                        <input type="radio" name="mehedi_color_type" value="gradient" onchange="shihabToggleGradient()" class="cursor-pointer" style="accent-color: var(--primary-color);"> Color Gradient
+                                    <label class="flex items-center gap-2 cursor-pointer text-sm font-semibold"
+                                        style="color: var(--text-main);">
+                                        <input type="radio" name="mehedi_color_type" value="gradient"
+                                            onchange="shihabToggleGradient()" class="cursor-pointer"
+                                            style="accent-color: var(--primary-color);"> Color Gradient
                                     </label>
                                 </div>
                                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                                     <div>
-                                        <label class="block text-xs font-bold uppercase mehedi-text-muted mb-1">Foreground Color 1</label>
-                                        <input type="color" id="shihab-qr-color" value="#000000" class="w-full h-10 border rounded-md cursor-pointer mehedi-border">
+                                        <label
+                                            class="block text-xs font-bold uppercase mehedi-text-muted mb-1">Foreground
+                                            Color 1</label>
+                                        <input type="color" id="shihab-qr-color" value="#000000"
+                                            class="w-full h-10 border rounded-md cursor-pointer mehedi-border">
                                     </div>
                                     <div id="shihab-grad-box" class="hidden">
-                                        <label class="block text-xs font-bold uppercase mehedi-text-muted mb-1">Foreground Color 2</label>
-                                        <input type="color" id="shihab-qr-color2" value="#10B981" class="w-full h-10 border rounded-md cursor-pointer mehedi-border">
+                                        <label
+                                            class="block text-xs font-bold uppercase mehedi-text-muted mb-1">Foreground
+                                            Color 2</label>
+                                        <input type="color" id="shihab-qr-color2" value="#10B981"
+                                            class="w-full h-10 border rounded-md cursor-pointer mehedi-border">
                                     </div>
                                     <div>
-                                        <label class="block text-xs font-bold uppercase mehedi-text-muted mb-1">Background Color</label>
-                                        <input type="color" id="shihab-qr-bg" value="#ffffff" class="w-full h-10 border rounded-md cursor-pointer mehedi-border">
+                                        <label
+                                            class="block text-xs font-bold uppercase mehedi-text-muted mb-1">Background
+                                            Color</label>
+                                        <input type="color" id="shihab-qr-bg" value="#ffffff"
+                                            class="w-full h-10 border rounded-md cursor-pointer mehedi-border">
                                     </div>
                                     <div class="col-span-1 md:col-span-3">
-                                        <label class="flex items-center gap-2 cursor-pointer text-sm font-semibold mb-2" style="color: var(--text-main);">
-                                            <input type="checkbox" id="shihab-custom-eye-toggle" onchange="shihabToggleEyeColor()" class="cursor-pointer" style="accent-color: var(--primary-color);"> Custom Eye Color
+                                        <label class="flex items-center gap-2 cursor-pointer text-sm font-semibold mb-2"
+                                            style="color: var(--text-main);">
+                                            <input type="checkbox" id="shihab-custom-eye-toggle"
+                                                onchange="shihabToggleEyeColor()" class="cursor-pointer"
+                                                style="accent-color: var(--primary-color);"> Custom Eye Color
                                         </label>
                                         <div id="shihab-eye-color-box" class="hidden">
-                                            <input type="color" id="shihab-qr-eye-color" value="#000000" class="w-full h-10 border rounded-md cursor-pointer mehedi-border md:w-1/3">
+                                            <input type="color" id="shihab-qr-eye-color" value="#000000"
+                                                class="w-full h-10 border rounded-md cursor-pointer mehedi-border md:w-1/3">
                                         </div>
                                     </div>
                                 </div>
@@ -526,71 +677,100 @@
                         </div>
                         <div class="mehedi-accordion-content space-y-4">
                             <div class="space-y-2">
-                                <label class="block text-xs font-bold uppercase mehedi-text-muted">Upload Custom Logo</label>
-                                <input type="file" id="mehedi-qr-logo" class="w-full text-sm mehedi-text-muted file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 cursor-pointer">
+                                <label class="block text-xs font-bold uppercase mehedi-text-muted">Upload Custom
+                                    Logo</label>
+                                <input type="file" id="mehedi-qr-logo"
+                                    class="w-full text-sm mehedi-text-muted file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 cursor-pointer">
                             </div>
                             <div class="space-y-2 pt-2">
                                 <label class="block text-xs font-bold uppercase mehedi-text-muted">Preset Logos</label>
                                 <div class="flex flex-wrap gap-2">
-                                    <button onclick="shihabSetPresetLogo('fb')" class="w-10 h-10 border mehedi-border rounded-md flex items-center justify-center hover:bg-blue-500/10 transition-colors"><i class="fab fa-facebook text-blue-600 text-xl"></i></button>
-                                    <button onclick="shihabSetPresetLogo('tw')" class="w-10 h-10 border mehedi-border rounded-md flex items-center justify-center hover:bg-blue-400/10 transition-colors"><i class="fab fa-twitter text-blue-400 text-xl"></i></button>
-                                    <button onclick="shihabSetPresetLogo('yt')" class="w-10 h-10 border mehedi-border rounded-md flex items-center justify-center hover:bg-red-600/10 transition-colors"><i class="fab fa-youtube text-red-600 text-xl"></i></button>
-                                    <button onclick="shihabSetPresetLogo('wa')" class="w-10 h-10 border mehedi-border rounded-md flex items-center justify-center hover:bg-green-500/10 transition-colors"><i class="fab fa-whatsapp text-green-500 text-xl"></i></button>
-                                    <button onclick="shihabSetPresetLogo('ig')" class="w-10 h-10 border mehedi-border rounded-md flex items-center justify-center hover:bg-pink-500/10 transition-colors"><i class="fab fa-instagram text-pink-500 text-xl"></i></button>
-                                    <button onclick="shihabSetPresetLogo('in')" class="w-10 h-10 border mehedi-border rounded-md flex items-center justify-center hover:bg-blue-700/10 transition-colors"><i class="fab fa-linkedin text-blue-700 text-xl"></i></button>
+                                    <button onclick="shihabSetPresetLogo('fb')"
+                                        class="w-10 h-10 border mehedi-border rounded-md flex items-center justify-center hover:bg-blue-500/10 transition-colors"><i
+                                            class="fab fa-facebook text-blue-600 text-xl"></i></button>
+                                    <button onclick="shihabSetPresetLogo('tw')"
+                                        class="w-10 h-10 border mehedi-border rounded-md flex items-center justify-center hover:bg-blue-400/10 transition-colors"><i
+                                            class="fab fa-twitter text-blue-400 text-xl"></i></button>
+                                    <button onclick="shihabSetPresetLogo('yt')"
+                                        class="w-10 h-10 border mehedi-border rounded-md flex items-center justify-center hover:bg-red-600/10 transition-colors"><i
+                                            class="fab fa-youtube text-red-600 text-xl"></i></button>
+                                    <button onclick="shihabSetPresetLogo('wa')"
+                                        class="w-10 h-10 border mehedi-border rounded-md flex items-center justify-center hover:bg-green-500/10 transition-colors"><i
+                                            class="fab fa-whatsapp text-green-500 text-xl"></i></button>
+                                    <button onclick="shihabSetPresetLogo('ig')"
+                                        class="w-10 h-10 border mehedi-border rounded-md flex items-center justify-center hover:bg-pink-500/10 transition-colors"><i
+                                            class="fab fa-instagram text-pink-500 text-xl"></i></button>
+                                    <button onclick="shihabSetPresetLogo('in')"
+                                        class="w-10 h-10 border mehedi-border rounded-md flex items-center justify-center hover:bg-blue-700/10 transition-colors"><i
+                                            class="fab fa-linkedin text-blue-700 text-xl"></i></button>
                                 </div>
                             </div>
                             <div class="pt-2">
-                                <button onclick="shihabRemoveLogo()" class="text-xs px-3 py-1 border rounded-md mehedi-border mehedi-text-muted hover:bg-red-50 hover:text-red-600 transition-colors">Remove Logo</button>
+                                <button onclick="shihabRemoveLogo()"
+                                    class="text-xs px-3 py-1 border rounded-md mehedi-border mehedi-text-muted hover:bg-red-50 hover:text-red-600 transition-colors">Remove
+                                    Logo</button>
                             </div>
 
                             <!-- Divider -->
                             <div class="border-t mehedi-border pt-4 mt-2 space-y-3">
                                 <div class="flex items-center justify-between">
-                                    <label class="block text-xs font-bold uppercase mehedi-text-muted">Center Text Label</label>
+                                    <label class="block text-xs font-bold uppercase mehedi-text-muted">Center Text
+                                        Label</label>
                                     <label class="relative inline-flex items-center cursor-pointer">
-                                        <input type="checkbox" id="shihab-text-overlay-toggle" onchange="shihabApplyTextOverlay()" class="sr-only peer">
-                                        <div class="w-10 h-5 rounded-full peer-checked:bg-blue-500 transition-colors" style="background:var(--border-color);"></div>
-                                        <div class="absolute left-0.5 top-0.5 w-4 h-4 bg-white rounded-full shadow transition-transform peer-checked:translate-x-5"></div>
+                                        <input type="checkbox" id="shihab-text-overlay-toggle"
+                                            onchange="shihabApplyTextOverlay()" class="sr-only peer">
+                                        <div class="w-10 h-5 rounded-full peer-checked:bg-blue-500 transition-colors"
+                                            style="background:var(--border-color);"></div>
+                                        <div
+                                            class="absolute left-0.5 top-0.5 w-4 h-4 bg-white rounded-full shadow transition-transform peer-checked:translate-x-5">
+                                        </div>
                                     </label>
                                 </div>
 
                                 <div id="shihab-text-overlay-panel" class="hidden space-y-3">
                                     <div>
-                                        <label class="block text-xs font-bold uppercase mehedi-text-muted mb-1">Label Text</label>
+                                        <label class="block text-xs font-bold uppercase mehedi-text-muted mb-1">Label
+                                            Text</label>
                                         <input type="text" id="shihab-overlay-text" placeholder="SCAN ME" maxlength="20"
                                             oninput="shihabApplyTextOverlay()"
                                             class="w-full p-2 border mehedi-input rounded-md outline-none text-sm">
                                     </div>
                                     <div class="grid grid-cols-2 gap-3">
                                         <div>
-                                            <label class="block text-xs font-bold uppercase mehedi-text-muted mb-1">Text Color</label>
+                                            <label class="block text-xs font-bold uppercase mehedi-text-muted mb-1">Text
+                                                Color</label>
                                             <input type="color" id="shihab-overlay-text-color" value="#ffffff"
                                                 oninput="shihabApplyTextOverlay()"
                                                 class="w-full h-9 border rounded-md cursor-pointer mehedi-border">
                                         </div>
                                         <div>
-                                            <label class="block text-xs font-bold uppercase mehedi-text-muted mb-1">Badge Color</label>
+                                            <label
+                                                class="block text-xs font-bold uppercase mehedi-text-muted mb-1">Badge
+                                                Color</label>
                                             <input type="color" id="shihab-overlay-bg-color" value="#3B82F6"
                                                 oninput="shihabApplyTextOverlay()"
                                                 class="w-full h-9 border rounded-md cursor-pointer mehedi-border">
                                         </div>
                                     </div>
                                     <div>
-                                        <div class="flex items-center justify-between text-xs font-bold uppercase mehedi-text-muted mb-1">
+                                        <div
+                                            class="flex items-center justify-between text-xs font-bold uppercase mehedi-text-muted mb-1">
                                             <span>Font Size</span>
                                             <span id="shihab-overlay-size-label">18px</span>
                                         </div>
-                                        <input type="range" id="shihab-overlay-font-size" min="10" max="36" step="1" value="18"
+                                        <input type="range" id="shihab-overlay-font-size" min="10" max="36" step="1"
+                                            value="18"
                                             oninput="document.getElementById('shihab-overlay-size-label').textContent=this.value+'px'; shihabApplyTextOverlay();"
                                             class="w-full cursor-pointer">
                                     </div>
                                     <div>
-                                        <div class="flex items-center justify-between text-xs font-bold uppercase mehedi-text-muted mb-1">
+                                        <div
+                                            class="flex items-center justify-between text-xs font-bold uppercase mehedi-text-muted mb-1">
                                             <span>Badge Roundness</span>
                                             <span id="shihab-overlay-radius-label">50%</span>
                                         </div>
-                                        <input type="range" id="shihab-overlay-radius" min="0" max="50" step="2" value="50"
+                                        <input type="range" id="shihab-overlay-radius" min="0" max="50" step="2"
+                                            value="50"
                                             oninput="document.getElementById('shihab-overlay-radius-label').textContent=this.value+'%'; shihabApplyTextOverlay();"
                                             class="w-full cursor-pointer">
                                     </div>
@@ -608,39 +788,142 @@
                         <div class="mehedi-accordion-content space-y-4">
                             <div class="space-y-6">
                                 <div>
-                                    <label class="block text-xs font-bold uppercase mehedi-text-muted mb-2">Body Shape</label>
+                                    <label class="block text-xs font-bold uppercase mehedi-text-muted mb-2">Body
+                                        Shape</label>
                                     <div class="grid grid-cols-6 md:grid-cols-8 gap-2">
-                                        <label class="cursor-pointer text-center group"><input type="radio" name="mehedi_body_shape" value="square" checked class="peer hidden" onchange="sshihabb007UpdateQR()"><div class="w-10 h-10 border mehedi-border rounded peer-checked:border-blue-500 peer-checked:bg-blue-50/10 flex items-center justify-center group-hover:bg-blue-50/5 transition-all"><i data-lucide="square" class="w-5 h-5" style="color: var(--text-main)"></i></div></label>
-                                        <label class="cursor-pointer text-center group"><input type="radio" name="mehedi_body_shape" value="dots" class="peer hidden" onchange="sshihabb007UpdateQR()"><div class="w-10 h-10 border mehedi-border rounded peer-checked:border-blue-500 peer-checked:bg-blue-50/10 flex items-center justify-center group-hover:bg-blue-50/5 transition-all"><i data-lucide="layout-grid" class="w-5 h-5" style="color: var(--text-main)"></i></div></label>
-                                        <label class="cursor-pointer text-center group"><input type="radio" name="mehedi_body_shape" value="rounded" class="peer hidden" onchange="sshihabb007UpdateQR()"><div class="w-10 h-10 border mehedi-border rounded peer-checked:border-blue-500 peer-checked:bg-blue-50/10 flex items-center justify-center group-hover:bg-blue-50/5 transition-all"><i data-lucide="app-window" class="w-5 h-5" style="color: var(--text-main)"></i></div></label>
-                                        <label class="cursor-pointer text-center group"><input type="radio" name="mehedi_body_shape" value="extra-rounded" class="peer hidden" onchange="sshihabb007UpdateQR()"><div class="w-10 h-10 border mehedi-border rounded peer-checked:border-blue-500 peer-checked:bg-blue-50/10 flex items-center justify-center group-hover:bg-blue-50/5 transition-all"><i data-lucide="circle" class="w-5 h-5" style="color: var(--text-main)"></i></div></label>
-                                        <label class="cursor-pointer text-center group"><input type="radio" name="mehedi_body_shape" value="classy" class="peer hidden" onchange="sshihabb007UpdateQR()"><div class="w-10 h-10 border mehedi-border rounded peer-checked:border-blue-500 peer-checked:bg-blue-50/10 flex items-center justify-center group-hover:bg-blue-50/5 transition-all"><i data-lucide="component" class="w-5 h-5" style="color: var(--text-main)"></i></div></label>
-                                        <label class="cursor-pointer text-center group"><input type="radio" name="mehedi_body_shape" value="classy-rounded" class="peer hidden" onchange="sshihabb007UpdateQR()"><div class="w-10 h-10 border mehedi-border rounded peer-checked:border-blue-500 peer-checked:bg-blue-50/10 flex items-center justify-center group-hover:bg-blue-50/5 transition-all"><i data-lucide="flower" class="w-5 h-5" style="color: var(--text-main)"></i></div></label>
+                                        <label class="cursor-pointer text-center group"><input type="radio"
+                                                name="mehedi_body_shape" value="square" checked class="peer hidden"
+                                                onchange="sshihabb007UpdateQR()">
+                                            <div
+                                                class="w-10 h-10 border mehedi-border rounded peer-checked:border-blue-500 peer-checked:bg-blue-50/10 flex items-center justify-center group-hover:bg-blue-50/5 transition-all">
+                                                <i data-lucide="square" class="w-5 h-5"
+                                                    style="color: var(--text-main)"></i>
+                                            </div>
+                                        </label>
+                                        <label class="cursor-pointer text-center group"><input type="radio"
+                                                name="mehedi_body_shape" value="dots" class="peer hidden"
+                                                onchange="sshihabb007UpdateQR()">
+                                            <div
+                                                class="w-10 h-10 border mehedi-border rounded peer-checked:border-blue-500 peer-checked:bg-blue-50/10 flex items-center justify-center group-hover:bg-blue-50/5 transition-all">
+                                                <i data-lucide="layout-grid" class="w-5 h-5"
+                                                    style="color: var(--text-main)"></i>
+                                            </div>
+                                        </label>
+                                        <label class="cursor-pointer text-center group"><input type="radio"
+                                                name="mehedi_body_shape" value="rounded" class="peer hidden"
+                                                onchange="sshihabb007UpdateQR()">
+                                            <div
+                                                class="w-10 h-10 border mehedi-border rounded peer-checked:border-blue-500 peer-checked:bg-blue-50/10 flex items-center justify-center group-hover:bg-blue-50/5 transition-all">
+                                                <i data-lucide="app-window" class="w-5 h-5"
+                                                    style="color: var(--text-main)"></i>
+                                            </div>
+                                        </label>
+                                        <label class="cursor-pointer text-center group"><input type="radio"
+                                                name="mehedi_body_shape" value="extra-rounded" class="peer hidden"
+                                                onchange="sshihabb007UpdateQR()">
+                                            <div
+                                                class="w-10 h-10 border mehedi-border rounded peer-checked:border-blue-500 peer-checked:bg-blue-50/10 flex items-center justify-center group-hover:bg-blue-50/5 transition-all">
+                                                <i data-lucide="circle" class="w-5 h-5"
+                                                    style="color: var(--text-main)"></i>
+                                            </div>
+                                        </label>
+                                        <label class="cursor-pointer text-center group"><input type="radio"
+                                                name="mehedi_body_shape" value="classy" class="peer hidden"
+                                                onchange="sshihabb007UpdateQR()">
+                                            <div
+                                                class="w-10 h-10 border mehedi-border rounded peer-checked:border-blue-500 peer-checked:bg-blue-50/10 flex items-center justify-center group-hover:bg-blue-50/5 transition-all">
+                                                <i data-lucide="component" class="w-5 h-5"
+                                                    style="color: var(--text-main)"></i>
+                                            </div>
+                                        </label>
+                                        <label class="cursor-pointer text-center group"><input type="radio"
+                                                name="mehedi_body_shape" value="classy-rounded" class="peer hidden"
+                                                onchange="sshihabb007UpdateQR()">
+                                            <div
+                                                class="w-10 h-10 border mehedi-border rounded peer-checked:border-blue-500 peer-checked:bg-blue-50/10 flex items-center justify-center group-hover:bg-blue-50/5 transition-all">
+                                                <i data-lucide="flower" class="w-5 h-5"
+                                                    style="color: var(--text-main)"></i>
+                                            </div>
+                                        </label>
                                     </div>
                                 </div>
                                 <div>
-                                    <label class="block text-xs font-bold uppercase mehedi-text-muted mb-2">Eye Frame Shape</label>
+                                    <label class="block text-xs font-bold uppercase mehedi-text-muted mb-2">Eye Frame
+                                        Shape</label>
                                     <div class="grid grid-cols-6 md:grid-cols-8 gap-2">
-                                        <label class="cursor-pointer text-center group"><input type="radio" name="mehedi_eye_frame" value="square" checked class="peer hidden" onchange="sshihabb007UpdateQR()"><div class="w-10 h-10 border mehedi-border rounded peer-checked:border-blue-500 peer-checked:bg-blue-50/10 flex items-center justify-center group-hover:bg-blue-50/5 transition-all"><i data-lucide="square" class="w-6 h-6" style="color: var(--text-main)"></i></div></label>
-                                        <label class="cursor-pointer text-center group"><input type="radio" name="mehedi_eye_frame" value="dot" class="peer hidden" onchange="sshihabb007UpdateQR()"><div class="w-10 h-10 border mehedi-border rounded peer-checked:border-blue-500 peer-checked:bg-blue-50/10 flex items-center justify-center group-hover:bg-blue-50/5 transition-all"><i data-lucide="circle-dot" class="w-6 h-6" style="color: var(--text-main)"></i></div></label>
-                                        <label class="cursor-pointer text-center group"><input type="radio" name="mehedi_eye_frame" value="rounded" class="peer hidden" onchange="sshihabb007UpdateQR()"><div class="w-10 h-10 border mehedi-border rounded peer-checked:border-blue-500 peer-checked:bg-blue-50/10 flex items-center justify-center group-hover:bg-blue-50/5 transition-all"><svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5" ry="5"></rect></svg></div></label>
-                                        <label class="cursor-pointer text-center group"><input type="radio" name="mehedi_eye_frame" value="extra-rounded" class="peer hidden" onchange="sshihabb007UpdateQR()"><div class="w-10 h-10 border mehedi-border rounded peer-checked:border-blue-500 peer-checked:bg-blue-50/10 flex items-center justify-center group-hover:bg-blue-50/5 transition-all"><i data-lucide="circle" class="w-6 h-6" style="color: var(--text-main)"></i></div></label>
+                                        <label class="cursor-pointer text-center group"><input type="radio"
+                                                name="mehedi_eye_frame" value="square" checked class="peer hidden"
+                                                onchange="sshihabb007UpdateQR()">
+                                            <div
+                                                class="w-10 h-10 border mehedi-border rounded peer-checked:border-blue-500 peer-checked:bg-blue-50/10 flex items-center justify-center group-hover:bg-blue-50/5 transition-all">
+                                                <i data-lucide="square" class="w-6 h-6"
+                                                    style="color: var(--text-main)"></i>
+                                            </div>
+                                        </label>
+                                        <label class="cursor-pointer text-center group"><input type="radio"
+                                                name="mehedi_eye_frame" value="dot" class="peer hidden"
+                                                onchange="sshihabb007UpdateQR()">
+                                            <div
+                                                class="w-10 h-10 border mehedi-border rounded peer-checked:border-blue-500 peer-checked:bg-blue-50/10 flex items-center justify-center group-hover:bg-blue-50/5 transition-all">
+                                                <i data-lucide="circle-dot" class="w-6 h-6"
+                                                    style="color: var(--text-main)"></i>
+                                            </div>
+                                        </label>
+                                        <label class="cursor-pointer text-center group"><input type="radio"
+                                                name="mehedi_eye_frame" value="rounded" class="peer hidden"
+                                                onchange="sshihabb007UpdateQR()">
+                                            <div
+                                                class="w-10 h-10 border mehedi-border rounded peer-checked:border-blue-500 peer-checked:bg-blue-50/10 flex items-center justify-center group-hover:bg-blue-50/5 transition-all">
+                                                <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="2">
+                                                    <rect x="3" y="3" width="18" height="18" rx="5" ry="5"></rect>
+                                                </svg>
+                                            </div>
+                                        </label>
+                                        <label class="cursor-pointer text-center group"><input type="radio"
+                                                name="mehedi_eye_frame" value="extra-rounded" class="peer hidden"
+                                                onchange="sshihabb007UpdateQR()">
+                                            <div
+                                                class="w-10 h-10 border mehedi-border rounded peer-checked:border-blue-500 peer-checked:bg-blue-50/10 flex items-center justify-center group-hover:bg-blue-50/5 transition-all">
+                                                <i data-lucide="circle" class="w-6 h-6"
+                                                    style="color: var(--text-main)"></i>
+                                            </div>
+                                        </label>
                                     </div>
                                 </div>
                                 <div>
-                                    <label class="block text-xs font-bold uppercase mehedi-text-muted mb-2">Eye Ball Shape</label>
+                                    <label class="block text-xs font-bold uppercase mehedi-text-muted mb-2">Eye Ball
+                                        Shape</label>
                                     <div class="grid grid-cols-6 md:grid-cols-8 gap-2">
-                                        <label class="cursor-pointer text-center group"><input type="radio" name="mehedi_eye_ball" value="square" checked class="peer hidden" onchange="sshihabb007UpdateQR()"><div class="w-10 h-10 border mehedi-border rounded peer-checked:border-blue-500 peer-checked:bg-blue-50/10 flex items-center justify-center group-hover:bg-blue-50/5 transition-all"><i data-lucide="square" class="w-4 h-4 fill-current" style="color: var(--text-main)"></i></div></label>
-                                        <label class="cursor-pointer text-center group"><input type="radio" name="mehedi_eye_ball" value="dot" class="peer hidden" onchange="sshihabb007UpdateQR()"><div class="w-10 h-10 border mehedi-border rounded peer-checked:border-blue-500 peer-checked:bg-blue-50/10 flex items-center justify-center group-hover:bg-blue-50/5 transition-all"><i data-lucide="circle" class="w-4 h-4 fill-current" style="color: var(--text-main)"></i></div></label>
+                                        <label class="cursor-pointer text-center group"><input type="radio"
+                                                name="mehedi_eye_ball" value="square" checked class="peer hidden"
+                                                onchange="sshihabb007UpdateQR()">
+                                            <div
+                                                class="w-10 h-10 border mehedi-border rounded peer-checked:border-blue-500 peer-checked:bg-blue-50/10 flex items-center justify-center group-hover:bg-blue-50/5 transition-all">
+                                                <i data-lucide="square" class="w-4 h-4 fill-current"
+                                                    style="color: var(--text-main)"></i>
+                                            </div>
+                                        </label>
+                                        <label class="cursor-pointer text-center group"><input type="radio"
+                                                name="mehedi_eye_ball" value="dot" class="peer hidden"
+                                                onchange="sshihabb007UpdateQR()">
+                                            <div
+                                                class="w-10 h-10 border mehedi-border rounded peer-checked:border-blue-500 peer-checked:bg-blue-50/10 flex items-center justify-center group-hover:bg-blue-50/5 transition-all">
+                                                <i data-lucide="circle" class="w-4 h-4 fill-current"
+                                                    style="color: var(--text-main)"></i>
+                                            </div>
+                                        </label>
                                     </div>
                                 </div>
                             </div>
                             <div>
-                                <div class="flex items-center justify-between text-xs font-bold uppercase mehedi-text-muted mb-1 mt-4">
+                                <div
+                                    class="flex items-center justify-between text-xs font-bold uppercase mehedi-text-muted mb-1 mt-4">
                                     <span>Padding</span>
                                     <span id="mehedi-padding-label">10px</span>
                                 </div>
-                                <input type="range" id="mehedi-padding-slider" min="0" max="50" step="5" value="10" class="w-full cursor-pointer mt-1">
+                                <input type="range" id="mehedi-padding-slider" min="0" max="50" step="5" value="10"
+                                    class="w-full cursor-pointer mt-1">
                             </div>
                         </div>
                     </div>
@@ -650,89 +933,126 @@
 
             <!-- Right Panel (Preview & Download) -->
             <div class="w-full lg:w-[380px] lg:flex-shrink-0 flex flex-col gap-4">
-                
+
                 <div class="mehedi-card border rounded-lg shadow-sm p-5 flex flex-col items-center w-full">
-                
-                <div class="w-full bg-white p-4 rounded-xl shadow-inner mb-4 relative">
-                    <div id="mehedi-canvas-container" class="flex justify-center items-center min-h-[200px]"></div>
-                </div>
 
-                <div class="w-full space-y-4">
-                    <div class="flex items-center justify-between text-xs font-bold uppercase mehedi-text-muted">
-                        <span>100px</span>
-                        <span>1000px</span>
-                        <span>2000px</span>
+                    <div class="w-full bg-white p-4 rounded-xl shadow-inner mb-4 relative">
+                        <div id="mehedi-canvas-container" class="flex justify-center items-center min-h-[200px]"></div>
                     </div>
-                    <input type="range" id="mehedi-size-slider" min="100" max="2000" step="100" value="400" class="w-full cursor-pointer">
-                    <div class="text-center text-sm font-semibold mehedi-text-muted" id="mehedi-size-label">400 x 400 Px</div>
-                    
-                    <button onclick="sshihabb007UpdateQR()" class="w-full text-white font-bold py-3 rounded-md hover:opacity-90 transition-all flex items-center justify-center gap-2 mt-4" style="background-color: #10B981;">
-                        <i data-lucide="refresh-cw" class="w-5 h-5"></i> Create QR Code
-                    </button>
-                    
-                    <div class="grid grid-cols-2 gap-2">
-                        <button onclick="mehediDownload('png')" class="w-full text-white font-bold py-2 rounded-md hover:opacity-90 transition-all flex items-center justify-center gap-2 text-sm" style="background-color: var(--primary-color);">
-                            .PNG
-                        </button>
-                        <button onclick="mehediDownload('svg')" class="w-full font-bold py-2 rounded-md hover:opacity-90 transition-all flex items-center justify-center gap-2 text-sm" style="background-color: transparent; color: var(--text-main); border: 1px solid var(--border-color);">
-                            .SVG
-                        </button>
-                        <button onclick="downloadPDF()" class="w-full font-bold py-2 rounded-md hover:opacity-90 transition-all flex items-center justify-center gap-2 text-sm" style="background-color: transparent; color: var(--text-main); border: 1px solid var(--border-color);">
-                            .PDF
-                        </button>
-                        <button onclick="downloadEPS()" class="w-full font-bold py-2 rounded-md hover:opacity-90 transition-all flex items-center justify-center gap-2 text-sm" style="background-color: transparent; color: var(--text-main); border: 1px solid var(--border-color);">
-                            .EPS
-                        </button>
-                    </div>
-                </div>
 
+                    <div class="w-full space-y-4">
+                        <div class="flex items-center justify-between text-xs font-bold uppercase mehedi-text-muted">
+                            <span>100px</span>
+                            <span>1000px</span>
+                            <span>2000px</span>
+                        </div>
+                        <input type="range" id="mehedi-size-slider" min="100" max="2000" step="100" value="400"
+                            class="w-full cursor-pointer">
+                        <div class="text-center text-sm font-semibold mehedi-text-muted" id="mehedi-size-label">400 x
+                            400 Px</div>
+
+                        <button onclick="sshihabb007UpdateQR()"
+                            class="w-full text-white font-bold py-3 rounded-md hover:opacity-90 transition-all flex items-center justify-center gap-2 mt-4"
+                            style="background-color: #10B981;">
+                            <i data-lucide="refresh-cw" class="w-5 h-5"></i> Create QR Code
+                        </button>
+
+                        <div class="grid grid-cols-2 gap-2">
+                            <button onclick="mehediDownload('png')"
+                                class="w-full text-white font-bold py-2 rounded-md hover:opacity-90 transition-all flex items-center justify-center gap-2 text-sm"
+                                style="background-color: var(--primary-color);">
+                                .PNG
+                            </button>
+                            <button onclick="mehediDownload('svg')"
+                                class="w-full font-bold py-2 rounded-md hover:opacity-90 transition-all flex items-center justify-center gap-2 text-sm"
+                                style="background-color: transparent; color: var(--text-main); border: 1px solid var(--border-color);">
+                                .SVG
+                            </button>
+                            <button onclick="downloadPDF()"
+                                class="w-full font-bold py-2 rounded-md hover:opacity-90 transition-all flex items-center justify-center gap-2 text-sm"
+                                style="background-color: transparent; color: var(--text-main); border: 1px solid var(--border-color);">
+                                .PDF
+                            </button>
+                            <button onclick="downloadEPS()"
+                                class="w-full font-bold py-2 rounded-md hover:opacity-90 transition-all flex items-center justify-center gap-2 text-sm"
+                                style="background-color: transparent; color: var(--text-main); border: 1px solid var(--border-color);">
+                                .EPS
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
             </div>
-        </div>
-        <!-- Close Main Layout Split -->
+            <!-- Close Main Layout Split -->
         </div>
 
         <!-- SEO / User Guide Content -->
-        <div class="mt-12 mb-8 mehedi-card border rounded-2xl shadow-sm p-8 space-y-10">
-            <div class="space-y-4">
-                <h2 class="text-2xl font-bold" style="color: var(--primary-color);">How to Create a QR Code for Free</h2>
-                <ol class="list-decimal list-inside space-y-3 mehedi-text-muted text-sm sm:text-base">
-                    <li><strong style="color: var(--text-main);">Select your content type:</strong> Choose from URL, Text, Email, Phone, WhatsApp, SMS, vCard, Location, or WiFi using the top navigation tabs.</li>
-                    <li><strong style="color: var(--text-main);">Enter your details:</strong> Fill in the required fields. For example, enter your website URL or your WiFi network credentials.</li>
-                    <li><strong style="color: var(--text-main);">Customize the design (Optional):</strong> Open the accordion menus to change the foreground and background colors, adjust the padding, and even upload your own custom logo.</li>
-                    <li><strong style="color: var(--text-main);">Adjust the shape:</strong> Stand out by changing the standard square shapes to dots, rounded corners, or classy patterns.</li>
-                    <li><strong style="color: var(--text-main);">Download the QR Code:</strong> Use the quality slider to pick your desired resolution, then click the "Download PNG" or ".SVG" button to save your generated QR code locally.</li>
-                </ol>
+        <!-- Documentation Accordion -->
+        <div class="mt-12 mb-8 mehedi-card border rounded-2xl shadow-sm overflow-hidden mehedi-accordion-item" id="mehedi-acc-guide" style="border-bottom: none;">
+            <div class="mehedi-accordion-header" onclick="shihabToggleAccordion('mehedi-acc-guide')" style="padding: 20px 24px;">
+                <h3 style="color: var(--text-main); font-size: 1.1rem;"><i data-lucide="book-open" class="w-5 h-5" style="color: var(--primary-color);"></i> User Guide & Features</h3>
+                <i data-lucide="chevron-down" class="w-5 h-5 mehedi-accordion-icon" style="color: var(--text-muted);"></i>
             </div>
+            <div class="mehedi-accordion-content border-t" style="border-color: var(--border-color); padding: 32px;">
+                <div class="space-y-10">
+                    <div class="space-y-4">
+                        <h2 class="text-2xl font-bold" style="color: var(--primary-color);">How to Create a QR Code for Free
+                        </h2>
+                        <ol class="list-decimal list-inside space-y-3 mehedi-text-muted text-sm sm:text-base">
+                            <li><strong style="color: var(--text-main);">Select your content type:</strong> Choose from URL,
+                                Text, Email, Phone, WhatsApp, SMS, vCard, Location, or WiFi using the top navigation tabs.</li>
+                            <li><strong style="color: var(--text-main);">Enter your details:</strong> Fill in the required
+                                fields. For example, enter your website URL or your WiFi network credentials.</li>
+                            <li><strong style="color: var(--text-main);">Customize the design (Optional):</strong> Open the
+                                accordion menus to change the foreground and background colors, adjust the padding, and even
+                                upload your own custom logo.</li>
+                            <li><strong style="color: var(--text-main);">Adjust the shape:</strong> Stand out by changing the
+                                standard square shapes to dots, rounded corners, or classy patterns.</li>
+                            <li><strong style="color: var(--text-main);">Download the QR Code:</strong> Use the quality slider
+                                to pick your desired resolution, then click the "Download PNG" or ".SVG" button to save your
+                                generated QR code locally.</li>
+                        </ol>
+                    </div>
 
-            <div class="space-y-4">
-                <h2 class="text-2xl font-bold" style="color: var(--primary-color);">Why Use Our QR Code Generator?</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mehedi-text-muted text-sm">
-                    <div class="flex gap-3">
-                        <i data-lucide="shield-check" class="w-6 h-6 flex-shrink-0" style="color: #10B981;"></i>
-                        <div>
-                            <strong class="block mb-1 text-base" style="color: var(--text-main);">100% Free & Private</strong>
-                            All QR codes are generated locally right inside your browser. We never store, track, or save your data on any external servers.
-                        </div>
-                    </div>
-                    <div class="flex gap-3">
-                        <i data-lucide="zap" class="w-6 h-6 flex-shrink-0" style="color: #10B981;"></i>
-                        <div>
-                            <strong class="block mb-1 text-base" style="color: var(--text-main);">High-Quality Vector Export</strong>
-                            Unlike simple generators, our tool allows you to download your QR code in high-resolution PNG or infinitely scalable SVG formats, perfect for professional printing.
-                        </div>
-                    </div>
-                    <div class="flex gap-3">
-                        <i data-lucide="palette" class="w-6 h-6 flex-shrink-0" style="color: #10B981;"></i>
-                        <div>
-                            <strong class="block mb-1 text-base" style="color: var(--text-main);">Advanced Customization</strong>
-                            Don't settle for boring black-and-white squares. Add your brand's logo, match your brand colors, and pick custom data patterns (like dots or rounded edges) instantly.
-                        </div>
-                    </div>
-                    <div class="flex gap-3">
-                        <i data-lucide="smartphone" class="w-6 h-6 flex-shrink-0" style="color: #10B981;"></i>
-                        <div>
-                            <strong class="block mb-1 text-base" style="color: var(--text-main);">Modern Action Codes</strong>
-                            We support direct actions like 'WhatsApp Chat', one-tap 'WiFi Connect', and 'vCard' contact saving so your users have a seamless mobile experience.
+                    <div class="space-y-4">
+                        <h2 class="text-2xl font-bold" style="color: var(--primary-color);">Why Use Our QR Code Generator?</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mehedi-text-muted text-sm">
+                            <div class="flex gap-3">
+                                <i data-lucide="shield-check" class="w-6 h-6 flex-shrink-0" style="color: #10B981;"></i>
+                                <div>
+                                    <strong class="block mb-1 text-base" style="color: var(--text-main);">100% Free &
+                                        Private</strong>
+                                    All QR codes are generated locally right inside your browser. We never store, track, or save
+                                    your data on any external servers.
+                                </div>
+                            </div>
+                            <div class="flex gap-3">
+                                <i data-lucide="zap" class="w-6 h-6 flex-shrink-0" style="color: #10B981;"></i>
+                                <div>
+                                    <strong class="block mb-1 text-base" style="color: var(--text-main);">High-Quality Vector
+                                        Export</strong>
+                                    Unlike simple generators, our tool allows you to download your QR code in high-resolution
+                                    PNG or infinitely scalable SVG formats, perfect for professional printing.
+                                </div>
+                            </div>
+                            <div class="flex gap-3">
+                                <i data-lucide="palette" class="w-6 h-6 flex-shrink-0" style="color: #10B981;"></i>
+                                <div>
+                                    <strong class="block mb-1 text-base" style="color: var(--text-main);">Advanced
+                                        Customization</strong>
+                                    Don't settle for boring black-and-white squares. Add your brand's logo, match your brand
+                                    colors, and pick custom data patterns (like dots or rounded edges) instantly.
+                                </div>
+                            </div>
+                            <div class="flex gap-3">
+                                <i data-lucide="smartphone" class="w-6 h-6 flex-shrink-0" style="color: #10B981;"></i>
+                                <div>
+                                    <strong class="block mb-1 text-base" style="color: var(--text-main);">Modern Action
+                                        Codes</strong>
+                                    We support direct actions like 'WhatsApp Chat', one-tap 'WiFi Connect', and 'vCard' contact
+                                    saving so your users have a seamless mobile experience.
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -809,7 +1129,7 @@
             qrOptions: { errorCorrectionLevel: 'H' }
         });
         sshihabb007QrCode.append(document.getElementById("mehedi-canvas-container"));
-        
+
         // Add initial viewBox for responsiveness
         setTimeout(() => {
             const svgEl = document.querySelector('#mehedi-canvas-container svg');
@@ -885,6 +1205,7 @@
         // Sliders Logic
         document.getElementById('mehedi-size-slider').addEventListener('input', (e) => {
             document.getElementById('mehedi-size-label').innerText = `${e.target.value} x ${e.target.value} Px`;
+            sshihabb007UpdateQR();
         });
         document.getElementById('mehedi-padding-slider').addEventListener('input', (e) => {
             document.getElementById('mehedi-padding-label').innerText = `${e.target.value}px`;
@@ -894,7 +1215,7 @@
         // Logo Upload Handling
         document.getElementById('mehedi-qr-logo').addEventListener('change', (e) => {
             const file = e.target.files[0];
-            if(file) {
+            if (file) {
                 const reader = new FileReader();
                 reader.onload = (ev) => {
                     currentLogo = ev.target.result;
@@ -912,7 +1233,7 @@
 
         // Live Inputs Update
         document.querySelectorAll('input, textarea, select').forEach(input => {
-            if(input.id !== 'mehedi-qr-logo' && input.id !== 'mehedi-size-slider' && input.id !== 'mehedi-padding-slider') {
+            if (input.id !== 'mehedi-qr-logo' && input.id !== 'mehedi-size-slider' && input.id !== 'mehedi-padding-slider') {
                 input.addEventListener('input', sshihabb007UpdateQR);
             }
         });
@@ -987,12 +1308,12 @@
 
             const size = parseInt(document.getElementById('mehedi-size-slider').value) || 400;
             const padding = parseInt(document.getElementById('mehedi-padding-slider').value) || 0;
-            
+
             const isGrad = document.querySelector('input[name="mehedi_color_type"]:checked').value === 'gradient';
             const fgColor1 = document.getElementById('shihab-qr-color').value || "#000000";
             const fgColor2 = document.getElementById('shihab-qr-color2').value || "#10B981";
             const bgColor = document.getElementById('shihab-qr-bg').value || "#ffffff";
-            
+
             const isCustomEye = document.getElementById('shihab-custom-eye-toggle').checked;
             const eyeColor = isCustomEye ? (document.getElementById('shihab-qr-eye-color').value || fgColor1) : fgColor1;
 
@@ -1109,129 +1430,108 @@
 
         async function downloadPDF() {
             try {
-                const svgEl = document.querySelector('#mehedi-canvas-container svg');
-                if (!svgEl) return alert('Please generate the QR code first.');
-                
                 const size = parseInt(document.getElementById('mehedi-size-slider').value) || 400;
-                const { jsPDF } = window.jspdf;
-                const doc = new jsPDF({
-                    orientation: 'portrait',
-                    unit: 'pt',
-                    format: [size, size]
-                });
-
-                // svg2pdf
-                await doc.svg(svgEl, {
-                    x: 0,
-                    y: 0,
-                    width: size,
-                    height: size
-                });
+                // Grab the raw PNG blob from the library to ensure all logos/colors are baked in perfectly
+                const blob = await sshihabb007QrCode.getRawData("png");
+                if (!blob) return alert('Please generate the QR code first.');
                 
-                doc.save('sshihabb007-qr.pdf');
-            } catch(e) {
+                const url = URL.createObjectURL(blob);
+                const img = new Image();
+                img.onload = function() {
+                    const { jsPDF } = window.jspdf;
+                    const doc = new jsPDF({
+                        orientation: 'portrait',
+                        unit: 'px',
+                        format: [size, size]
+                    });
+                    
+                    doc.addImage(img, 'PNG', 0, 0, size, size);
+                    doc.save('sshihabb007-qr.pdf');
+                    URL.revokeObjectURL(url);
+                };
+                img.src = url;
+            } catch (e) {
                 console.error(e);
                 alert("Failed to generate PDF. Make sure all external assets (like logos) are accessible.");
             }
         }
 
         async function downloadEPS() {
-            // EPS requires a canvas to extract base64 PNG, then wrapping in EPS structure.
-            // Pure vector EPS is out of scope for browser without server processing.
             try {
-                // Ensure we get the data URL of the canvas
                 const size = parseInt(document.getElementById('mehedi-size-slider').value) || 400;
-                
-                // Get SVG raw data
-                const rawSvg = await sshihabb007QrCode.getRawData("svg");
-                const svgBlob = new Blob([rawSvg], {type:"image/svg+xml;charset=utf-8"});
-                const DOMURL = window.URL || window.webkitURL || window;
-                const url = DOMURL.createObjectURL(svgBlob);
-                
+
+                // Get a safe PNG blob from the library to avoid canvas tainting from external SVG logos
+                const blob = await sshihabb007QrCode.getRawData("png");
+                const url = URL.createObjectURL(blob);
+
                 const img = new Image();
-                img.crossOrigin = "Anonymous";
-                img.onload = function() {
+                img.onload = function () {
                     const canvas = document.createElement("canvas");
                     canvas.width = size;
                     canvas.height = size;
                     const ctx = canvas.getContext("2d");
+                    
+                    // JPEGs do not support transparency, so fill with white background first
+                    ctx.fillStyle = '#ffffff';
+                    ctx.fillRect(0, 0, size, size);
                     ctx.drawImage(img, 0, 0);
-                    DOMURL.revokeObjectURL(url);
-                    
-                    // Simple embedded raster EPS
+                    URL.revokeObjectURL(url);
+
+                    // Extract JPEG data to utilize PostScript's DCTDecode filter
                     const imgData = canvas.toDataURL("image/jpeg", 1.0);
-                    // Extract base64
                     const b64 = imgData.split(',')[1];
+                    const raw = atob(b64);
                     
+                    // Convert raw binary string to a hex array
+                    let hexArr = new Array(raw.length);
+                    for (let i = 0; i < raw.length; i++) {
+                        let h = raw.charCodeAt(i).toString(16);
+                        if (h.length === 1) h = '0' + h;
+                        hexArr[i] = h;
+                    }
+                    
+                    // Split hex string into 64-character lines to meet strict EPS formatting standards
+                    let flatHex = hexArr.join('');
+                    let formattedHex = '';
+                    for (let i = 0; i < flatHex.length; i += 64) {
+                        formattedHex += flatHex.substring(i, i + 64) + '\n';
+                    }
+
                     const epsString = `%!PS-Adobe-3.0 EPSF-3.0
+%%Creator: Mehedi Hasan Shihab QR Generator
 %%BoundingBox: 0 0 ${size} ${size}
 %%LanguageLevel: 2
 %%EndComments
 /DeviceRGB setcolorspace
+${size} ${size} scale
 <<
-/ImageType 1
-/Width ${size}
-/Height ${size}
-/BitsPerComponent 8
-/Decode [0 1 0 1 0 1]
-/ImageMatrix [${size} 0 0 -${size} 0 ${size}]
-/DataSource currentfile /ASCII85Decode filter /DCTDecode filter
+  /ImageType 1
+  /Width ${size}
+  /Height ${size}
+  /BitsPerComponent 8
+  /Decode [0 1 0 1 0 1]
+  /ImageMatrix [${size} 0 0 -${size} 0 ${size}]
+  /DataSource currentfile /ASCIIHexDecode filter /DCTDecode filter
 >>
 image
-${shihabBase64ToAscii85(b64)}
-~>
+${formattedHex}>
 %%EOF`;
 
                     const epsBlob = new Blob([epsString], { type: "application/postscript" });
-                    const epsUrl = DOMURL.createObjectURL(epsBlob);
+                    const epsUrl = URL.createObjectURL(epsBlob);
                     const a = document.createElement("a");
                     a.href = epsUrl;
                     a.download = "sshihabb007-qr.eps";
                     a.click();
-                    DOMURL.revokeObjectURL(epsUrl);
+                    URL.revokeObjectURL(epsUrl);
                 };
                 img.src = url;
-            } catch(e) {
+            } catch (e) {
                 console.error(e);
                 alert("EPS generation failed.");
             }
         }
-
-        function shihabBase64ToAscii85(b64) {
-            const raw = atob(b64);
-            let ascii85 = '';
-            let tuple = 0;
-            let count = 0;
-            for (let i = 0; i < raw.length; i++) {
-                tuple = (tuple << 8) | raw.charCodeAt(i);
-                count++;
-                if (count === 4) {
-                    if (tuple === 0) {
-                        ascii85 += 'z';
-                    } else {
-                        let temp = '';
-                        for (let j = 0; j < 5; j++) {
-                            temp = String.fromCharCode((tuple % 85) + 33) + temp;
-                            tuple = Math.floor(tuple / 85);
-                        }
-                        ascii85 += temp;
-                    }
-                    tuple = 0;
-                    count = 0;
-                }
-            }
-            if (count > 0) {
-                let padding = 4 - count;
-                tuple <<= padding * 8;
-                let temp = '';
-                for (let j = 0; j < 5; j++) {
-                    temp = String.fromCharCode((tuple % 85) + 33) + temp;
-                    tuple = Math.floor(tuple / 85);
-                }
-                ascii85 += temp.substring(0, 5 - padding);
-            }
-            return ascii85;
-        }
     </script>
 </body>
+
 </html>

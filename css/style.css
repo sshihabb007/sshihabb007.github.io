@@ -9,7 +9,7 @@
 
   --primary-color: #3B82F6;
   --cursor-color: #3B82F6;
-  --brand-gradient: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-color) 100%);
+  --brand-gradient: linear-gradient(135deg, var(--primary-color) 0%, #8B5CF6 100%);
 
   --tag-green-bg: rgba(16, 185, 129, 0.1);
   --tag-green-text: #10B981;
@@ -1393,7 +1393,7 @@ h2 {
 button:hover,
 h1:hover,
 h2:hover {
-  transform: scale(1.13) !important;
+  transform: scale(1.02) !important;
   z-index: 1001;
   /* Ensure scaled dropdown item overlaps others */
   position: relative;

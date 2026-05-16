@@ -1,4 +1,4 @@
-const mehedi_initTheme = () => {
+window.mehedi_initTheme = function() {
     const shihab_themeBtns = [document.getElementById('sshihabb007-theme-toggle')].filter(Boolean);
     const sshihabb007_currentTheme = localStorage.getItem('mehedi_theme');
     const sshihabb007_currentColor = localStorage.getItem('mehedi_color');
@@ -13,6 +13,8 @@ const mehedi_initTheme = () => {
     }
 
     shihab_themeBtns.forEach(btn => {
+        if (btn.hasAttribute('data-theme-initialized')) return;
+        btn.setAttribute('data-theme-initialized', 'true');
         btn.addEventListener('click', () => {
             document.body.classList.toggle('light-mode');
             const isLight = document.body.classList.contains('light-mode');
@@ -85,7 +87,9 @@ const mehedi_initTheme = () => {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-    mehedi_initTheme();
+    if (typeof window.mehedi_initTheme === 'function') {
+        window.mehedi_initTheme();
+    }
 
     // Custom Cursor Logic
     const cursorDot = document.querySelector(".cursor-dot");

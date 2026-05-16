@@ -34,30 +34,14 @@ async function loadSiteComponents() {
             }
         }
     } catch (e) {
-        console.error('Failed to load footer', e);
+        console.error('Failed to load site components', e);
     }
 
-    // Initialize the theme toggle for the newly loaded header
-    const themeBtn = document.getElementById('sshihabb007-theme-toggle');
-    if (themeBtn) {
-        const currentTheme = localStorage.getItem('mehedi_theme');
-        if (currentTheme === 'light') {
-            const icon = themeBtn.querySelector('i');
-            if (icon) icon.classList.replace('fa-moon', 'fa-sun');
-        }
-        themeBtn.addEventListener('click', () => {
-            document.body.classList.toggle('light-mode');
-            const isLight = document.body.classList.contains('light-mode');
-            const icon = themeBtn.querySelector('i');
-            if (icon) {
-                if (isLight) {
-                    icon.classList.replace('fa-moon', 'fa-sun');
-                } else {
-                    icon.classList.replace('fa-sun', 'fa-moon');
-                }
-            }
-            localStorage.setItem('mehedi_theme', isLight ? 'light' : 'dark');
-        });
+    // Re-initialize theme toggle after the header is dynamically inserted into the DOM
+    if (typeof window.mehedi_initTheme === 'function') {
+        window.mehedi_initTheme();
+    } else if (typeof mehedi_initTheme === 'function') {
+        mehedi_initTheme();
     }
 
     // PWA Install Popup Logic

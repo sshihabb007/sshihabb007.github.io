@@ -1,4 +1,4 @@
-const CACHE_NAME = 'sshihabb007-pwa-v15';
+const CACHE_NAME = 'sshihabb007-pwa-v16';
 const STATIC_ASSETS = [
     './',
     './index.html',
@@ -53,7 +53,7 @@ self.addEventListener('fetch', (event) => {
 
     // Skip non-GET, heavy files, and external CDN requests
     if (event.request.method !== 'GET') return;
-    if (!requestUrl.origin.includes(self.location.origin.split('//')[1])) return;
+    if (requestUrl.origin !== self.location.origin) return;
     if (requestUrl.pathname.endsWith('.wasm') ||
         requestUrl.pathname.endsWith('.wav') ||
         requestUrl.pathname.endsWith('.pdf')) return;
