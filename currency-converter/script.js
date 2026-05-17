@@ -42,14 +42,48 @@ function sshihabb007_populateDropdowns(codes) {
         return a.localeCompare(b);
     });
 
-    // Helper to get full currency name
+    // Map of currency code -> primary country name for "Country - CODE" format
+    const currencyCountryMap = {
+        AED:'UAE', AFN:'Afghanistan', ALL:'Albania', AMD:'Armenia', ANG:'Netherlands Antilles',
+        AOA:'Angola', ARS:'Argentina', AUD:'Australia', AWG:'Aruba', AZN:'Azerbaijan',
+        BAM:'Bosnia & Herzegovina', BBD:'Barbados', BDT:'Bangladesh', BGN:'Bulgaria',
+        BHD:'Bahrain', BIF:'Burundi', BMD:'Bermuda', BND:'Brunei', BOB:'Bolivia',
+        BRL:'Brazil', BSD:'Bahamas', BTN:'Bhutan', BWP:'Botswana', BYN:'Belarus',
+        BZD:'Belize', CAD:'Canada', CDF:'Congo', CHF:'Switzerland', CLP:'Chile',
+        CNY:'China', COP:'Colombia', CRC:'Costa Rica', CUP:'Cuba', CVE:'Cape Verde',
+        CZK:'Czech Republic', DJF:'Djibouti', DKK:'Denmark', DOP:'Dominican Republic',
+        DZD:'Algeria', EGP:'Egypt', ERN:'Eritrea', ETB:'Ethiopia', EUR:'Eurozone',
+        FJD:'Fiji', FKP:'Falkland Islands', FOK:'Faroe Islands', GBP:'United Kingdom',
+        GEL:'Georgia', GGP:'Guernsey', GHS:'Ghana', GIP:'Gibraltar', GMD:'Gambia',
+        GNF:'Guinea', GTQ:'Guatemala', GYD:'Guyana', HKD:'Hong Kong', HNL:'Honduras',
+        HRK:'Croatia', HTG:'Haiti', HUF:'Hungary', IDR:'Indonesia', ILS:'Israel',
+        IMP:'Isle of Man', INR:'India', IQD:'Iraq', IRR:'Iran', ISK:'Iceland',
+        JEP:'Jersey', JMD:'Jamaica', JOD:'Jordan', JPY:'Japan', KES:'Kenya',
+        KGS:'Kyrgyzstan', KHR:'Cambodia', KID:'Kiribati', KMF:'Comoros', KRW:'South Korea',
+        KWD:'Kuwait', KYD:'Cayman Islands', KZT:'Kazakhstan', LAK:'Laos', LBP:'Lebanon',
+        LKR:'Sri Lanka', LRD:'Liberia', LSL:'Lesotho', LYD:'Libya', MAD:'Morocco',
+        MDL:'Moldova', MGA:'Madagascar', MKD:'North Macedonia', MMK:'Myanmar', MNT:'Mongolia',
+        MOP:'Macao', MRU:'Mauritania', MUR:'Mauritius', MVR:'Maldives', MWK:'Malawi',
+        MXN:'Mexico', MYR:'Malaysia', MZN:'Mozambique', NAD:'Namibia', NGN:'Nigeria',
+        NIO:'Nicaragua', NOK:'Norway', NPR:'Nepal', NZD:'New Zealand', OMR:'Oman',
+        PAB:'Panama', PEN:'Peru', PGK:'Papua New Guinea', PHP:'Philippines', PKR:'Pakistan',
+        PLN:'Poland', PYG:'Paraguay', QAR:'Qatar', RON:'Romania', RSD:'Serbia',
+        RUB:'Russia', RWF:'Rwanda', SAR:'Saudi Arabia', SBD:'Solomon Islands',
+        SCR:'Seychelles', SDG:'Sudan', SEK:'Sweden', SGD:'Singapore', SHP:'Saint Helena',
+        SLE:'Sierra Leone', SLL:'Sierra Leone', SOS:'Somalia', SRD:'Suriname',
+        SSP:'South Sudan', STN:'São Tomé & Príncipe', SYP:'Syria', SZL:'Eswatini',
+        THB:'Thailand', TJS:'Tajikistan', TMT:'Turkmenistan', TND:'Tunisia', TOP:'Tonga',
+        TRY:'Turkey', TTD:'Trinidad & Tobago', TVD:'Tuvalu', TWD:'Taiwan', TZS:'Tanzania',
+        UAH:'Ukraine', UGX:'Uganda', USD:'United States', UYU:'Uruguay', UZS:'Uzbekistan',
+        VES:'Venezuela', VND:'Vietnam', VUV:'Vanuatu', WST:'Samoa', XAF:'Central Africa',
+        XCD:'East Caribbean', XDR:'IMF', XOF:'West Africa', XPF:'French Polynesia',
+        YER:'Yemen', ZAR:'South Africa', ZMW:'Zambia', ZWL:'Zimbabwe'
+    };
+
+    // Helper to get "Country - CODE" label (e.g. "Australia - AUD")
     const getCurrencyName = (code) => {
-        try {
-            const currencyNames = new Intl.DisplayNames(['en'], {type: 'currency'});
-            return `${currencyNames.of(code)} - ${code}`;
-        } catch (e) {
-            return code;
-        }
+        const country = currencyCountryMap[code] || code;
+        return `${country} - ${code}`;
     };
 
     codes.forEach(code => {
