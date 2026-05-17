@@ -105,26 +105,29 @@
                 </div>
 
                 <!-- Currency Selection -->
-                <div class="grid grid-cols-1 gap-2 relative mt-4">
+                <div class="grid grid-cols-1 gap-2 mt-4">
                     <div>
                         <label class="block text-xs font-bold uppercase mb-2"
                             style="color: var(--text-muted);">From</label>
                         <select id="shihab_fromCurrency"
-                            class="sshihabb007_input w-full p-4 pr-16 rounded-2xl outline-none appearance-none cursor-pointer font-semibold border-none focus:ring-2 focus:ring-indigo-500"
+                            class="sshihabb007_input w-full p-4 rounded-2xl outline-none appearance-none cursor-pointer font-semibold border-none focus:ring-2 focus:ring-indigo-500"
                             style="background-color: var(--bg-hover); color: var(--text-main);"></select>
                     </div>
 
-                    <!-- Swap Button -->
-                    <button id="mehedi_swapBtn"
-                        class="absolute right-4 top-1/2 translate-y-1 bg-indigo-600 p-2 rounded-full hover:rotate-180 transition-transform duration-300 text-white shadow-lg cursor-pointer flex items-center justify-center w-10 h-10 border-none">
-                        <i class="fas fa-exchange-alt"></i>
-                    </button>
+                    <!-- Swap Button Row -->
+                    <div class="flex justify-center items-center py-1">
+                        <button id="mehedi_swapBtn"
+                            class="bg-indigo-600 p-2 rounded-full hover:rotate-180 transition-transform duration-300 text-white shadow-lg cursor-pointer flex items-center justify-center w-10 h-10 border-none"
+                            title="Swap currencies">
+                            <i class="fas fa-exchange-alt"></i>
+                        </button>
+                    </div>
 
-                    <div class="mt-2">
+                    <div>
                         <label class="block text-xs font-bold uppercase mb-2"
                             style="color: var(--text-muted);">To</label>
                         <select id="shihab_toCurrency"
-                            class="sshihabb007_input w-full p-4 pr-16 rounded-2xl outline-none appearance-none cursor-pointer font-semibold border-none focus:ring-2 focus:ring-indigo-500"
+                            class="sshihabb007_input w-full p-4 rounded-2xl outline-none appearance-none cursor-pointer font-semibold border-none focus:ring-2 focus:ring-indigo-500"
                             style="background-color: var(--bg-hover); color: var(--text-main);"></select>
                     </div>
                 </div>
