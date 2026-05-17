@@ -114,8 +114,10 @@
                             style="background-color: var(--bg-hover); color: var(--text-main);"></select>
                     </div>
 
-                    <!-- Swap Button Row -->
-                    <div class="flex justify-center items-center py-1">
+                    <!-- Swap Button Row with TO label for equal spacing -->
+                    <div class="flex justify-center items-center relative" style="height: 40px;">
+                        <label class="absolute left-0 text-xs font-bold uppercase"
+                            style="color: var(--text-muted);">To</label>
                         <button id="mehedi_swapBtn"
                             class="bg-indigo-600 p-2 rounded-full hover:rotate-180 transition-transform duration-300 text-white shadow-lg cursor-pointer flex items-center justify-center w-10 h-10 border-none"
                             title="Swap currencies">
@@ -124,8 +126,6 @@
                     </div>
 
                     <div>
-                        <label class="block text-xs font-bold uppercase mb-2"
-                            style="color: var(--text-muted);">To</label>
                         <select id="shihab_toCurrency"
                             class="sshihabb007_input w-full p-4 rounded-2xl outline-none appearance-none cursor-pointer font-semibold border-none focus:ring-2 focus:ring-indigo-500"
                             style="background-color: var(--bg-hover); color: var(--text-main);"></select>
