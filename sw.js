@@ -1,4 +1,4 @@
-const CACHE_NAME = 'sshihabb007-pwa-v15';
+const CACHE_NAME = 'sshihabb007-pwa-v17';
 const STATIC_ASSETS = [
     './',
     './index.html',
@@ -17,7 +17,13 @@ const STATIC_ASSETS = [
     './currency-converter/',
     './currency-converter/index.html',
     './advanced-calculator/',
-    './advanced-calculator/index.html'
+    './advanced-calculator/index.html',
+    // Universal Downloader
+    './universal-downloader/',
+    './universal-downloader/index.html',
+    './universal-downloader/style.css',
+    './universal-downloader/script.js',
+    './universal-downloader/manifest.json'
 ];
 
 self.addEventListener('install', (event) => {

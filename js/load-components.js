@@ -10,7 +10,7 @@ async function loadSiteComponents() {
         basePath = headerPlaceholder.getAttribute('data-basepath');
     } else {
         const path = window.location.pathname;
-        if (path.includes('/front/') || path.includes('/compressor/') || path.includes('/audio-to-text/') || path.includes('/tax-calculator/') || path.includes('/power-calculator/') || path.includes('/age-calculator/') || path.includes('/bmi-calculator/')) {
+        if (path.includes('/front/') || path.includes('/compressor/') || path.includes('/audio-to-text/') || path.includes('/tax-calculator/') || path.includes('/power-calculator/') || path.includes('/age-calculator/') || path.includes('/bmi-calculator/') || path.includes('/universal-downloader/')) {
             basePath = '../';
         }
     }
