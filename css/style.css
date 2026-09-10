@@ -421,8 +421,8 @@ body {
   max-width: 1000px;
   margin: 0 auto 40px;
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 10px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
   padding: 0 20px;
 }
 
@@ -558,6 +558,11 @@ body {
   color: var(--tag-blue-text);
 }
 
+.tag-pink {
+  background: var(--tag-pink-bg);
+  color: var(--tag-pink-text);
+}
+
 /* Right Sidebar (Trending Topics / Researchers style) */
 .sidebar-panel {
   background: var(--bg-card);
@@ -651,7 +656,7 @@ body {
   }
 
   .stats-banner {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
@@ -1397,4 +1402,32 @@ h2:hover {
   z-index: 1001;
   /* Ensure scaled dropdown item overlaps others */
   position: relative;
+}
+
+/* Google Credentials & Certifications Styling */
+.btn-verify-wallet {
+  background: rgba(66, 133, 244, 0.1);
+  color: #4285F4;
+  border: 1px solid rgba(66, 133, 244, 0.3);
+  transition: all 0.25s ease;
+}
+
+.btn-verify-wallet:hover {
+  background: #4285F4;
+  color: #FFFFFF !important;
+  border-color: #4285F4;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(66, 133, 244, 0.25);
+}
+
+.cred-icon-circle {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  background: rgba(66, 133, 244, 0.08);
+  border: 1px solid rgba(66, 133, 244, 0.2);
 }
