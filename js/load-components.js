@@ -44,6 +44,27 @@ async function loadSiteComponents() {
         mehedi_initTheme();
     }
 
+    // Initialize nav dropdown toggle for touch and click interaction
+    const navDropdown = document.querySelector('.nav-dropdown');
+    if (navDropdown) {
+        const toggleBtn = navDropdown.querySelector('.nav-dropdown-toggle') || navDropdown.querySelector('a');
+        if (toggleBtn) {
+            toggleBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                navDropdown.classList.toggle('active');
+                const isExpanded = navDropdown.classList.contains('active');
+                toggleBtn.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
+            });
+        }
+        document.addEventListener('click', (e) => {
+            if (!navDropdown.contains(e.target)) {
+                navDropdown.classList.remove('active');
+                if (toggleBtn) toggleBtn.setAttribute('aria-expanded', 'false');
+            }
+        });
+    }
+
     // Remove any duplicate color switcher / back-to-top elements that were hardcoded on old pages
     // (the shared header now injects these elements, so page-level copies must be removed)
     const allPalettes = document.querySelectorAll('.color-switcher-container');
