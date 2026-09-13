@@ -202,7 +202,8 @@ body {
 .nav-dropdown:hover .nav-dropdown-content,
 .nav-dropdown:focus-within .nav-dropdown-content,
 .nav-dropdown.active .nav-dropdown-content {
-  display: block;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Page Header (for inner pages like projects.html) */
@@ -755,7 +756,6 @@ body {
     display: flex;
     flex-wrap: nowrap;
     overflow-x: auto;
-    overflow-y: hidden;
     -webkit-overflow-scrolling: touch;
     scroll-behavior: smooth;
     justify-content: flex-start;
@@ -774,29 +774,64 @@ body {
   }
 
   .nav-links > a,
-  .nav-links .nav-dropdown {
+  .nav-links > .nav-dropdown {
     flex-shrink: 0;
     white-space: nowrap;
   }
 
-  .nav-links a {
+  .nav-links > a,
+  .nav-links > .nav-dropdown > a {
     padding: 4px 2px;
     display: inline-flex;
     align-items: center;
   }
 
   .nav-dropdown {
-    position: static;
+    position: relative;
   }
 
   .nav-dropdown-content {
-    top: calc(100% + 2px);
-    right: 12px;
-    left: auto;
+    display: none;
+    flex-direction: column !important;
+    position: absolute;
+    background-color: var(--bg-card);
     min-width: 240px;
-    max-width: calc(100vw - 24px);
+    box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.4);
+    z-index: 1000;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    top: calc(100% + 10px);
+    right: 0;
+    left: auto;
     max-height: 70vh;
     overflow-y: auto;
+  }
+
+  .nav-dropdown:hover .nav-dropdown-content,
+  .nav-dropdown:focus-within .nav-dropdown-content,
+  .nav-dropdown.active .nav-dropdown-content {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  .nav-dropdown-content a {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    width: 100% !important;
+    padding: 8px 16px !important;
+    gap: 10px !important;
+    color: var(--text-main) !important;
+    font-size: 0.85rem !important;
+    font-weight: 500 !important;
+    border-bottom: 1px solid var(--border-color) !important;
+    text-decoration: none !important;
+    white-space: nowrap !important;
+    box-sizing: border-box !important;
+  }
+
+  .nav-dropdown-content a:last-child {
+    border-bottom: none !important;
   }
 
   .data-row {
