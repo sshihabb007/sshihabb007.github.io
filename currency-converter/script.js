@@ -6,39 +6,59 @@ const shihab_fromSelect = document.getElementById('shihab_fromCurrency');
 const shihab_toSelect = document.getElementById('shihab_toCurrency');
 const mehedi_resultText = document.getElementById('mehedi_resultText');
 const sshihabb007_rateText = document.getElementById('sshihabb007_rateText');
+const mehedi_lastUpdated = document.getElementById('mehedi_lastUpdated');
 const mehedi_swapBtn = document.getElementById('mehedi_swapBtn');
+
+// Offline / Fallback reference rates (Base: USD)
+const shihab_fallbackRates = {
+    USD: 1, EUR: 0.92, GBP: 0.79, BDT: 120.0, INR: 84.0,
+    JPY: 152.5, AUD: 1.53, CAD: 1.39, CHF: 0.87, CNY: 7.12,
+    HKD: 7.77, NZD: 1.67, AED: 3.6725, SAR: 3.75, MYR: 4.38,
+    SGD: 1.32, PKR: 277.8, LKR: 293.0, NPR: 134.4, THB: 33.7,
+    IDR: 15700, PHP: 58.1, VND: 25300, KRW: 1380, TRY: 34.3,
+    RUB: 96.5, BRL: 5.75, MXN: 20.1, ZAR: 17.6, EGP: 48.7,
+    KWD: 0.307, QAR: 3.64, OMR: 0.385, BHD: 0.376, SEK: 10.6,
+    NOK: 10.9, DKK: 6.88, PLN: 4.01, CZK: 23.4, HUF: 374.0,
+    ILS: 3.74, TWD: 32.1, NGN: 1640, KES: 129.0, MAD: 9.9
+};
 
 let shihab_exchangeRates = {};
 
-// 1. Fetch initial rates
+// 1. Fetch initial rates with offline fallback
 async function mehedi_init() {
     try {
         const response = await fetch(`https://v6.exchangerate-api.com/v6/${sshihabb007_API_KEY}/latest/USD`);
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
         const data = await response.json();
-        
-        if (data.result === "success") {
+
+        if (data && data.result === "success" && data.conversion_rates) {
             shihab_exchangeRates = data.conversion_rates;
             sshihabb007_populateDropdowns(Object.keys(shihab_exchangeRates));
-            shihab_calculate(); // Run initial calculation
-        } else {
-            sshihabb007_rateText.innerText = "Error loading rates from API.";
+            if (mehedi_lastUpdated) mehedi_lastUpdated.innerText = "Live market exchange rates";
+            shihab_calculate();
+            return;
         }
+        throw new Error("Invalid API payload");
     } catch (error) {
-        sshihabb007_rateText.innerText = "Error loading rates. Please try again.";
+        shihab_exchangeRates = { ...shihab_fallbackRates };
+        sshihabb007_populateDropdowns(Object.keys(shihab_exchangeRates));
+        if (mehedi_lastUpdated) mehedi_lastUpdated.innerText = "(Offline reference rates)";
+        shihab_calculate();
     }
 }
 
 // 2. Fill the select menus
 function sshihabb007_populateDropdowns(codes) {
-    // Top 10 most traded currencies to bring to top of list
-    const topCurrencies = ['USD', 'EUR', 'GBP', 'JPY', 'AUD', 'CAD', 'CHF', 'CNY', 'HKD', 'NZD', 'BDT', 'INR'];
-    
-    // Sort array so top currencies appear first
+    // Priority currencies to display at top of list in exact priority order
+    const topCurrencies = ['USD', 'EUR', 'GBP', 'BDT', 'INR', 'JPY', 'AUD', 'CAD', 'CHF', 'CNY', 'HKD', 'NZD', 'AED', 'SAR'];
+
+    // Sort array so top currencies appear first in their defined priority order, then alphabetically
     codes.sort((a, b) => {
-        const aIsTop = topCurrencies.includes(a);
-        const bIsTop = topCurrencies.includes(b);
-        if (aIsTop && !bIsTop) return -1;
-        if (!aIsTop && bIsTop) return 1;
+        const indexA = topCurrencies.indexOf(a);
+        const indexB = topCurrencies.indexOf(b);
+        if (indexA !== -1 && indexB !== -1) return indexA - indexB;
+        if (indexA !== -1) return -1;
+        if (indexB !== -1) return 1;
         return a.localeCompare(b);
     });
 
@@ -86,13 +106,36 @@ function sshihabb007_populateDropdowns(codes) {
         return `${country} - ${code}`;
     };
 
+    shihab_fromSelect.innerHTML = '';
+    shihab_toSelect.innerHTML = '';
+
+    const topGroup1 = document.createElement('optgroup');
+    topGroup1.label = 'Popular Currencies';
+    const otherGroup1 = document.createElement('optgroup');
+    otherGroup1.label = 'All Currencies';
+
+    const topGroup2 = document.createElement('optgroup');
+    topGroup2.label = 'Popular Currencies';
+    const otherGroup2 = document.createElement('optgroup');
+    otherGroup2.label = 'All Currencies';
+
     codes.forEach(code => {
         const displayName = getCurrencyName(code);
         const option1 = new Option(displayName, code);
         const option2 = new Option(displayName, code);
-        shihab_fromSelect.add(option1);
-        shihab_toSelect.add(option2);
+        if (topCurrencies.includes(code)) {
+            topGroup1.appendChild(option1);
+            topGroup2.appendChild(option2);
+        } else {
+            otherGroup1.appendChild(option1);
+            otherGroup2.appendChild(option2);
+        }
     });
+
+    shihab_fromSelect.appendChild(topGroup1);
+    shihab_fromSelect.appendChild(otherGroup1);
+    shihab_toSelect.appendChild(topGroup2);
+    shihab_toSelect.appendChild(otherGroup2);
 
     // Set defaults
     shihab_fromSelect.value = "USD";
@@ -101,25 +144,28 @@ function sshihabb007_populateDropdowns(codes) {
 
 // 3. The Math logic
 function shihab_calculate() {
-    const amount = mehedi_amountInput.value;
+    const amountRaw = mehedi_amountInput.value;
+    const amount = parseFloat(amountRaw);
     const from = shihab_fromSelect.value;
     const to = shihab_toSelect.value;
 
-    if (amount === "" || amount <= 0) {
-        mehedi_resultText.innerText = "0.00";
+    const rateA = shihab_exchangeRates[from];
+    const rateB = shihab_exchangeRates[to];
+
+    if (!rateA || !rateB) return;
+
+    const unitRate = rateB / rateA;
+    sshihabb007_rateText.innerText = `1 ${from} = ${unitRate.toFixed(4)} ${to}`;
+
+    if (amountRaw === "" || isNaN(amount) || amount <= 0) {
+        mehedi_resultText.innerText = `0.00 ${to}`;
         return;
     }
 
     // Formula: (Amount / FromRate) * ToRate
-    const rateA = shihab_exchangeRates[from];
-    const rateB = shihab_exchangeRates[to];
-    
-    if (!rateA || !rateB) return;
-
     const convertedAmount = (amount / rateA) * rateB;
 
     mehedi_resultText.innerText = `${convertedAmount.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})} ${to}`;
-    sshihabb007_rateText.innerText = `1 ${from} = ${(rateB / rateA).toFixed(4)} ${to}`;
 }
 
 // 4. Event Listeners

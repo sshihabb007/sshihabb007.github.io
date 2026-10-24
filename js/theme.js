@@ -1,8 +1,11 @@
+let mehedi_paletteOutsideClickBound = false;
+let mehedi_scrollListenerBound = false;
+
 window.mehedi_initTheme = function() {
     const shihab_themeBtns = [document.getElementById('sshihabb007-theme-toggle')].filter(Boolean);
     const sshihabb007_currentTheme = localStorage.getItem('mehedi_theme');
     const sshihabb007_currentColor = localStorage.getItem('mehedi_color');
-    
+
     // Default is dark. If light mode is stored, apply it.
     if (sshihabb007_currentTheme === 'light') {
         document.body.classList.add('light-mode');
@@ -18,7 +21,7 @@ window.mehedi_initTheme = function() {
         btn.addEventListener('click', () => {
             document.body.classList.toggle('light-mode');
             const isLight = document.body.classList.contains('light-mode');
-            
+
             shihab_themeBtns.forEach(b => {
                 const icon = b.querySelector('i');
                 if (icon) {
@@ -29,7 +32,7 @@ window.mehedi_initTheme = function() {
                     }
                 }
             });
-            
+
             localStorage.setItem('mehedi_theme', isLight ? 'light' : 'dark');
         });
     });
@@ -39,26 +42,31 @@ window.mehedi_initTheme = function() {
     const colorPalette = document.getElementById('color-palette');
     const colorBtns = document.querySelectorAll('.color-btn');
 
-    if (paletteToggle && colorPalette) {
-        paletteToggle.addEventListener('click', () => {
+    if (paletteToggle && colorPalette && !paletteToggle.hasAttribute('data-palette-initialized')) {
+        paletteToggle.setAttribute('data-palette-initialized', 'true');
+        paletteToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
             if (colorPalette.style.display === 'none' || colorPalette.style.display === '') {
                 colorPalette.style.display = 'flex';
             } else {
                 colorPalette.style.display = 'none';
             }
         });
+    }
 
-        // Close palette when clicking outside
+    if (!mehedi_paletteOutsideClickBound) {
+        mehedi_paletteOutsideClickBound = true;
         document.addEventListener('click', (e) => {
-            if (!e.target.closest('.color-switcher-container')) {
-                colorPalette.style.display = 'none';
+            const activePalette = document.getElementById('color-palette');
+            if (activePalette && !e.target.closest('.color-switcher-container')) {
+                activePalette.style.display = 'none';
             }
         });
     }
 
     if (colorBtns.length > 0) {
         const applyColor = (colorHex) => {
-            if (colorHex === 'default') {
+            if (!colorHex || colorHex === 'default') {
                 document.body.style.removeProperty('--primary-color');
                 document.body.style.removeProperty('--text-main');
                 document.body.style.removeProperty('--cursor-color');
@@ -67,10 +75,10 @@ window.mehedi_initTheme = function() {
                 document.body.style.setProperty('--text-main', colorHex);
                 document.body.style.setProperty('--cursor-color', colorHex);
             }
-            localStorage.setItem('mehedi_color', colorHex);
-            
-            colorBtns.forEach(b => b.classList.remove('active'));
-            const activeBtn = Array.from(colorBtns).find(b => b.getAttribute('data-color') === colorHex);
+            localStorage.setItem('mehedi_color', colorHex || 'default');
+
+            document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('active'));
+            const activeBtn = Array.from(document.querySelectorAll('.color-btn')).find(b => b.getAttribute('data-color') === (colorHex || 'default'));
             if (activeBtn) activeBtn.classList.add('active');
         };
 
@@ -79,10 +87,37 @@ window.mehedi_initTheme = function() {
         }
 
         colorBtns.forEach(btn => {
+            if (btn.hasAttribute('data-color-initialized')) return;
+            btn.setAttribute('data-color-initialized', 'true');
             btn.addEventListener('click', () => {
                 applyColor(btn.getAttribute('data-color'));
             });
         });
+    }
+
+    // Back to Top Logic (supports async header injection)
+    const backToTopBtn = document.getElementById('back-to-top');
+    if (backToTopBtn && !backToTopBtn.hasAttribute('data-backtotop-initialized')) {
+        backToTopBtn.setAttribute('data-backtotop-initialized', 'true');
+        if (window.scrollY > 300) {
+            backToTopBtn.classList.add('show');
+        }
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    }
+
+    if (!mehedi_scrollListenerBound) {
+        mehedi_scrollListenerBound = true;
+        window.addEventListener('scroll', () => {
+            const btn = document.getElementById('back-to-top');
+            if (!btn) return;
+            if (window.scrollY > 300) {
+                btn.classList.add('show');
+            } else {
+                btn.classList.remove('show');
+            }
+        }, { passive: true });
     }
 };
 
@@ -119,21 +154,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 cursorOutline.style.backgroundColor = 'transparent';
                 cursorDot.style.opacity = '1';
             }
-        });
-    }
-
-    // Back to Top Logic
-    const backToTopBtn = document.getElementById('back-to-top');
-    if (backToTopBtn) {
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 300) {
-                backToTopBtn.classList.add('show');
-            } else {
-                backToTopBtn.classList.remove('show');
-            }
-        });
-        backToTopBtn.addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
         });
     }
 });

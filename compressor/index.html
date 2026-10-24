@@ -99,6 +99,10 @@
         .text-white {
             color: var(--text-main) !important;
         }
+
+        .from-black\/90 .text-white {
+            color: #ffffff !important;
+        }
     </style>
     <script src="https://unpkg.com/wavesurfer.js@7/dist/wavesurfer.min.js"></script>
     <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.11.6/dist/ffmpeg.min.js"></script>
@@ -131,7 +135,7 @@
             <!-- The Drop Zone -->
             <div id="Mehedi_dropZoneId"
                 class="relative group border-4 border-dashed border-gray-600 rounded-xl p-8 md:p-16 text-center hover:border-blue-500 hover:bg-gray-700/50 transition-all duration-300 cursor-pointer bg-gray-800">
-                <input type="file" id="sshihabb007_fileInputId" multiple
+                <input type="file" id="sshihabb007_fileInputId" multiple aria-label="Upload image, audio, or video files"
                     class="peer absolute inset-0 w-full h-full opacity-0 cursor-pointer z-50"
                     accept="image/*, audio/*, .m4a, video/*, .ts">
                 <div class="space-y-4 group-hover:scale-105 transition-transform duration-300">
@@ -152,7 +156,7 @@
             <div id="Shihab_settingsPanelId"
                 class="hidden grid-cols-1 md:grid-cols-2 gap-8 bg-gray-750 border border-gray-700 p-6 rounded-xl transition-opacity duration-300 bg-gray-900/30">
                 <div class="space-y-3">
-                    <label class="block text-sm font-semibold text-gray-300 uppercase tracking-wider">Output
+                    <label for="Mehedi_formatSelectId" class="block text-sm font-semibold text-gray-300 uppercase tracking-wider">Output
                         Format</label>
                     <select id="Mehedi_formatSelectId"
                         class="w-full bg-gray-800 border border-gray-600 rounded-lg shadow-inner py-3 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-white transition-all">
@@ -163,7 +167,7 @@
                 </div>
 
                 <div class="space-y-3">
-                    <label
+                    <label for="sshihabb007_qualitySliderId"
                         class="block text-sm font-semibold text-gray-300 uppercase tracking-wider flex justify-between">
                         <span>Quality Compression</span>
                         <span id="Shihab_qualityValueId"
@@ -203,8 +207,8 @@
                 </div>
                 <div class="flex flex-col sm:flex-row items-end sm:items-center space-y-2 sm:space-y-0 sm:space-x-3">
                     <div class="flex items-center space-x-2 bg-gray-800 px-3 py-1.5 rounded-lg border border-gray-600">
-                        <span class="text-sm text-gray-400 hidden sm:inline">Convert to:</span>
-                        <select id="Mehedi_audioFormatSelectId"
+                        <label for="Mehedi_audioFormatSelectId" class="text-sm text-gray-400 hidden sm:inline">Convert to:</label>
+                        <select id="Mehedi_audioFormatSelectId" aria-label="Convert audio to format"
                             class="bg-transparent text-white focus:outline-none text-sm font-semibold">
                             <option value="mp3" class="bg-gray-800">MP3</option>
                             <option value="aac" class="bg-gray-800">AAC</option>
@@ -236,10 +240,10 @@
                             <img id="Shihab_originalImgId" class="max-w-full max-h-full object-contain p-2" src=""
                                 alt="Original Preview">
                             <div
-                                class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/90 to-transparent pt-8 pb-3 px-4 text-sm text-center flex justify-between items-end opacity-90">
+                                class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/90 to-transparent pt-8 pb-3 px-4 text-sm text-center flex justify-between items-end opacity-90 text-white">
                                 <span id="Mehedi_originalSizeId"
-                                    class="font-mono text-gray-300 bg-gray-800 px-2 py-1 rounded">0 KB</span>
-                                <span id="sshihabb007_originalDimensionsId" class="font-mono text-gray-400">0 x 0</span>
+                                    class="font-mono text-white bg-black/60 px-2 py-1 rounded">0 KB</span>
+                                <span id="sshihabb007_originalDimensionsId" class="font-mono text-white">0 x 0</span>
                             </div>
                         </div>
                     </div>
@@ -253,11 +257,11 @@
                             <img id="Mehedi_convertedImgId" class="max-w-full max-h-full object-contain p-2" src=""
                                 alt="Converted Preview">
                             <div
-                                class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/90 to-transparent pt-8 pb-3 px-4 text-sm text-center flex justify-between items-end opacity-90">
+                                class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/90 to-transparent pt-8 pb-3 px-4 text-sm text-center flex justify-between items-end opacity-90 text-white">
                                 <span id="Shihab_convertedSizeId"
                                     class="font-mono text-green-400 font-bold bg-green-900/30 px-2 py-1 rounded border border-green-500/30">0
                                     KB</span>
-                                <span id="sshihabb007_convertedDimensionsId" class="font-mono text-blue-300">0 x
+                                <span id="sshihabb007_convertedDimensionsId" class="font-mono text-white">0 x
                                     0</span>
                             </div>
                         </div>
@@ -266,7 +270,8 @@
             </div>
 
             <button id="Mehedi_downloadBtnId"
-                class="hidden w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-bold py-4 px-6 rounded-xl shadow-[0_0_20px_rgba(59,130,246,0.4)] transform transition duration-200 hover:-translate-y-1 hover:shadow-[0_0_25px_rgba(59,130,246,0.6)] focus:outline-none focus:ring-4 focus:ring-blue-500/50 flex justify-center items-center space-x-3 text-lg mt-4 animate-[fadeIn_0.5s_ease-out]">
+                class="hidden w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-bold py-4 px-6 rounded-xl shadow-[0_0_20px_rgba(59,130,246,0.4)] transform transition duration-200 hover:-translate-y-1 hover:shadow-[0_0_25px_rgba(59,130,246,0.6)] focus:outline-none focus:ring-4 focus:ring-blue-500/50 flex justify-center items-center space-x-3 text-lg mt-4 animate-[fadeIn_0.5s_ease-out]"
+                style="color: #ffffff !important;">
                 <svg class="w-6 h-6 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
                         d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
@@ -275,7 +280,8 @@
             </button>
 
             <button id="Shihab_convertAudioBtnId"
-                class="hidden w-full bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-red-400 text-white font-bold py-4 px-6 rounded-xl shadow-[0_0_20px_rgba(220,38,38,0.4)] transform transition duration-200 hover:-translate-y-1 focus:outline-none flex justify-center items-center space-x-3 text-lg mt-4">
+                class="hidden w-full bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-red-400 text-white font-bold py-4 px-6 rounded-xl shadow-[0_0_20px_rgba(220,38,38,0.4)] transform transition duration-200 hover:-translate-y-1 focus:outline-none flex justify-center items-center space-x-3 text-lg mt-4"
+                style="color: #ffffff !important;">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
                         d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15">
@@ -310,7 +316,7 @@
                                     d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4">
                                 </path>
                             </svg> Audio Options</h3>
-                        <button id="sshihabb007_closeModalBtnId"
+                        <button id="sshihabb007_closeModalBtnId" aria-label="Close Audio Options"
                             class="text-gray-400 hover:text-white transition bg-zinc-800 hover:bg-zinc-700 rounded-lg p-1.5">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -322,22 +328,34 @@
                     <div class="p-6 space-y-8 max-h-[75vh] overflow-y-auto custom-scrollbar">
                         <!-- Trimming / Waveform -->
                         <div class="space-y-3">
-                            <label class="block text-sm font-semibold text-gray-300 uppercase tracking-wider">Trim
-                                Audio</label>
+                            <div class="flex items-center justify-between">
+                                <label class="block text-sm font-semibold text-gray-300 uppercase tracking-wider">Trim
+                                    Audio</label>
+                                <div class="flex items-center gap-3">
+                                    <span id="Shihab_waveformTimeId" class="text-xs font-mono text-gray-400">00:00:00 / 00:00:00</span>
+                                    <button type="button" id="Shihab_playPauseAudioBtnId"
+                                        class="px-3 py-1 bg-red-600 hover:bg-red-500 rounded-lg text-xs font-bold flex items-center gap-1.5 transition shadow"
+                                        style="color: #ffffff !important;">
+                                        <i class="fas fa-play" id="Shihab_playPauseIconId"></i>
+                                        <span id="Shihab_playPauseTextId">Play Preview</span>
+                                    </button>
+                                </div>
+                            </div>
                             <div id="Mehedi_waveformContainerId"
-                                class="w-full h-28 bg-zinc-950 rounded-lg border border-zinc-700 overflow-hidden relative shadow-inner">
+                                class="w-full h-28 bg-zinc-950 rounded-lg border border-zinc-700 overflow-hidden relative shadow-inner cursor-pointer"
+                                title="Click on waveform to seek">
                                 <!-- WaveSurfer mounts here -->
                             </div>
                             <div class="flex space-x-4">
                                 <div class="flex-1">
-                                    <label class="block text-xs text-gray-500 mb-1 font-medium">Start Time
+                                    <label for="Shihab_trimStartId" class="block text-xs text-gray-500 mb-1 font-medium">Start Time
                                         (HH:MM:SS)</label>
                                     <input type="text" id="Shihab_trimStartId"
                                         class="w-full bg-zinc-800 border border-zinc-600 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-colors"
                                         placeholder="00:00:00">
                                 </div>
                                 <div class="flex-1">
-                                    <label class="block text-xs text-gray-500 mb-1 font-medium">End Time
+                                    <label for="sshihabb007_trimEndId" class="block text-xs text-gray-500 mb-1 font-medium">End Time
                                         (HH:MM:SS)</label>
                                     <input type="text" id="sshihabb007_trimEndId"
                                         class="w-full bg-zinc-800 border border-zinc-600 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-colors"
@@ -349,7 +367,7 @@
                         <div
                             class="grid grid-cols-1 sm:grid-cols-2 gap-6 bg-zinc-800/30 p-4 rounded-xl border border-zinc-800">
                             <div class="space-y-2">
-                                <label class="block text-sm font-semibold text-gray-300">Audio Bitrate</label>
+                                <label for="Mehedi_bitrateSelectId" class="block text-sm font-semibold text-gray-300">Audio Bitrate</label>
                                 <select id="Mehedi_bitrateSelectId"
                                     class="w-full bg-zinc-800 border border-zinc-600 rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-red-500">
                                     <option value="">Auto (Copy)</option>
@@ -361,7 +379,7 @@
                                 </select>
                             </div>
                             <div class="space-y-2">
-                                <label class="block text-sm font-semibold text-gray-300">Audio Qscale</label>
+                                <label for="sshihabb007_qscaleSelectId" class="block text-sm font-semibold text-gray-300">Audio Qscale</label>
                                 <select id="sshihabb007_qscaleSelectId"
                                     class="w-full bg-zinc-800 border border-zinc-600 rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-red-500">
                                     <option value="">Auto</option>
@@ -378,7 +396,7 @@
                                 </select>
                             </div>
                             <div class="space-y-2">
-                                <label class="block text-sm font-semibold text-gray-300">Sample Rate</label>
+                                <label for="Shihab_sampleRateSelectId" class="block text-sm font-semibold text-gray-300">Sample Rate</label>
                                 <select id="Shihab_sampleRateSelectId"
                                     class="w-full bg-zinc-800 border border-zinc-600 rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-red-500">
                                     <option value="">Auto (Copy)</option>
@@ -387,7 +405,7 @@
                                 </select>
                             </div>
                             <div class="space-y-2 sm:col-span-2">
-                                <label class="block text-sm font-semibold text-gray-300">Channels</label>
+                                <label for="sshihabb007_channelsSelectId" class="block text-sm font-semibold text-gray-300">Channels</label>
                                 <select id="sshihabb007_channelsSelectId"
                                     class="w-full bg-zinc-800 border border-zinc-600 rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-red-500">
                                     <option value="">Auto (Copy)</option>
@@ -404,7 +422,8 @@
                             Cancel
                         </button>
                         <button id="Mehedi_saveOptionsBtnId"
-                            class="bg-red-600 hover:bg-red-500 text-white px-8 py-2.5 rounded-lg font-bold shadow-[0_0_15px_rgba(220,38,38,0.3)] hover:shadow-[0_0_20px_rgba(220,38,38,0.5)] transition-all">
+                            class="bg-red-600 hover:bg-red-500 text-white px-8 py-2.5 rounded-lg font-bold shadow-[0_0_15px_rgba(220,38,38,0.3)] hover:shadow-[0_0_20px_rgba(220,38,38,0.5)] transition-all"
+                            style="color: #ffffff !important;">
                             Save Options
                         </button>
                     </div>
@@ -416,7 +435,7 @@
         <div class="max-w-4xl w-full mt-8 sm:mt-12 mx-auto" style="display:flex; flex-direction:column; gap:12px;">
 
             <div class="shihab-accordion-item rounded-xl overflow-hidden" style="border: none !important; box-shadow: none !important; outline: none !important;">
-                <button id="Shihab_accordionBtn1"
+                <button id="Shihab_accordionBtn1" aria-expanded="false"
                     onclick="sshihabb007_toggleAccordion('Shihab_accordionPanel1', 'Shihab_accordionIcon1', this)"
                     class="shihab-accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
                     <span class="flex items-center gap-3">
@@ -445,7 +464,7 @@
             </div>
 
             <div class="shihab-accordion-item rounded-xl overflow-hidden" style="border: none !important; box-shadow: none !important; outline: none !important;">
-                <button id="Shihab_accordionBtn2"
+                <button id="Shihab_accordionBtn2" aria-expanded="false"
                     onclick="sshihabb007_toggleAccordion('Shihab_accordionPanel2', 'Shihab_accordionIcon2', this)"
                     class="shihab-accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
                     <span class="flex items-center gap-3">
@@ -524,7 +543,7 @@
     </main>
 
     <!-- Footer -->
-    <div id="site-footer"></div>
+    <div id="site-footer" data-basepath="../"></div>
 
     <!-- Custom Cursor -->
     <div class="cursor-dot"></div>
@@ -544,16 +563,18 @@
         }
     </script>
     <script>
-        function sshihabb007_toggleAccordion(panelId, iconId) {
+        function sshihabb007_toggleAccordion(panelId, iconId, btnEl) {
             const panel = document.getElementById(panelId);
             const icon  = document.getElementById(iconId);
             const isOpen = panel.style.maxHeight && panel.style.maxHeight !== '0px';
             if (isOpen) {
                 panel.style.maxHeight = '0px';
-                icon.style.transform  = 'rotate(0deg)';
+                if (icon) icon.style.transform = 'rotate(0deg)';
+                if (btnEl) btnEl.setAttribute('aria-expanded', 'false');
             } else {
                 panel.style.maxHeight = panel.scrollHeight + 'px';
-                icon.style.transform  = 'rotate(180deg)';
+                if (icon) icon.style.transform = 'rotate(180deg)';
+                if (btnEl) btnEl.setAttribute('aria-expanded', 'true');
             }
         }
     </script>

@@ -98,14 +98,12 @@
 
     <!-- Vendor Scripts -->
     <script src="vendor/jquery.min.js"></script>
-    <script src="vendor/mathquill/mathquill.js"></script>
+    <script src="vendor/mathquill/mathquill.min.js"></script>
     <script src="vendor/math.js"></script>
     <script src="vendor/nerdamer/nerdamer.core.js"></script>
     <script src="vendor/nerdamer/Algebra.js"></script>
     <script src="vendor/nerdamer/Calculus.js"></script>
     <script src="vendor/nerdamer/Solve.js"></script>
-    <script src="vendor/d3.min.js"></script>
-    <script src="vendor/function-plot.js"></script>
 
     <style>
         /* Tool-specific overrides for adaptive UI */
@@ -312,7 +310,7 @@
                         <!-- Numeric Pad -->
                         <div class="grid grid-cols-4 gap-2 md:gap-3">
                             <button class="calc-btn calc-btn-secondary py-3 md:py-4 font-semibold" data-cmd="clear" style="color: #ef4444;">AC</button>
-                            <button class="calc-btn calc-btn-secondary py-3 md:py-4" data-cmd="backspace" style="color: #f59e0b;"><i class="fas fa-backspace"></i></button>
+                            <button class="calc-btn calc-btn-secondary py-3 md:py-4" data-cmd="backspace" aria-label="Backspace" style="color: #f59e0b;"><i class="fas fa-backspace"></i></button>
                             <button class="calc-btn calc-btn-secondary py-3 md:py-4 font-semibold text-sm" data-cmd="store">Store</button>
                             <button class="calc-btn calc-btn-secondary py-3 md:py-4 text-xl" data-cmd="/">÷</button>
 

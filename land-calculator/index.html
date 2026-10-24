@@ -50,7 +50,8 @@
     <link rel="stylesheet" href="../css/style.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
     <script>
         tailwind.config = {
@@ -164,8 +165,8 @@
                     <div class="flex items-center gap-3">
                         <span class="text-xs font-bold uppercase tracking-wide"
                             style="color: var(--text-muted);">Standard <br> (33 Dec)</span>
-                        <label class="relative inline-flex items-center cursor-pointer">
-                            <input type="checkbox" id="sshihabb007_regionalToggle" class="sr-only peer">
+                        <label class="relative inline-flex items-center cursor-pointer" for="sshihabb007_regionalToggle">
+                            <input type="checkbox" id="sshihabb007_regionalToggle" class="sr-only peer" aria-label="Toggle Standard (33 Decimal) or Regional (52 Decimal) Bigha">
                             <div
                                 class="w-11 h-6 bg-gray-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-500">
                             </div>
@@ -178,68 +179,68 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
                     <!-- Decimal Input -->
                     <div class="space-y-1">
-                        <label class="font-bold text-xs uppercase" style="color: var(--text-muted);">Shotangsho
+                        <label for="shihab_unit_decimal" class="font-bold text-xs uppercase" style="color: var(--text-muted);">Shotangsho
                             (Decimal)</label>
-                        <input type="number" data-unit="decimal"
+                        <input type="number" id="shihab_unit_decimal" data-unit="decimal" min="0"
                             class="sshihabb007_input w-full p-3 sm:p-4 border-2 rounded-xl outline-none transition font-semibold text-lg"
                             placeholder="0">
                     </div>
 
                     <!-- Katha Input -->
                     <div class="space-y-1">
-                        <label class="font-bold text-xs uppercase" style="color: var(--text-muted);">Katha</label>
-                        <input type="number" data-unit="katha"
+                        <label for="shihab_unit_katha" class="font-bold text-xs uppercase" style="color: var(--text-muted);">Katha</label>
+                        <input type="number" id="shihab_unit_katha" data-unit="katha" min="0"
                             class="sshihabb007_input w-full p-3 sm:p-4 border-2 rounded-xl outline-none transition font-semibold text-lg"
                             placeholder="0">
                     </div>
 
                     <!-- Bigha Input -->
                     <div class="space-y-1">
-                        <label class="font-bold text-xs uppercase" style="color: var(--text-muted);">Bigha</label>
-                        <input type="number" data-unit="bigha"
+                        <label for="shihab_unit_bigha" class="font-bold text-xs uppercase" style="color: var(--text-muted);">Bigha</label>
+                        <input type="number" id="shihab_unit_bigha" data-unit="bigha" min="0"
                             class="sshihabb007_input w-full p-3 sm:p-4 border-2 rounded-xl outline-none transition font-semibold text-lg"
                             placeholder="0">
                     </div>
 
                     <!-- Acre Input -->
                     <div class="space-y-1">
-                        <label class="font-bold text-xs uppercase" style="color: var(--text-muted);">Acre</label>
-                        <input type="number" data-unit="acre"
+                        <label for="shihab_unit_acre" class="font-bold text-xs uppercase" style="color: var(--text-muted);">Acre</label>
+                        <input type="number" id="shihab_unit_acre" data-unit="acre" min="0"
                             class="sshihabb007_input w-full p-3 sm:p-4 border-2 rounded-xl outline-none transition font-semibold text-lg"
                             placeholder="0">
                     </div>
 
                     <!-- Hectare Input -->
                     <div class="space-y-1">
-                        <label class="font-bold text-xs uppercase" style="color: var(--text-muted);">Hectare</label>
-                        <input type="number" data-unit="hectare"
+                        <label for="shihab_unit_hectare" class="font-bold text-xs uppercase" style="color: var(--text-muted);">Hectare</label>
+                        <input type="number" id="shihab_unit_hectare" data-unit="hectare" min="0"
                             class="sshihabb007_input w-full p-3 sm:p-4 border-2 rounded-xl outline-none transition font-semibold text-lg"
                             placeholder="0">
                     </div>
 
                     <!-- Sq Meter Input -->
                     <div class="space-y-1">
-                        <label class="font-bold text-xs uppercase" style="color: var(--text-muted);">Square Meter (Sq
+                        <label for="shihab_unit_sqmeter" class="font-bold text-xs uppercase" style="color: var(--text-muted);">Square Meter (Sq
                             M)</label>
-                        <input type="number" data-unit="sqmeter"
+                        <input type="number" id="shihab_unit_sqmeter" data-unit="sqmeter" min="0"
                             class="sshihabb007_input w-full p-3 sm:p-4 border-2 rounded-xl outline-none transition font-semibold text-lg"
                             placeholder="0">
                     </div>
 
                     <!-- Sq Ft Input -->
                     <div class="space-y-1">
-                        <label class="font-bold text-xs uppercase" style="color: var(--text-muted);">Square Feet (Sq
+                        <label for="shihab_unit_sqft" class="font-bold text-xs uppercase" style="color: var(--text-muted);">Square Feet (Sq
                             Ft)</label>
-                        <input type="number" data-unit="sqft"
+                        <input type="number" id="shihab_unit_sqft" data-unit="sqft" min="0"
                             class="sshihabb007_input w-full p-3 sm:p-4 border-2 rounded-xl outline-none transition font-semibold text-lg"
                             placeholder="0">
                     </div>
 
                     <!-- Sq Links Input -->
                     <div class="space-y-1">
-                        <label class="font-bold text-xs uppercase" style="color: var(--text-muted);">Square
+                        <label for="shihab_unit_sqlink" class="font-bold text-xs uppercase" style="color: var(--text-muted);">Square
                             Links</label>
-                        <input type="number" data-unit="sqlink"
+                        <input type="number" id="shihab_unit_sqlink" data-unit="sqlink" min="0"
                             class="sshihabb007_input w-full p-3 sm:p-4 border-2 rounded-xl outline-none transition font-semibold text-lg"
                             placeholder="0">
                     </div>
@@ -276,16 +277,16 @@
 
                         <div class="grid grid-cols-2 gap-4 mb-4">
                             <div>
-                                <label class="text-xs font-bold uppercase" style="color: var(--text-muted);">Length
+                                <label for="shihab_chain_length" class="text-xs font-bold uppercase" style="color: var(--text-muted);">Length
                                     (Links)</label>
-                                <input type="number" id="shihab_chain_length"
+                                <input type="number" id="shihab_chain_length" min="0"
                                     class="w-full p-3 border-2 rounded-xl outline-none transition font-semibold"
                                     placeholder="0">
                             </div>
                             <div>
-                                <label class="text-xs font-bold uppercase" style="color: var(--text-muted);">Width
+                                <label for="shihab_chain_width" class="text-xs font-bold uppercase" style="color: var(--text-muted);">Width
                                     (Links)</label>
-                                <input type="number" id="shihab_chain_width"
+                                <input type="number" id="shihab_chain_width" min="0"
                                     class="w-full p-3 border-2 rounded-xl outline-none transition font-semibold"
                                     placeholder="0">
                             </div>
@@ -397,7 +398,7 @@
                                 style="border-color: var(--border-color); color: var(--text-muted);">
                                 <p><strong>Standard Bigha (33 Decimal):</strong> This is the official government
                                     standard across Bangladesh. It is universally used for all legal deeds, government
-                                    land registries, and taxation. (1 Bigha = 33 Decimal = 14,400 Sq Ft).</p>
+                                    land registries, and taxation. (1 Standard Bigha = 33 Decimal ≈ 14,374.8 Sq Ft; 20 Katha × 720 = 14,400 Sq Ft traditional).</p>
                                 <p><strong>Regional Bigha (52 Decimal):</strong> Used locally in specific rural regions
                                     of Bangladesh (e.g., parts of Rajshahi/Northern areas) based on older customary
                                     measurements set by historical local Zamindars. Always clarify which "Bigha" is
@@ -412,7 +413,7 @@
     </main>
 
     <!-- Footer -->
-    <div id="site-footer"></div>
+    <div id="site-footer" data-basepath="../"></div>
 
     <script src="../js/load-components.js"></script>
     <script src="../js/theme.js"></script>
@@ -425,6 +426,7 @@
             const toggleRegional = document.getElementById('sshihabb007_regionalToggle');
             const breakdownDisplay = document.getElementById('shihab_breakdown_display');
             const visualizerBox = document.getElementById('mehedi_visualizer_box');
+            let lastEditedInput = document.querySelector('[data-unit="decimal"]');
 
             // Gunter's Chain inputs
             const chainLength = document.getElementById('shihab_chain_length');
@@ -455,7 +457,7 @@
             const updateHumanReadable = (totalDecimal) => {
                 const ratios = getRatios();
 
-                let remainingDec = totalDecimal;
+                let remainingDec = Math.max(0, totalDecimal);
 
                 const acres = Math.floor(remainingDec / ratios.acre);
                 remainingDec %= ratios.acre;
@@ -474,9 +476,10 @@
             const updateVisualizer = (sqftValue) => {
                 // Tennis court is ~2808 sqft. We cap it at 10x tennis court for visual.
                 const TENNIS_COURT = 2808;
-                let percentage = (sqftValue / TENNIS_COURT) * 100;
+                const safeSqft = Math.max(0, sqftValue);
+                let percentage = (safeSqft / TENNIS_COURT) * 100;
 
-                if (percentage === 0) {
+                if (percentage <= 0) {
                     visualizerBox.style.width = '0%';
                     visualizerBox.style.height = '0%';
                     visualizerBox.innerText = '';
@@ -495,16 +498,25 @@
 
             const mehedi_calc_update = (e) => {
                 const ratios = getRatios();
-                // If triggered by toggle, use Decimal input as source of truth
-                const sourceInput = e.target.type === 'checkbox' ?
-                    document.querySelector('[data-unit="decimal"]') : e.target;
+                if (e.target.type !== 'checkbox') {
+                    lastEditedInput = e.target;
+                }
 
-                const value = parseFloat(sourceInput.value);
+                const sourceInput = e.target.type === 'checkbox'
+                    ? (lastEditedInput && lastEditedInput.value !== '' ? lastEditedInput : document.querySelector('[data-unit="decimal"]'))
+                    : e.target;
+
+                let value = parseFloat(sourceInput.value);
                 const unit = sourceInput.dataset.unit;
 
                 if (isNaN(value)) {
                     if (e.target.type !== 'checkbox') resetAllInputs();
                     return;
+                }
+
+                if (value < 0) {
+                    value = 0;
+                    sourceInput.value = 0;
                 }
 
                 // 1. Convert to Base (Decimal)
@@ -533,8 +545,8 @@
 
             // Gunter's Chain logic
             const calculateChain = () => {
-                const l = parseFloat(chainLength.value) || 0;
-                const w = parseFloat(chainWidth.value) || 0;
+                const l = Math.max(0, parseFloat(chainLength.value) || 0);
+                const w = Math.max(0, parseFloat(chainWidth.value) || 0);
                 const dec = (l * w) / 1000;
                 chainResult.innerText = dec.toFixed(4);
             };

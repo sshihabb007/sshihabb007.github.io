@@ -50,6 +50,11 @@
     <link rel="stylesheet" href="../css/style.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            corePlugins: { preflight: false }
+        }
+    </script>
 
     <style>
         .sshihabb007-glass {
@@ -155,7 +160,7 @@
                     </h2>
 
                     <!-- Unit Toggle -->
-                    <div class="flex gap-2 mb-8 bg-zinc-800/20 p-1 rounded-xl border"
+                    <div class="flex gap-2 mb-8 bg-[var(--bg-hover)] p-1 rounded-xl border"
                         style="border-color: var(--border-color);">
                         <button id="mehedi_btnMetric"
                             class="flex-1 py-2.5 rounded-lg bg-indigo-600 text-white font-bold shadow-md transition-all">Metric</button>
@@ -166,29 +171,29 @@
                     <!-- Metric Inputs -->
                     <div id="shihab_metricInputs" class="space-y-6">
                         <div>
-                            <label class="block text-sm font-semibold mb-2 uppercase tracking-wide"
+                            <label for="mehedi_weightKg" class="block text-sm font-semibold mb-2 uppercase tracking-wide"
                                 style="color: var(--text-muted);">Weight (kg)</label>
                             <input type="number" id="mehedi_weightKg" placeholder="e.g. 70"
-                                class="w-full p-4 rounded-xl mehedi-input font-bold text-lg" step="0.1">
+                                class="w-full p-4 rounded-xl mehedi-input font-bold text-lg" step="0.1" min="0">
                         </div>
                         <div>
-                            <label
+                            <label for="mehedi_heightCm"
                                 class="flex justify-between items-center text-sm font-semibold mb-2 uppercase tracking-wide"
                                 style="color: var(--text-muted);">
                                 <span>Height</span>
-                                <select id="shihab_metricHeightUnit"
+                                <select id="shihab_metricHeightUnit" aria-label="Height Unit"
                                     class="bg-transparent text-indigo-500 font-bold outline-none cursor-pointer text-xs focus:ring-0">
                                     <option value="cm">CM</option>
                                     <option value="ft">FT & IN</option>
                                 </select>
                             </label>
                             <input type="number" id="mehedi_heightCm" placeholder="e.g. 175"
-                                class="w-full p-4 rounded-xl mehedi-input font-bold text-lg">
+                                class="w-full p-4 rounded-xl mehedi-input font-bold text-lg" min="0">
                             <div id="shihab_metricHeightFtWrap" class="grid grid-cols-2 gap-4 hidden">
-                                <input type="number" id="mehedi_metricHeightFt" placeholder="e.g. 5 (ft)"
-                                    class="w-full p-4 rounded-xl mehedi-input font-bold text-lg">
-                                <input type="number" id="mehedi_metricHeightIn" placeholder="e.g. 9 (in)"
-                                    class="w-full p-4 rounded-xl mehedi-input font-bold text-lg">
+                                <input type="number" id="mehedi_metricHeightFt" placeholder="e.g. 5 (ft)" aria-label="Height (feet)"
+                                    class="w-full p-4 rounded-xl mehedi-input font-bold text-lg" min="0">
+                                <input type="number" id="mehedi_metricHeightIn" placeholder="e.g. 9 (in)" aria-label="Height (inches)"
+                                    class="w-full p-4 rounded-xl mehedi-input font-bold text-lg" min="0">
                             </div>
                         </div>
                     </div>
@@ -196,23 +201,23 @@
                     <!-- Imperial Inputs (Hidden by default) -->
                     <div id="shihab_imperialInputs" class="space-y-6 hidden">
                         <div>
-                            <label class="block text-sm font-semibold mb-2 uppercase tracking-wide"
+                            <label for="mehedi_weightLbs" class="block text-sm font-semibold mb-2 uppercase tracking-wide"
                                 style="color: var(--text-muted);">Weight (lbs)</label>
                             <input type="number" id="mehedi_weightLbs" placeholder="e.g. 154"
-                                class="w-full p-4 rounded-xl mehedi-input font-bold text-lg" step="0.1">
+                                class="w-full p-4 rounded-xl mehedi-input font-bold text-lg" step="0.1" min="0">
                         </div>
                         <div class="grid grid-cols-2 gap-4">
                             <div>
-                                <label class="block text-sm font-semibold mb-2 uppercase tracking-wide"
+                                <label for="mehedi_heightFt" class="block text-sm font-semibold mb-2 uppercase tracking-wide"
                                     style="color: var(--text-muted);">Height (ft)</label>
                                 <input type="number" id="mehedi_heightFt" placeholder="e.g. 5"
-                                    class="w-full p-4 rounded-xl mehedi-input font-bold text-lg">
+                                    class="w-full p-4 rounded-xl mehedi-input font-bold text-lg" min="0">
                             </div>
                             <div>
-                                <label class="block text-sm font-semibold mb-2 uppercase tracking-wide"
+                                <label for="mehedi_heightIn" class="block text-sm font-semibold mb-2 uppercase tracking-wide"
                                     style="color: var(--text-muted);">Height (in)</label>
                                 <input type="number" id="mehedi_heightIn" placeholder="e.g. 9"
-                                    class="w-full p-4 rounded-xl mehedi-input font-bold text-lg">
+                                    class="w-full p-4 rounded-xl mehedi-input font-bold text-lg" min="0">
                             </div>
                         </div>
                     </div>
@@ -220,7 +225,7 @@
 
                 <div class="mt-8 pt-6 border-t" style="border-color: var(--border-color);">
                     <button id="sshihabb007_saveBtn"
-                        class="w-full bg-zinc-700/50 hover:bg-zinc-700 text-white py-3 rounded-xl font-bold transition-colors flex items-center justify-center gap-2">
+                        class="w-full bg-[var(--bg-hover)] border border-[var(--border-color)] text-[var(--text-main)] hover:border-[var(--primary-color)] py-3 rounded-xl font-bold transition-colors flex items-center justify-center gap-2">
                         <i class="fas fa-bookmark text-indigo-400"></i> Save Result to History
                     </button>
                 </div>
@@ -234,7 +239,7 @@
                     <div class="absolute top-0 left-0 w-full h-2 bg-gray-500 opacity-20" id="shihab_statusTopBar"></div>
 
                     <button id="shihab_copyBmiBtn"
-                        class="absolute top-6 right-6 bg-white/10 hover:bg-white/20 text-white rounded-lg px-3 py-1.5 text-xs font-bold backdrop-blur-sm transition-colors shadow flex items-center gap-1.5 z-10"
+                        class="absolute top-6 right-6 bg-[var(--bg-hover)] border border-[var(--border-color)] text-[var(--text-main)] hover:border-[var(--primary-color)] rounded-lg px-3 py-1.5 text-xs font-bold backdrop-blur-sm transition-colors shadow flex items-center gap-1.5 z-10"
                         title="Copy BMI Stats">
                         <i class="fas fa-copy"></i> Copy Stats
                     </button>
@@ -273,13 +278,13 @@
                     </h3>
                     <div class="space-y-4 text-sm font-medium" style="color: var(--text-main);">
                         <div
-                            class="flex justify-between items-center p-3 rounded-lg bg-zinc-800/30 border border-zinc-700/50">
-                            <span class="text-zinc-400">Ideal Weight Range:</span>
+                            class="flex justify-between items-center p-3 rounded-lg bg-[var(--bg-hover)] border border-[var(--border-color)]">
+                            <span class="text-[var(--text-muted)]">Ideal Weight Range:</span>
                             <span id="shihab_idealWeight" class="font-bold text-indigo-400">--</span>
                         </div>
                         <div
-                            class="flex justify-between items-center p-3 rounded-lg bg-zinc-800/30 border border-zinc-700/50">
-                            <span class="text-zinc-400">Action Plan:</span>
+                            class="flex justify-between items-center p-3 rounded-lg bg-[var(--bg-hover)] border border-[var(--border-color)]">
+                            <span class="text-[var(--text-muted)]">Action Plan:</span>
                             <span id="sshihabb007_actionPlan" class="font-bold text-green-400">--</span>
                         </div>
                     </div>
@@ -305,7 +310,7 @@
     </main>
 
     <!-- Footer -->
-    <div id="site-footer"></div>
+    <div id="site-footer" data-basepath="../"></div>
 
     <!-- Custom Cursor -->
     <div class="cursor-dot"></div>
@@ -350,6 +355,13 @@
         let shihab_currentMode = 'metric';
         let mehedi_lastCalculatedBmi = null;
         let sshihabb007_lastWeightStr = "";
+
+        const shihab_escapeHtml = (str) => String(str ?? '')
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;');
 
         // Toggle Modes
         mehedi_btnMetric.addEventListener('click', () => {
@@ -437,8 +449,9 @@
             }
 
             if (bmi > 0 && bmi < 100) {
-                mehedi_lastCalculatedBmi = bmi.toFixed(1);
-                mehedi_updateUI(parseFloat(mehedi_lastCalculatedBmi), weight, height, isMetric);
+                const roundedBmi = parseFloat(bmi.toFixed(1));
+                mehedi_lastCalculatedBmi = roundedBmi.toFixed(1);
+                mehedi_updateUI(roundedBmi, weight, height, isMetric);
             } else {
                 mehedi_lastCalculatedBmi = null;
                 mehedi_resetUI();
@@ -446,7 +459,7 @@
         }
 
         function mehedi_updateUI(bmi, weight, height, isMetric) {
-            mehedi_bmiValue.innerText = bmi;
+            mehedi_bmiValue.innerText = bmi.toFixed(1);
             mehedi_insightsCard.classList.remove('hidden');
 
             // Color Logic
@@ -455,23 +468,18 @@
             let borderColor = "";
             let percentage = 0; // 0 to 100 for gauge
 
-            // Mapping BMI to a 0-100% scale. 
-            // <18.5 is 0-24%
-            // 18.5 - 24.9 is 25-50%
-            // 25 - 29.9 is 51-75%
-            // 30+ is 76-100%
-
+            // Mapping BMI to a 0-100% scale using consistent 18.5 / 24.9 / 29.9 thresholds
             if (bmi < 18.5) {
                 statusText = "Underweight";
                 colorClass = "bg-blue-500/20 text-blue-400 border-blue-500/50";
                 borderColor = "#3b82f6";
                 percentage = (bmi / 18.5) * 24;
-            } else if (bmi < 25) {
+            } else if (bmi <= 24.9) {
                 statusText = "Healthy Weight";
                 colorClass = "bg-green-500/20 text-green-400 border-green-500/50";
                 borderColor = "#22c55e";
-                percentage = 25 + ((bmi - 18.5) / (25 - 18.5)) * 25;
-            } else if (bmi < 30) {
+                percentage = 25 + ((bmi - 18.5) / (24.9 - 18.5)) * 25;
+            } else if (bmi <= 29.9) {
                 statusText = "Overweight";
                 colorClass = "bg-yellow-500/20 text-yellow-400 border-yellow-500/50";
                 borderColor = "#eab308";
@@ -496,7 +504,7 @@
             // Move needle
             sshihabb007_needle.style.left = `${percentage}%`;
 
-            // Insights
+            // Insights (using 18.5 - 24.9 consistently with roundedBmi classification)
             let idealMin, idealMax;
             if (isMetric) {
                 idealMin = (18.5 * height * height).toFixed(1);
@@ -504,11 +512,11 @@
                 shihab_idealWeight.innerText = `${idealMin} - ${idealMax} kg`;
 
                 if (bmi < 18.5) {
-                    let diff = (idealMin - weight).toFixed(1);
+                    let diff = Math.max(0.1, parseFloat(idealMin) - weight).toFixed(1);
                     sshihabb007_actionPlan.innerText = `Gain ${diff} kg`;
                     sshihabb007_actionPlan.className = "font-bold text-blue-400";
-                } else if (bmi >= 25) {
-                    let diff = (weight - idealMax).toFixed(1);
+                } else if (bmi > 24.9) {
+                    let diff = Math.max(0.1, weight - parseFloat(idealMax)).toFixed(1);
                     sshihabb007_actionPlan.innerText = `Lose ${diff} kg`;
                     sshihabb007_actionPlan.className = "font-bold text-yellow-400";
                     if (bmi >= 30) sshihabb007_actionPlan.className = "font-bold text-red-400";
@@ -523,11 +531,11 @@
                 shihab_idealWeight.innerText = `${idealMin} - ${idealMax} lbs`;
 
                 if (bmi < 18.5) {
-                    let diff = (idealMin - weight).toFixed(1);
+                    let diff = Math.max(0.1, parseFloat(idealMin) - weight).toFixed(1);
                     sshihabb007_actionPlan.innerText = `Gain ${diff} lbs`;
                     sshihabb007_actionPlan.className = "font-bold text-blue-400";
-                } else if (bmi >= 25) {
-                    let diff = (weight - idealMax).toFixed(1);
+                } else if (bmi > 24.9) {
+                    let diff = Math.max(0.1, weight - parseFloat(idealMax)).toFixed(1);
                     sshihabb007_actionPlan.innerText = `Lose ${diff} lbs`;
                     sshihabb007_actionPlan.className = "font-bold text-yellow-400";
                     if (bmi >= 30) sshihabb007_actionPlan.className = "font-bold text-red-400";
@@ -553,18 +561,25 @@
             const history = JSON.parse(localStorage.getItem('shihab_bmiHistory') || '[]');
             if (history.length > 0) {
                 shihab_historySection.classList.remove('hidden');
-                sshihabb007_historyList.innerHTML = history.map(item => `
+                sshihabb007_historyList.innerHTML = history.map(item => {
+                    const safeBmi = shihab_escapeHtml(item.bmi);
+                    const safeStatus = shihab_escapeHtml(item.status);
+                    const safeWeight = shihab_escapeHtml(item.weight);
+                    const parsedDate = new Date(item.date);
+                    const safeDate = shihab_escapeHtml(isNaN(parsedDate.getTime()) ? '' : parsedDate.toLocaleDateString());
+                    return `
                     <div class="sshihabb007-history-item">
                         <div>
-                            <span class="font-bold text-indigo-400 text-lg mr-2">${item.bmi}</span>
-                            <span class="text-xs text-gray-500 font-semibold uppercase tracking-wider">${item.status}</span>
+                            <span class="font-bold text-indigo-400 text-lg mr-2">${safeBmi}</span>
+                            <span class="text-xs text-gray-500 font-semibold uppercase tracking-wider">${safeStatus}</span>
                         </div>
                         <div class="text-left sm:text-right">
-                            <div class="text-sm font-semibold" style="color: var(--text-main);">${item.weight}</div>
-                            <div class="text-xs text-gray-500">${new Date(item.date).toLocaleDateString()}</div>
+                            <div class="text-sm font-semibold" style="color: var(--text-main);">${safeWeight}</div>
+                            <div class="text-xs text-gray-500">${safeDate}</div>
                         </div>
                     </div>
-                `).join('');
+                `;
+                }).join('');
             } else {
                 shihab_historySection.classList.add('hidden');
             }

@@ -16,6 +16,15 @@ const shihab_engine_select = document.getElementById('shihab_engine_select');
 const shihab_gemini_key = document.getElementById('shihab_gemini_key');
 const shihab_groq_key = document.getElementById('shihab_groq_key');
 
+function mehedi_escapeHtml(str) {
+    return String(str ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+
 // Load Settings
 const savedEngine = localStorage.getItem('shihab_engine') || 'gemini';
 shihab_engine_select.value = savedEngine;
@@ -56,7 +65,7 @@ shihab_drop_zone.addEventListener('drop', async function sshihabb007_drop(shihab
 
 async function sshihabb007_handleFile(file) {
     sshihabb007_showStatus();
-    const selectedEngine = localStorage.getItem('shihab_engine') || 'local';
+    const selectedEngine = localStorage.getItem('shihab_engine') || shihab_engine_select.value || 'gemini';
     
     if (selectedEngine === 'local') {
         const shihab_audioData = await mehedi_parseAudio(file);
@@ -108,11 +117,15 @@ function shihab_updateProgressBar(shihab_p) {
 // 2. Audio Pre-processing (The Secret Sauce)
 async function mehedi_parseAudio(sshihabb007_file) {
     const shihab_audioCtx = new (window.AudioContext || window.webkitAudioContext)({ sampleRate: 16000 });
-    const mehedi_arrayBuffer = await sshihabb007_file.arrayBuffer();
-    const sshihabb007_audioBuffer = await shihab_audioCtx.decodeAudioData(mehedi_arrayBuffer);
-    
-    // Whisper needs a Float32Array of the first channel
-    return sshihabb007_audioBuffer.getChannelData(0);
+    try {
+        const mehedi_arrayBuffer = await sshihabb007_file.arrayBuffer();
+        const sshihabb007_audioBuffer = await shihab_audioCtx.decodeAudioData(mehedi_arrayBuffer);
+        
+        // Whisper needs a Float32Array of the first channel
+        return sshihabb007_audioBuffer.getChannelData(0);
+    } finally {
+        await shihab_audioCtx.close();
+    }
 }
 
 // 3. Listen to Worker updates
@@ -145,7 +158,7 @@ shihab_worker.onmessage = function mehedi_onMessage(sshihabb007_event) {
         document.getElementById('shihab_status_text').innerText = mehedi_message_text || "Analyzing audio...";
     } else if (shihab_status_state === 'error') {
         document.getElementById('shihab_status_text').innerText = "Error analyzing audio!";
-        sshihabb007_transcript_content.innerHTML = `<span class="text-red-500">${mehedi_message_text}</span>`;
+        sshihabb007_transcript_content.innerHTML = `<span class="text-red-500">${mehedi_escapeHtml(mehedi_message_text)}</span>`;
         console.error("Worker Error:", mehedi_message_text);
     }
 };
@@ -166,7 +179,7 @@ async function mehedi_processGroq(file) {
         return;
     }
     if (file.size > 25 * 1024 * 1024) {
-        document.getElementById('shihab_status_text').innerText = "Error: File too large for Groq (Max 25MB). Please use Gemini 1.5 Pro.";
+        document.getElementById('shihab_status_text').innerText = "Error: File too large for Groq (Max 25MB). Please use Google Gemini 2.5 Flash.";
         return;
     }
 
@@ -196,7 +209,7 @@ async function mehedi_processGroq(file) {
     } catch (error) {
         document.getElementById('shihab_status_text').innerText = "Groq API Error!";
         document.getElementById('sshihabb007_progress_bar').classList.remove('animate-pulse');
-        sshihabb007_transcript_content.innerHTML = `<span class="text-red-500">${error.message}</span>`;
+        sshihabb007_transcript_content.innerHTML = `<span class="text-red-500">${mehedi_escapeHtml(error.message)}</span>`;
     }
 }
 
@@ -249,6 +262,27 @@ async function mehedi_processGemini(file) {
 
         const fileInfo = await uploadResponse.json();
         const fileUri = fileInfo.file.uri;
+        const fileName = fileInfo.file.name;
+        let fileState = fileInfo.file.state;
+
+        // Poll file state until ACTIVE so large audio files don't fail with FAILED_PRECONDITION
+        let pollAttempts = 0;
+        while (fileState && fileState !== 'ACTIVE' && pollAttempts < 60) {
+            if (fileState === 'FAILED') {
+                throw new Error("Google AI Studio failed to process the uploaded audio file.");
+            }
+            document.getElementById('shihab_status_text').innerText = "Processing audio file on Google AI Studio...";
+            document.getElementById('sshihabb007_progress_bar').style.width = `75%`;
+            await new Promise(resolve => setTimeout(resolve, 2000));
+            const statusUrl = fileName
+                ? `https://generativelanguage.googleapis.com/v1beta/${fileName}?key=${geminiKey}`
+                : `${fileUri}?key=${geminiKey}`;
+            const statusRes = await fetch(statusUrl);
+            if (!statusRes.ok) break;
+            const statusData = await statusRes.json();
+            fileState = statusData.state || statusData.file?.state || 'ACTIVE';
+            pollAttempts++;
+        }
 
         // Step 3: Call GenerateContent
         document.getElementById('shihab_status_text').innerText = "Transcribing via Gemini 2.5 Flash-Lite...";
@@ -281,6 +315,6 @@ async function mehedi_processGemini(file) {
     } catch (error) {
         document.getElementById('shihab_status_text').innerText = "Gemini API Error!";
         document.getElementById('sshihabb007_progress_bar').classList.remove('animate-pulse');
-        sshihabb007_transcript_content.innerHTML = `<span class="text-red-500">${error.message}</span>`;
+        sshihabb007_transcript_content.innerHTML = `<span class="text-red-500">${mehedi_escapeHtml(error.message)}</span>`;
     }
 }

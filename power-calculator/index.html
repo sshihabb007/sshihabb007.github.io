@@ -24,21 +24,21 @@
         gtag('config', 'G-3JN6PYW17Z');
     </script>
 
-    <title>Electric Bill Calculator | Estimate Electricity Consumption Cost</title>
+    <title>PC Power Calculator Pro & Electricity Bill Estimator | Mehedi Hasan Shihab</title>
 
     <meta name="description"
         content="Calculate your monthly electric bill accurately. Estimate electricity consumption, appliance power usage in kWh, and total cost with our free power calculator.">
     <meta name="keywords"
         content="electric bill calculator, power consumption calculator, kwh calculator, electricity cost estimator, appliance wattage calculator">
     <link rel="canonical" href="https://sshihabb007.github.io/power-calculator/">
-    <meta property="og:title" content="Electric Bill Calculator | Estimate Electricity Consumption Cost">
+    <meta property="og:title" content="PC Power Calculator Pro & Electricity Bill Estimator | Mehedi Hasan Shihab">
     <meta property="og:description"
         content="Calculate your monthly electric bill accurately. Estimate electricity consumption, appliance power usage in kWh, and total cost with our free power calculator.">
     <meta property="og:url" content="https://sshihabb007.github.io/power-calculator/">
     <meta property="og:image" content="https://sshihabb007.github.io/asset/Shihab.jpg">
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Electric Bill Calculator | Estimate Electricity Consumption Cost">
+    <meta name="twitter:title" content="PC Power Calculator Pro & Electricity Bill Estimator | Mehedi Hasan Shihab">
     <meta name="twitter:description"
         content="Calculate your monthly electric bill accurately. Estimate electricity consumption, appliance power usage in kWh, and total cost with our free power calculator.">
     <meta name="twitter:image" content="https://sshihabb007.github.io/asset/Shihab.jpg">
@@ -138,40 +138,40 @@
 
                         <div class="space-y-4">
                             <div>
-                                <label class="block text-xs uppercase tracking-wider text-slate-500 mb-1">CPU (e.g.,
+                                <label for="sshihab007_cpu_w" class="block text-xs uppercase tracking-wider text-slate-500 mb-1">CPU (e.g.,
                                     Ryzen 7
                                     7700)</label>
                                 <div class="flex items-center gap-3">
-                                    <input type="number" id="sshihab007_cpu_w" value="65"
-                                        class="bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 w-full focus:ring-2 focus:ring-sky-500 outline-none">
+                                    <input type="number" id="sshihab007_cpu_w" value="65" min="0"
+                                        class="mehedi-input bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 w-full focus:ring-2 focus:ring-sky-500 outline-none">
                                     <span class="text-sm text-slate-400 w-12">W</span>
                                 </div>
                             </div>
                             <div>
-                                <label class="block text-xs uppercase tracking-wider text-slate-500 mb-1">GPU (e.g., RTX
+                                <label for="sshihab007_gpu_w" class="block text-xs uppercase tracking-wider text-slate-500 mb-1">GPU (e.g., RTX
                                     5060 Ti)</label>
                                 <div class="flex items-center gap-3">
-                                    <input type="number" id="sshihab007_gpu_w" value="160"
-                                        class="bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 w-full focus:ring-2 focus:ring-sky-500 outline-none">
+                                    <input type="number" id="sshihab007_gpu_w" value="160" min="0"
+                                        class="mehedi-input bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 w-full focus:ring-2 focus:ring-sky-500 outline-none">
                                     <span class="text-sm text-slate-400 w-12">W</span>
                                 </div>
                             </div>
                             <div>
-                                <label class="block text-xs uppercase tracking-wider text-slate-500 mb-1">Others (Fans,
+                                <label for="sshihab007_peripherals_w" class="block text-xs uppercase tracking-wider text-slate-500 mb-1">Others (Fans,
                                     RAM,
                                     SSD, RGB)</label>
                                 <div class="flex items-center gap-3">
-                                    <input type="number" id="sshihab007_peripherals_w" value="50"
-                                        class="bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 w-full focus:ring-2 focus:ring-sky-500 outline-none">
+                                    <input type="number" id="sshihab007_peripherals_w" value="50" min="0"
+                                        class="mehedi-input bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 w-full focus:ring-2 focus:ring-sky-500 outline-none">
                                     <span class="text-sm text-slate-400 w-12">W</span>
                                 </div>
                             </div>
                             <div>
-                                <label
+                                <label for="sshihab007_monitor_w"
                                     class="block text-xs uppercase tracking-wider text-slate-500 mb-1">Monitor</label>
                                 <div class="flex items-center gap-3">
-                                    <input type="number" id="sshihab007_monitor_w" value="35"
-                                        class="bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 w-full focus:ring-2 focus:ring-sky-500 outline-none">
+                                    <input type="number" id="sshihab007_monitor_w" value="35" min="0"
+                                        class="mehedi-input bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 w-full focus:ring-2 focus:ring-sky-500 outline-none">
                                     <span class="text-sm text-slate-400 w-12">W</span>
                                 </div>
                             </div>
@@ -190,29 +190,29 @@
                         <div class="space-y-5">
                             <div>
                                 <div class="flex justify-between text-xs uppercase tracking-wider text-slate-500 mb-2">
-                                    <span>Daily Usage</span>
+                                    <label for="sshihab007_hours">Daily Usage</label>
                                     <span id="sshihab007_hours_val" class="text-sky-400">8 Hours</span>
                                 </div>
                                 <input type="range" id="sshihab007_hours" min="1" max="24" value="8"
-                                    class="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-sky-500 hover:accent-sky-400 transition-all">
+                                    class="mehedi-input w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-sky-500 hover:accent-sky-400 transition-all">
                             </div>
 
                             <div>
-                                <label class="block text-xs uppercase tracking-wider text-slate-500 mb-1">Calculation
+                                <label for="sshihab007_region" class="block text-xs uppercase tracking-wider text-slate-500 mb-1">Calculation
                                     Mode</label>
                                 <select id="sshihab007_region"
-                                    class="bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 w-full focus:ring-2 focus:ring-sky-500 outline-none">
+                                    class="mehedi-input bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 w-full focus:ring-2 focus:ring-sky-500 outline-none">
                                     <option value="BD">Bangladesh (Tiered Tariff)</option>
                                     <option value="Global">Custom Global (Flat Rate)</option>
                                 </select>
                             </div>
 
                             <div id="sshihab007_custom_rate_box" class="hidden">
-                                <label class="block text-xs uppercase tracking-wider text-slate-500 mb-1">Rate per
+                                <label for="sshihab007_custom_rate" class="block text-xs uppercase tracking-wider text-slate-500 mb-1">Rate per
                                     kWh</label>
                                 <div class="flex items-center gap-3">
-                                    <input type="number" id="sshihab007_custom_rate" value="0.15" step="0.01"
-                                        class="bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 w-full">
+                                    <input type="number" id="sshihab007_custom_rate" value="0.15" step="0.01" min="0"
+                                        class="mehedi-input bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 w-full">
                                     <span id="sshihab007_currency" class="text-sm text-slate-400 w-12">USD</span>
                                 </div>
                             </div>
@@ -354,17 +354,21 @@
             function sshihab007_init() {
                 const inputs = ['cpu_w', 'gpu_w', 'peripherals_w', 'monitor_w', 'hours', 'region', 'custom_rate'];
                 inputs.forEach(id => {
-                    document.getElementById('sshihab007_' + id).addEventListener('input', sshihab007_calculate);
+                    const el = document.getElementById('sshihab007_' + id);
+                    if (el) {
+                        el.addEventListener('input', sshihab007_calculate);
+                        el.addEventListener('change', sshihab007_calculate);
+                    }
                 });
                 sshihab007_calculate();
             }
 
             function sshihab007_calculate() {
                 // 1. Gather Inputs
-                const cpu = parseFloat(document.getElementById('sshihab007_cpu_w').value) || 0;
-                const gpu = parseFloat(document.getElementById('sshihab007_gpu_w').value) || 0;
-                const peri = parseFloat(document.getElementById('sshihab007_peripherals_w').value) || 0;
-                const mon = parseFloat(document.getElementById('sshihab007_monitor_w').value) || 0;
+                const cpu = Math.max(0, parseFloat(document.getElementById('sshihab007_cpu_w').value) || 0);
+                const gpu = Math.max(0, parseFloat(document.getElementById('sshihab007_gpu_w').value) || 0);
+                const peri = Math.max(0, parseFloat(document.getElementById('sshihab007_peripherals_w').value) || 0);
+                const mon = Math.max(0, parseFloat(document.getElementById('sshihab007_monitor_w').value) || 0);
                 const hours = parseFloat(document.getElementById('sshihab007_hours').value);
                 const region = document.getElementById('sshihab007_region').value;
 
@@ -392,28 +396,32 @@
                     let tierHtml = '';
                     let prevLimit = 0;
 
-                    sshihab007_config.bd_slabs.forEach(slab => {
-                        const range = slab.limit - prevLimit;
-                        const unitsInSlab = Math.min(remainingKwh, range);
-                        if (unitsInSlab > 0) {
-                            const slabCost = unitsInSlab * slab.rate;
-                            finalCost += slabCost;
-                            tierHtml += `<div class="flex justify-between"><span class="text-slate-400">${slab.limit === Infinity ? '600+' : slab.limit} Unit Slab (@${slab.rate})</span> <span class="font-semibold">৳${slabCost.toFixed(2)}</span></div>`;
-                            remainingKwh -= unitsInSlab;
-                        }
-                        prevLimit = slab.limit;
-                    });
+                    if (monthlyKwh > 0) {
+                        sshihab007_config.bd_slabs.forEach(slab => {
+                            const range = slab.limit - prevLimit;
+                            const unitsInSlab = Math.min(remainingKwh, range);
+                            if (unitsInSlab > 0) {
+                                const slabCost = unitsInSlab * slab.rate;
+                                finalCost += slabCost;
+                                tierHtml += `<div class="flex justify-between"><span class="text-slate-400">${slab.limit === Infinity ? '600+' : slab.limit} Unit Slab (@${slab.rate})</span> <span class="font-semibold">৳${slabCost.toFixed(2)}</span></div>`;
+                                remainingKwh -= unitsInSlab;
+                            }
+                            prevLimit = slab.limit;
+                        });
 
-                    // Add Demand charge and VAT
-                    finalCost += sshihab007_config.demand_charge;
-                    finalCost = finalCost * (1 + sshihab007_config.vat);
+                        // Add Demand charge and VAT only when monthly usage > 0
+                        finalCost += sshihab007_config.demand_charge;
+                        finalCost = finalCost * (1 + sshihab007_config.vat);
+                    } else {
+                        finalCost = 0;
+                    }
 
                     tierListEl.innerHTML = tierHtml || '<p class="text-slate-500">No usage calculated.</p>';
                     tierListEl.parentElement.classList.remove('opacity-20');
                 } else {
                     customBox.classList.remove('hidden');
-                    document.getElementById('sshihab007_unit_label').innerText = '৳';
-                    const rate = parseFloat(document.getElementById('sshihab007_custom_rate').value) || 0;
+                    document.getElementById('sshihab007_unit_label').innerText = '$';
+                    const rate = Math.max(0, parseFloat(document.getElementById('sshihab007_custom_rate').value) || 0);
                     finalCost = monthlyKwh * rate;
                     tierListEl.innerHTML = `<p class="text-slate-400">Global flat rate calculation active.</p>`;
                     tierListEl.parentElement.classList.add('opacity-20');
@@ -432,26 +440,38 @@
 
                 let model = "";
                 let desc = "";
+                let backupTime = "";
                 let stress = "Low";
                 let color = "bg-green-500";
 
-                if (vaRaw <= 650) {
+                if (watts <= 0) {
+                    model = "None Needed (0W)";
+                    desc = "Enter component wattages above to get a tailored UPS recommendation and backup time estimate.";
+                    backupTime = "N/A (0W Load)";
+                } else if (vaRaw <= 650) {
                     model = "650VA Standard";
                     desc = "Perfect for this build. A standard 650VA UPS will give you enough time to save work and shut down properly.";
+                    const estMins = Math.max(3, Math.round((67 / watts) * 60));
+                    backupTime = `~${Math.max(2, estMins - 2)}-${estMins + 3} Mins`;
                 } else if (vaRaw <= 1200) {
                     model = "1200VA Pro";
                     desc = "Your power draw is substantial. A 1200VA unit is highly recommended for stability and longer backup.";
+                    const estMins = Math.max(5, Math.round((134 / watts) * 60));
+                    backupTime = `~${Math.max(3, estMins - 2)}-${estMins + 3} Mins`;
                     stress = "Moderate";
                     color = "bg-yellow-500";
                 } else {
                     model = "2000VA Online UPS";
                     desc = "High performance detected! You need a 2KVA system to handle the surge and maintain sine wave purity.";
+                    const estMins = Math.max(5, Math.round((250 / watts) * 60));
+                    backupTime = `~${Math.max(3, estMins - 2)}-${estMins + 3} Mins`;
                     stress = "High";
                     color = "bg-red-500";
                 }
 
                 document.getElementById('sshihab007_ups_model').innerText = model;
                 document.getElementById('sshihab007_ups_desc').innerText = desc;
+                document.getElementById('sshihab007_ups_time').innerText = backupTime;
                 document.getElementById('sshihab007_ups_stress').innerText = stress;
 
                 // Visual indicators
@@ -470,7 +490,7 @@
     </main>
 
     <!-- Footer -->
-    <div id="site-footer"></div>
+    <div id="site-footer" data-basepath="../"></div>
 
     <!-- Custom Cursor -->
     <div class="cursor-dot"></div>

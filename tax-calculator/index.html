@@ -24,7 +24,7 @@
 
     <title>Bangladesh Income Tax Calculator 2025-2026 | NBR e-Return Estimator & e-TIN BD</title>
     <meta name="description"
-        content="Calculate your Bangladesh Income Tax (AY 2025-2026) instantly with the free, highly accurate NBR e-Return Tax Calculator. Features progressive tax slabs, investment rebates, lifestyle expenses (IT-10BB), net wealth surcharges, and a dynamic Zero Tax Optimizer.">
+        content="Calculate your Bangladesh Income Tax (AY 2025-2026) instantly with the free, highly accurate NBR e-Return Tax Calculator. Features progressive tax slabs, investment rebates, lifestyle expenses (IT-10BB), net wealth surcharges, and a dynamic Tax Rebate Optimizer.">
     <meta name="keywords" content="Income Tax Calculator Bangladesh 2025-2026, NBR e-Return Tax Calculator BD, e-Return Bangladesh, e-TIN BD tax calculator, assessment year 2025-2026 tax slabs, BD tax calculation, Mehedi Hasan Shihab, investment tax rebate Bangladesh, wealth surcharge BD, form IT-11GA, form IT-10B, lifestyle expense IT-10BB">
     
     <!-- Geo-targeting & Localization for Google Search BD -->
@@ -36,7 +36,7 @@
     <!-- Open Graph / Facebook / LinkedIn sharing -->
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Bangladesh Income Tax Calculator 2025-2026 | NBR e-Return Estimator & e-TIN BD" />
-    <meta property="og:description" content="Calculate your NBR e-Return tax liability instantly for AY 2025-2026. Features progressive slabs, investment rebates, and one-click Zero Tax Optimizer." />
+    <meta property="og:description" content="Calculate your NBR e-Return tax liability instantly for AY 2025-2026. Features progressive slabs, investment rebates, and one-click Tax Rebate Optimizer." />
     <meta property="og:image" content="https://sshihabb007.github.io/asset/fav.png" />
     <meta property="og:url" content="https://sshihabb007.github.io/tax-calculator/" />
     <meta property="og:site_name" content="NBR e-Return Tax Tool" />
@@ -44,7 +44,7 @@
     <!-- Twitter card sharing -->
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content="Bangladesh Income Tax Calculator 2025-2026" />
-    <meta name="twitter:description" content="Highly accurate NBR e-Return tax calculator with progressive slabs and Zero Tax Optimizer." />
+    <meta name="twitter:description" content="Highly accurate NBR e-Return tax calculator with progressive slabs and Tax Rebate Optimizer." />
     <meta name="twitter:image" content="https://sshihabb007.github.io/asset/fav.png" />
 
     <!-- SEO Canonical URL link -->
@@ -72,7 +72,7 @@
         "name": "Mehedi Hasan Shihab",
         "url": "https://sshihabb007.github.io/"
       },
-      "description": "Free, highly accurate Bangladesh Income Tax Calculator for Assessment Year 2025-2026. Instantly estimate NBR e-Return, progressive slabs, tax rebates, wealth surcharge, and lifestyle expenditures with a Zero Tax Optimizer."
+      "description": "Free, highly accurate Bangladesh Income Tax Calculator for Assessment Year 2025-2026. Instantly estimate NBR e-Return, progressive slabs, tax rebates, wealth surcharge, and lifestyle expenditures with a Tax Rebate Optimizer."
     }
     </script>
 
@@ -83,11 +83,15 @@
     <link rel="manifest" href="manifest.json?v=2">
     <meta name="theme-color" content="#10b981">
     <link rel="apple-touch-icon" href="../asset/icons/tax.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
+            corePlugins: { preflight: false },
             darkMode: 'class',
             theme: {
                 extend: {
@@ -108,6 +112,33 @@
             font-family: 'Outfit', sans-serif;
             background: var(--bg-dark) !important;
             color: var(--text-main) !important;
+        }
+
+        #mehedi_step_navigation_bar,
+        #mehedi_step_navigation_bar *,
+        #mehedi_calculator_form_root,
+        #mehedi_calculator_form_root * {
+            box-sizing: border-box;
+        }
+
+        #mehedi_step_navigation_bar button,
+        #mehedi_calculator_form_root button {
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        #mehedi_calculator_form_root input,
+        #mehedi_calculator_form_root select {
+            border-style: solid;
+            font-family: inherit;
+            color: inherit;
+        }
+
+        #mehedi_calculator_form_root h2,
+        #mehedi_calculator_form_root h3,
+        #mehedi_calculator_form_root p {
+            margin-top: 0;
         }
 
         .glass_shihab {
@@ -180,6 +211,11 @@
 </head>
 
 <body class="flex flex-col min-h-screen">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-537NPQRV" height="0" width="0"
+            style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
     <!-- Header -->
     <div id="site-header" data-basepath="../"></div>
 
@@ -220,7 +256,7 @@
                 </button>
             </nav>
 
-            <main id="mehedi_calculator_form_root">
+            <div id="mehedi_calculator_form_root">
 
                 <!-- Step 1: User Profile Configuration [Form IT-11GA] -->
                 <section id="sshihabb007_step_card_1" class="glass_shihab rounded-3xl p-6 sm:p-8 border border-[var(--border-color)]">
@@ -515,6 +551,10 @@
                                             <td class="py-3 text-gray-500 dark:text-slate-400">Net Surcharge (Surcharge Tax)</td>
                                             <td id="mehedi_table_applied_surcharge" class="py-3 text-right font-bold text-indigo-500 font-mono">0 BDT</td>
                                         </tr>
+                                        <tr class="border-b border-gray-100 dark:border-slate-800/80">
+                                            <td class="py-3 text-gray-500 dark:text-slate-400">Advance Tax / TDS Credit [IT-10BB]</td>
+                                            <td id="mehedi_table_applied_tds" class="py-3 text-right font-bold text-teal-600 dark:text-teal-400 font-mono">- 0 BDT</td>
+                                        </tr>
                                         <tr>
                                             <td class="py-4 text-gray-800 dark:text-slate-200 font-extrabold text-base">Net Final Tax Liabilities Due</td>
                                             <td id="mehedi_table_final_tax" class="py-4 text-right font-black text-xl text-rose-600 dark:text-rose-400 font-mono">0 BDT</td>
@@ -540,7 +580,7 @@
                             </div>
                         </div>
 
-                        <!-- Right Panel: Surcharge Inputs & Premium Zero Tax Optimizer -->
+                        <!-- Right Panel: Surcharge Inputs & Premium Rebate Optimizer -->
                         <div class="space-y-6 flex flex-col">
                             
                             <!-- Surcharge Slabs Inputs Card -->
@@ -570,10 +610,10 @@
                                 <div class="relative z-10">
                                     <span class="bg-emerald-800 text-emerald-200 text-xs font-bold uppercase px-3 py-1.5 rounded-lg tracking-widest border border-emerald-700/50">Legal Framework Optimizer</span>
                                     <h3 class="text-xl font-bold mt-4 mb-2 flex items-center gap-2">
-                                        🚀 Adjust to Zero Tax
+                                        🚀 Optimize Tax Rebate
                                     </h3>
                                     <p class="text-xs text-emerald-200/85 leading-relaxed">
-                                        Runs an automated calculation loop inside the Schedule 5 investment framework, identifying the exact legitimate capital allocation needed to lower your net asset tax liability to absolute zero.
+                                        Calculates the exact additional Schedule 5 investment needed to maximize your allowable tax rebate (up to 3% of taxable income or 10 Lakh BDT) while preserving your existing investments.
                                     </p>
                                 </div>
 
@@ -583,7 +623,7 @@
                                 </div>
 
                                 <button id="sshihabb007_zero_tax_action_btn" onclick="sshihabb007_optimize_to_zero_tax()" class="w-full py-4 bg-white hover:bg-emerald-50 text-emerald-950 text-sm font-extrabold rounded-2xl shadow-md transition transform active:scale-95 text-center relative z-10 cursor-pointer">
-                                    Force Adjust Tax To Zero
+                                    Auto-Maximize Tax Rebate
                                 </button>
                             </div>
                         </div>
@@ -597,7 +637,7 @@
                     </div>
                 </section>
 
-            </main>
+            </div>
         </div>
     </main>
 
@@ -674,7 +714,6 @@
                     shihab_btn.className = "flex-1 min-w-[135px] md:min-w-0 py-3 px-2 rounded-xl text-xs sm:text-sm font-bold text-center bg-emerald-600 text-white shadow-md transition-all duration-300";
                 } else {
                     shihab_card.classList.add('hidden');
-                    // Check if it's "completed" style or standard inactive
                     shihab_btn.className = "flex-1 min-w-[135px] md:min-w-0 py-3 px-2 rounded-xl text-xs sm:text-sm font-semibold text-center text-gray-500 dark:text-slate-400 hover:bg-gray-200/50 dark:hover:bg-slate-700/30 transition-all duration-300";
                 }
             }
@@ -794,24 +833,24 @@
                 shihab_taxpayer_profile.sshihabb007_invest_zakat + shihab_taxpayer_profile.sshihabb007_invest_benevolent;
 
             // Allowable Rebate Rule: lowest of 3% of total taxable base, 15% of eligible investment, or 10,00,000 BDT
+            let max_possible_rebate = Math.min(mehedi_taxable_salary * 0.03, 1000000);
             let shihab_max_allowable_rebate = 0;
             if (mehedi_calculated_gross_tax > 0) {
                 shihab_max_allowable_rebate = Math.min(
-                    mehedi_taxable_salary * 0.03,
-                    shihab_total_investments * 0.15,
-                    1000000
+                    max_possible_rebate,
+                    shihab_total_investments * 0.15
                 );
             }
 
             document.getElementById('shihab_total_invest_display').innerText = shihab_format_currency(shihab_total_investments) + " BDT";
             document.getElementById('shihab_tax_rebate_display').innerText = shihab_format_currency(shihab_max_allowable_rebate) + " BDT";
 
-            // 5. Final Net Surcharge Calculation
+            // 5. Final Net Surcharge & Advance Tax (TDS) Calculation
             let shihab_final_net_tax = Math.max(mehedi_calculated_gross_tax - shihab_max_allowable_rebate, 0);
 
             // Minimum location-based Tax threshold logic if taxable base exceeds threshold
             let shihab_min_tax_due = shihab_taxpayer_profile.mehedi_location;
-            let shihab_has_taxable_income = mehedi_taxable_salary > shihab_base_threshold;
+            let shihab_has_taxable_income = mehedi_calculated_gross_tax > 0;
             
             if (shihab_has_taxable_income && shihab_final_net_tax < shihab_min_tax_due) {
                 shihab_final_net_tax = shihab_min_tax_due;
@@ -834,7 +873,9 @@
             }
 
             let shihab_applied_surcharge_sum = shihab_final_net_tax * shihab_surcharge_rate;
-            let shihab_total_amount_payable = shihab_final_net_tax + shihab_applied_surcharge_sum;
+            let shihab_tax_with_surcharge = shihab_final_net_tax + shihab_applied_surcharge_sum;
+            let shihab_exp_tds = shihab_taxpayer_profile.mehedi_exp_tds;
+            let shihab_total_amount_payable = Math.max(0, shihab_tax_with_surcharge - shihab_exp_tds);
 
             // 6. Expenses Tracking Summary Framework (IT-10BB)
             let shihab_total_lifestyle_expense = 
@@ -857,35 +898,37 @@
             document.getElementById('mehedi_table_exempted_income').innerText = shihab_format_currency(mehedi_exempted_salary) + " BDT";
             document.getElementById('mehedi_table_taxable_income').innerText = shihab_format_currency(mehedi_taxable_salary) + " BDT";
             document.getElementById('mehedi_table_gross_tax').innerText = shihab_format_currency(mehedi_calculated_gross_tax) + " BDT";
-            document.getElementById('mehedi_table_applied_rebate').innerText = shihab_format_currency(shihab_max_allowable_rebate) + " BDT";
+            document.getElementById('mehedi_table_applied_rebate').innerText = "- " + shihab_format_currency(shihab_max_allowable_rebate) + " BDT";
             document.getElementById('mehedi_table_applied_surcharge').innerText = "+ " + shihab_format_currency(shihab_applied_surcharge_sum) + " BDT";
+            document.getElementById('mehedi_table_applied_tds').innerText = "- " + shihab_format_currency(shihab_exp_tds) + " BDT";
             document.getElementById('mehedi_table_final_tax').innerText = shihab_format_currency(shihab_total_amount_payable) + " BDT";
 
-            // Calculate zero tax advice metrics
+            // Calculate legal investment rebate optimization advice
             let shihab_optimizer_advice_box = document.getElementById('sshihabb007_optimization_advice');
             
             if (!shihab_has_taxable_income) {
                 shihab_optimizer_advice_box.innerText = "Tax is already 0 BDT. No investment needed!";
-            } else if (shihab_final_net_tax <= shihab_min_tax_due && mehedi_calculated_gross_tax > 0) {
-                shihab_optimizer_advice_box.innerText = `Minimum Tax (${shihab_format_currency(shihab_min_tax_due)} BDT) reached. No further adjustment possible.`;
-            } else if (shihab_final_net_tax === 0) {
-                shihab_optimizer_advice_box.innerText = "Tax successfully optimized to 0 BDT!";
+            } else if (mehedi_calculated_gross_tax <= shihab_min_tax_due) {
+                shihab_optimizer_advice_box.innerText = `Minimum Tax (${shihab_format_currency(shihab_min_tax_due)} BDT) applies. Investment rebate cannot reduce tax below minimum tax.`;
             } else {
-                // Slabs tax-credit limit: we solve for target eligible investment to reduce tax to min or zero
-                // Gross Tax minus Rebate = Min Tax  => Rebate = Gross Tax - Min Tax
-                let target_rebate = Math.max(0, mehedi_calculated_gross_tax - shihab_min_tax_due);
-                let shihab_required_invest_target = target_rebate / 0.15;
+                // Maximum useful rebate is capped by both (gross_tax - min_tax) and the legal cap (min of 3% taxable income or 10 Lakh)
+                let max_useful_rebate = Math.min(mehedi_calculated_gross_tax - shihab_min_tax_due, max_possible_rebate);
+                let shihab_required_invest_target = Math.ceil(max_useful_rebate / 0.15);
                 let needed_invest = Math.max(0, shihab_required_invest_target - shihab_total_investments);
                 
-                if (needed_invest <= 0) {
-                    shihab_optimizer_advice_box.innerText = "Maximum available rebate is already fully secured!";
+                if (needed_invest <= 0 || shihab_max_allowable_rebate >= max_useful_rebate - 0.5) {
+                    if (max_useful_rebate < mehedi_calculated_gross_tax - shihab_min_tax_due) {
+                        shihab_optimizer_advice_box.innerText = `Maximum allowable tax rebate (${shihab_format_currency(max_useful_rebate)} BDT) reached under the 3% taxable income / 10L cap!`;
+                    } else {
+                        shihab_optimizer_advice_box.innerText = `Maximum useful rebate reached! Tax reduced to statutory Minimum Tax (${shihab_format_currency(shihab_min_tax_due)} BDT).`;
+                    }
                 } else {
-                    shihab_optimizer_advice_box.innerText = `Invest ~${shihab_format_currency(needed_invest)} BDT into listed stocks to secure maximum rebate coverage.`;
+                    shihab_optimizer_advice_box.innerText = `Invest an additional ~${shihab_format_currency(needed_invest)} BDT into listed stocks to claim your maximum allowable rebate (${shihab_format_currency(max_useful_rebate)} BDT).`;
                 }
             }
         }
 
-        // Advanced Optimization Solver Loop to reach optimal rebate reduction
+        // Advanced Optimization Solver to maximize legal tax rebate without overwriting existing investments
         function sshihabb007_optimize_to_zero_tax() {
             sshihabb007_core_execution_engine();
 
@@ -904,11 +947,6 @@
                 shihab_taxpayer_profile.shihab_rpf_contribution + shihab_taxpayer_profile.shihab_salary_others;
 
             let mehedi_taxable_salary = Math.max(mehedi_total_gross_salary - Math.min(mehedi_total_gross_salary / 3, 450000), 0);
-
-            if (mehedi_taxable_salary <= shihab_base_threshold) {
-                alert("Your taxable income falls below the structural threshold. Net Tax is already 0 BDT.");
-                return;
-            }
 
             // Progressive Slab solver parameters
             let mehedi_rem_income = mehedi_taxable_salary - shihab_base_threshold;
@@ -930,28 +968,45 @@
                 }
             }
 
-            // Target rebate is equal to Gross Tax minus the Location-based Minimum Tax
-            let shihab_min_tax_due = shihab_taxpayer_profile.mehedi_location;
-            let target_rebate = Math.max(0, mehedi_calculated_gross_tax - shihab_min_tax_due);
-            let shihab_target_investment_allocation = target_rebate / 0.15;
-
-            // Enforce maximum permissible rebate caps (3% of taxable income limit)
-            let max_possible_rebate = mehedi_taxable_salary * 0.03;
-            if (target_rebate > max_possible_rebate) {
-                shihab_target_investment_allocation = max_possible_rebate / 0.15;
+            if (mehedi_calculated_gross_tax <= 0) {
+                alert("Your taxable income falls below the threshold. Net Tax is already 0 BDT.");
+                return;
             }
 
-            // Legally allocate target across securities inputs
-            document.getElementById('sshihabb007_invest_stocks').value = Math.round(shihab_target_investment_allocation);
-            document.getElementById('sshihabb007_invest_insurance').value = 0;
-            document.getElementById('sshihabb007_invest_dps').value = 0;
-            document.getElementById('sshihabb007_invest_gov_sec').value = 0;
-            document.getElementById('sshihabb007_invest_zakat').value = 0;
-            document.getElementById('sshihabb007_invest_benevolent').value = 0;
+            let shihab_min_tax_due = shihab_taxpayer_profile.mehedi_location;
+            if (mehedi_calculated_gross_tax <= shihab_min_tax_due) {
+                alert(`Your gross tax is already at or below the statutory Minimum Tax (${shihab_format_currency(shihab_min_tax_due)} BDT).`);
+                return;
+            }
+
+            // Enforce maximum permissible rebate caps (min of 3% of taxable income or 10 Lakh, and gross_tax - min_tax)
+            let max_possible_rebate = Math.min(mehedi_taxable_salary * 0.03, 1000000);
+            let target_rebate = Math.min(mehedi_calculated_gross_tax - shihab_min_tax_due, max_possible_rebate);
+
+            // Preserve user's existing investments in insurance, dps, gov_sec, zakat, benevolent
+            let other_eligible_investments =
+                shihab_taxpayer_profile.sshihabb007_invest_insurance +
+                Math.min(shihab_taxpayer_profile.sshihabb007_invest_dps, 60000) +
+                shihab_taxpayer_profile.sshihabb007_invest_gov_sec +
+                shihab_taxpayer_profile.sshihabb007_invest_zakat +
+                shihab_taxpayer_profile.sshihabb007_invest_benevolent;
+
+            let current_rebate_from_other = Math.min(other_eligible_investments * 0.15, target_rebate);
+            let remaining_rebate_gap = Math.max(0, target_rebate - current_rebate_from_other);
+            let required_stocks_investment = Math.ceil(remaining_rebate_gap / 0.15);
+            let current_stocks = shihab_taxpayer_profile.sshihabb007_invest_stocks;
+
+            if (current_stocks >= required_stocks_investment) {
+                alert(`You have already reached the maximum allowable tax rebate (${shihab_format_currency(target_rebate)} BDT)!`);
+                return;
+            }
+
+            let additional_stocks_added = required_stocks_investment - current_stocks;
+            document.getElementById('sshihabb007_invest_stocks').value = required_stocks_investment;
 
             // Re-trigger calculation engine computation to update display statistics
             sshihabb007_core_execution_engine();
-            alert(`Optimization executed! Allocated ${shihab_format_currency(shihab_target_investment_allocation)} BDT into listed stocks to secure maximum rebate coverage.`);
+            alert(`Optimization complete! Added ${shihab_format_currency(additional_stocks_added)} BDT (total ${shihab_format_currency(required_stocks_investment)} BDT) in listed stocks to secure the maximum allowable rebate of ${shihab_format_currency(target_rebate)} BDT while keeping your other investments intact.`);
         }
 
         // Sync local light/dark classes with body.light-mode transitions

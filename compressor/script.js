@@ -56,6 +56,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const Mehedi_cancelOptionsBtn    = document.getElementById('Mehedi_cancelOptionsBtnId');
     const Mehedi_saveOptionsBtn      = document.getElementById('Mehedi_saveOptionsBtnId');
     const Mehedi_waveformContainer   = document.getElementById('Mehedi_waveformContainerId');
+    const Shihab_waveformTime        = document.getElementById('Shihab_waveformTimeId');
+    const Shihab_playPauseAudioBtn   = document.getElementById('Shihab_playPauseAudioBtnId');
+    const Shihab_playPauseIcon       = document.getElementById('Shihab_playPauseIconId');
+    const Shihab_playPauseText       = document.getElementById('Shihab_playPauseTextId');
     const Shihab_trimStart           = document.getElementById('Shihab_trimStartId');
     const sshihabb007_trimEnd        = document.getElementById('sshihabb007_trimEndId');
     const Mehedi_bitrateSelect       = document.getElementById('Mehedi_bitrateSelectId');
@@ -64,12 +68,25 @@ document.addEventListener('DOMContentLoaded', () => {
     const sshihabb007_channelsSelect = document.getElementById('sshihabb007_channelsSelectId');
 
     // === State ===
-    let Shihab_currentFile    = null;
-    let Shihab_currentFiles   = [];
-    let Mehedi_currentBlobUrl  = null;
-    let Mehedi_currentBlobUrls = [];
-    let Mehedi_isAudio         = false;
-    let sshihabb007_wavesurfer = null;
+    let Shihab_currentFile        = null;
+    let Shihab_currentFiles       = [];
+    let Mehedi_currentBlobUrl     = null;
+    let Mehedi_currentBlobUrls    = [];
+    let Shihab_originalImgBlobUrl = null;
+    let Mehedi_audioPreviewUrl    = null;
+    let Mehedi_isAudio            = false;
+    let sshihabb007_wavesurfer    = null;
+    let Mehedi_sliderDebounceTimer = null;
+
+    // Format seconds into HH:MM:SS
+    const Shihab_formatTimeHMS = (secs) => {
+        if (!Number.isFinite(secs) || secs < 0) return '00:00:00';
+        const totalSec = Math.floor(secs);
+        const h = Math.floor(totalSec / 3600);
+        const m = Math.floor((totalSec % 3600) / 60);
+        const s = totalSec % 60;
+        return [h, m, s].map(v => String(v).padStart(2, '0')).join(':');
+    };
 
     // === FFmpeg v0.11.6 — single-threaded, no Worker required ===
     const { createFFmpeg, fetchFile } = FFmpeg;
@@ -77,7 +94,8 @@ document.addEventListener('DOMContentLoaded', () => {
         log: true,
         corePath: 'https://unpkg.com/@ffmpeg/core@0.11.0/dist/ffmpeg-core.js',
         progress: ({ ratio }) => {
-            const pct = Math.round(ratio * 100);
+            if (!Number.isFinite(ratio)) return;
+            const pct = Math.min(100, Math.max(0, Math.round(ratio * 100)));
             sshihabb007_audioProgressPct.textContent = `${pct}%`;
             Mehedi_audioProgressBar.style.width = `${pct}%`;
         }
@@ -162,11 +180,25 @@ document.addEventListener('DOMContentLoaded', () => {
         Shihab_audioFileName.textContent = Shihab_currentFile.name;
         sshihabb007_audioFileSize.textContent = Shihab_formatBytes(Shihab_currentFile.size);
 
+        Shihab_trimStart.value = '';
+        sshihabb007_trimEnd.value = '';
+
         Mehedi_audioListItem.classList.remove('hidden');
         Mehedi_audioListItem.classList.add('flex');
 
         // Start loading engine in background, show progress
         Shihab_loadEngine();
+    };
+
+    const sshihabb007_updatePlayPauseUI = (isPlaying) => {
+        if (!Shihab_playPauseIcon || !Shihab_playPauseText) return;
+        if (isPlaying) {
+            Shihab_playPauseIcon.className = 'fas fa-pause';
+            Shihab_playPauseText.textContent = 'Pause';
+        } else {
+            Shihab_playPauseIcon.className = 'fas fa-play';
+            Shihab_playPauseText.textContent = 'Play Preview';
+        }
     };
 
     // === Audio Options Modal ===
@@ -182,12 +214,49 @@ document.addEventListener('DOMContentLoaded', () => {
                 cursorColor: '#fca5a5',
                 barWidth: 2,
                 barRadius: 3,
-                responsive: true,
+                interact: true,
                 height: 100,
             });
+
+            sshihabb007_wavesurfer.on('ready', () => {
+                const dur = sshihabb007_wavesurfer.getDuration();
+                const formattedDur = Shihab_formatTimeHMS(dur);
+                Shihab_trimStart.setAttribute('max', Math.floor(dur));
+                sshihabb007_trimEnd.setAttribute('max', Math.floor(dur));
+                if (!Shihab_trimStart.value) Shihab_trimStart.value = '00:00:00';
+                if (!sshihabb007_trimEnd.value) sshihabb007_trimEnd.value = formattedDur;
+                if (Shihab_waveformTime) {
+                    Shihab_waveformTime.textContent = `00:00:00 / ${formattedDur}`;
+                }
+                sshihabb007_updatePlayPauseUI(false);
+            });
+
+            sshihabb007_wavesurfer.on('timeupdate', (currentTime) => {
+                const dur = sshihabb007_wavesurfer.getDuration();
+                if (Shihab_waveformTime) {
+                    Shihab_waveformTime.textContent = `${Shihab_formatTimeHMS(currentTime)} / ${Shihab_formatTimeHMS(dur)}`;
+                }
+            });
+
+            sshihabb007_wavesurfer.on('play', () => sshihabb007_updatePlayPauseUI(true));
+            sshihabb007_wavesurfer.on('pause', () => sshihabb007_updatePlayPauseUI(false));
+            sshihabb007_wavesurfer.on('finish', () => sshihabb007_updatePlayPauseUI(false));
         }
-        sshihabb007_wavesurfer.load(URL.createObjectURL(Shihab_currentFile));
+
+        if (Mehedi_audioPreviewUrl) {
+            URL.revokeObjectURL(Mehedi_audioPreviewUrl);
+        }
+        Mehedi_audioPreviewUrl = URL.createObjectURL(Shihab_currentFile);
+        sshihabb007_wavesurfer.load(Mehedi_audioPreviewUrl);
     });
+
+    if (Shihab_playPauseAudioBtn) {
+        Shihab_playPauseAudioBtn.addEventListener('click', () => {
+            if (sshihabb007_wavesurfer) {
+                sshihabb007_wavesurfer.playPause();
+            }
+        });
+    }
 
     const sshihabb007_closeModal = () => {
         Shihab_audioModal.classList.add('hidden');
@@ -230,7 +299,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const trimStart = Shihab_trimStart.value.trim();
             const trimEnd   = sshihabb007_trimEnd.value.trim();
-            if (trimStart) cmd.push('-ss', trimStart);
+            if (trimStart && trimStart !== '00:00:00') cmd.push('-ss', trimStart);
             if (trimEnd)   cmd.push('-to', trimEnd);
 
             const bitrate    = Mehedi_bitrateSelect.value;
@@ -325,7 +394,7 @@ document.addEventListener('DOMContentLoaded', () => {
         results.forEach(r => {
             const blobUrl = URL.createObjectURL(r.blob);
             Mehedi_currentBlobUrls.push({
-                originalName: r.file.name.split('.')[0],
+                originalName: r.file.name.replace(/\.[^/.]+$/, ''),
                 blobUrl,
                 ext: fmt === 'jpeg' ? 'jpg' : fmt
             });
@@ -335,7 +404,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (results.length > 0) {
             const first = results[0];
-            Shihab_originalImg.src         = URL.createObjectURL(first.file);
+            if (Shihab_originalImgBlobUrl) {
+                URL.revokeObjectURL(Shihab_originalImgBlobUrl);
+            }
+            Shihab_originalImgBlobUrl      = URL.createObjectURL(first.file);
+            Shihab_originalImg.src         = Shihab_originalImgBlobUrl;
             Mehedi_originalSize.textContent = Shihab_formatBytes(totalOriginalSize) +
                 (results.length > 1 ? ` (${results.length} files)` : '');
             sshihabb007_originalDims.textContent = `${first.img.width} x ${first.img.height}`;
@@ -400,10 +473,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // === Image Settings ===
+    // === Image Settings (Debounced Slider) ===
     sshihabb007_qualitySlider.addEventListener('input', (e) => {
         Shihab_qualityValue.textContent = `${e.target.value}%`;
-        Mehedi_processImage();
+        if (Mehedi_sliderDebounceTimer) clearTimeout(Mehedi_sliderDebounceTimer);
+        Mehedi_sliderDebounceTimer = setTimeout(() => {
+            Mehedi_processImage();
+        }, 150);
     });
     Mehedi_formatSelect.addEventListener('change', () => Mehedi_processImage());
     Mehedi_resizeCheckbox.addEventListener('change', () => Mehedi_processImage());

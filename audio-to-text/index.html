@@ -190,7 +190,7 @@
             <h3 class="text-xl font-bold text-indigo-400 mb-4 shihab_h3_2 mehedi_title_feat sshihabb007_head3">✨ Key
               Features</h3>
             <ul class="space-y-2 text-zinc-400 text-sm shihab_ul mehedi_ul sshihabb007_feat_list">
-              <li>👉 <strong class="text-zinc-200">Gemini 2.5 Flash-Lite:</strong> Deep multimodal analysis for massive
+              <li>👉 <strong class="text-zinc-200">Gemini 2.5 Flash:</strong> Deep multimodal analysis for massive
                 files (including songs).</li>
               <li>👉 <strong class="text-zinc-200">Groq Whisper V3:</strong> Lightning-fast hardware processing for
                 files under 25MB.</li>
@@ -201,67 +201,63 @@
             </ul>
           </div>
         </div>
-  </main>
-  </div>
+      </div>
 
-  <!-- Settings Modal -->
-  <div id="shihab_settings_modal"
-    class="hidden fixed inset-0 bg-black/80 flex items-center justify-center z-50 shihab_modal mehedi_modal_overlay sshihabb007_modal_bg">
-    <div
-      class="bg-zinc-900 rounded-xl p-5 sm:p-8 w-full max-w-md border border-zinc-700 shihab_modal_content mehedi_modal_box sshihabb007_modal_inner m-4">
-      <h2 class="text-2xl font-bold text-white mb-6 shihab_modal_title mehedi_h2 sshihabb007_settings_head">Settings
-      </h2>
+      <!-- Settings Modal -->
+      <div id="shihab_settings_modal"
+        class="hidden fixed inset-0 bg-black/80 flex items-center justify-center z-50 shihab_modal mehedi_modal_overlay sshihabb007_modal_bg">
+        <div
+          class="bg-zinc-900 rounded-xl p-5 sm:p-8 w-full max-w-md border border-zinc-700 shihab_modal_content mehedi_modal_box sshihabb007_modal_inner m-4">
+          <h2 class="text-2xl font-bold text-white mb-6 shihab_modal_title mehedi_h2 sshihabb007_settings_head">Settings
+          </h2>
 
-      <div class="space-y-4 shihab_settings_space mehedi_form_space sshihabb007_form_group">
-        <!-- Engine Selector -->
-        <div>
-          <label
-            class="block text-sm font-medium text-zinc-400 mb-1 shihab_label1 mehedi_engine_lbl sshihabb007_lbl_engine">Transcription
-            Engine</label>
-          <select id="shihab_engine_select"
-            class="w-full bg-zinc-800 border border-zinc-700 text-white rounded-lg p-2 focus:border-indigo-500 outline-none shihab_select mehedi_engine_select sshihabb007_select">
-            <option value="gemini" class="shihab_opt2 mehedi_opt_gemini sshihabb007_gemini">Google Gemini 1.5 Pro (Best
-              for Songs/Huge Files)</option>
-            <option value="groq" class="shihab_opt3 mehedi_opt_groq sshihabb007_groq">Groq Whisper V3 (Fastest for
-              <25MB)< /option>
-            <option value="local" class="shihab_opt1 mehedi_opt_local sshihabb007_local">Local Browser AI (Whisper Base)
-            </option>
-          </select>
-        </div>
+          <div class="space-y-4 shihab_settings_space mehedi_form_space sshihabb007_form_group">
+            <!-- Engine Selector -->
+            <div>
+              <label
+                class="block text-sm font-medium text-zinc-400 mb-1 shihab_label1 mehedi_engine_lbl sshihabb007_lbl_engine">Transcription
+                Engine</label>
+              <select id="shihab_engine_select"
+                class="w-full bg-zinc-800 border border-zinc-700 text-white rounded-lg p-2 focus:border-indigo-500 outline-none shihab_select mehedi_engine_select sshihabb007_select">
+                <option value="gemini" class="shihab_opt2 mehedi_opt_gemini sshihabb007_gemini">Google Gemini 2.5 Flash (Best for Songs/Huge Files)</option>
+                <option value="groq" class="shihab_opt3 mehedi_opt_groq sshihabb007_groq">Groq Whisper V3 (Fastest for &lt;25MB)</option>
+                <option value="local" class="shihab_opt1 mehedi_opt_local sshihabb007_local">Local Browser AI (Whisper Base)</option>
+              </select>
+            </div>
 
-        <!-- Gemini Key -->
-        <div>
-          <label
-            class="block text-sm font-medium text-zinc-400 mb-1 shihab_label2 mehedi_gemini_lbl sshihabb007_lbl_gemini">Google
-            AI Studio (Gemini) Key</label>
-          <input type="password" id="shihab_gemini_key"
-            class="w-full bg-zinc-800 border border-zinc-700 text-white rounded-lg p-2 focus:border-indigo-500 outline-none shihab_input1 mehedi_gemini_input sshihabb007_gemini_key"
-            placeholder="AIzaSy...">
-        </div>
+            <!-- Gemini Key -->
+            <div>
+              <label
+                class="block text-sm font-medium text-zinc-400 mb-1 shihab_label2 mehedi_gemini_lbl sshihabb007_lbl_gemini">Google
+                AI Studio (Gemini) Key</label>
+              <input type="password" id="shihab_gemini_key"
+                class="w-full bg-zinc-800 border border-zinc-700 text-white rounded-lg p-2 focus:border-indigo-500 outline-none shihab_input1 mehedi_gemini_input sshihabb007_gemini_key"
+                placeholder="AIzaSy...">
+            </div>
 
-        <!-- Groq Key -->
-        <div>
-          <label
-            class="block text-sm font-medium text-zinc-400 mb-1 shihab_label3 mehedi_groq_lbl sshihabb007_lbl_groq">Groq
-            API Key</label>
-          <input type="password" id="shihab_groq_key"
-            class="w-full bg-zinc-800 border border-zinc-700 text-white rounded-lg p-2 focus:border-indigo-500 outline-none shihab_input2 mehedi_groq_input sshihabb007_groq_key"
-            placeholder="gsk_...">
+            <!-- Groq Key -->
+            <div>
+              <label
+                class="block text-sm font-medium text-zinc-400 mb-1 shihab_label3 mehedi_groq_lbl sshihabb007_lbl_groq">Groq
+                API Key</label>
+              <input type="password" id="shihab_groq_key"
+                class="w-full bg-zinc-800 border border-zinc-700 text-white rounded-lg p-2 focus:border-indigo-500 outline-none shihab_input2 mehedi_groq_input sshihabb007_groq_key"
+                placeholder="gsk_...">
+            </div>
+          </div>
+
+          <div class="mt-8 flex justify-end space-x-3 shihab_modal_actions mehedi_btn_group sshihabb007_footer">
+            <button id="shihab_close_settings"
+              class="px-4 py-2 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-white shihab_btn_cancel mehedi_cancel_btn sshihabb007_close">Cancel</button>
+            <button id="shihab_save_settings"
+              class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white shihab_btn_save mehedi_save_btn sshihabb007_save">Save
+              Changes</button>
+          </div>
         </div>
       </div>
 
-      <div class="mt-8 flex justify-end space-x-3 shihab_modal_actions mehedi_btn_group sshihabb007_footer">
-        <button id="shihab_close_settings"
-          class="px-4 py-2 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-white shihab_btn_cancel mehedi_cancel_btn sshihabb007_close">Cancel</button>
-        <button id="shihab_save_settings"
-          class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white shihab_btn_save mehedi_save_btn sshihabb007_save">Save
-          Changes</button>
-      </div>
-    </div>
-  </div>
-
-  <script type="module" src="shihab_main.js"></script>
-  </div> <!-- Close w-full div -->
+      <script type="module" src="shihab_main.js"></script>
+    </div> <!-- Close w-full div -->
   </main>
 
   <!-- Footer -->

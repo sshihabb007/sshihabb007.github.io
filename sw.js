@@ -1,4 +1,4 @@
-const CACHE_NAME = 'sshihabb007-pwa-v17';
+const CACHE_NAME = 'sshihabb007-pwa-v19';
 const STATIC_ASSETS = [
     './',
     './index.html',
@@ -10,15 +10,29 @@ const STATIC_ASSETS = [
     './asset/fav.png',
     './components/header.html',
     './components/footer.html',
-    // QR Generator
-    './qr-generator/',
-    './qr-generator/index.html',
-    // Other tools
-    './currency-converter/',
-    './currency-converter/index.html',
+    './front/projects.html',
+    './front/contact.html',
+    // Tools
     './advanced-calculator/',
     './advanced-calculator/index.html',
-    // Universal Downloader
+    './age-calculator/',
+    './age-calculator/index.html',
+    './audio-to-text/',
+    './audio-to-text/index.html',
+    './bmi-calculator/',
+    './bmi-calculator/index.html',
+    './compressor/',
+    './compressor/index.html',
+    './currency-converter/',
+    './currency-converter/index.html',
+    './land-calculator/',
+    './land-calculator/index.html',
+    './power-calculator/',
+    './power-calculator/index.html',
+    './qr-generator/',
+    './qr-generator/index.html',
+    './tax-calculator/',
+    './tax-calculator/index.html',
     './universal-downloader/',
     './universal-downloader/index.html',
     './universal-downloader/style.css',
@@ -64,25 +78,25 @@ self.addEventListener('fetch', (event) => {
         requestUrl.pathname.endsWith('.wav') ||
         requestUrl.pathname.endsWith('.pdf')) return;
 
-    // Network-first for HTML pages (always fresh)
+    // Network-first for HTML pages (always fresh, ignore query string for cache matching)
     if (requestUrl.pathname.endsWith('.html') || requestUrl.pathname.endsWith('/')) {
         event.respondWith(
             fetch(event.request)
                 .then((response) => {
                     if (response && response.status === 200) {
                         const clone = response.clone();
-                        caches.open(CACHE_NAME).then(c => c.put(event.request, clone));
+                        caches.open(CACHE_NAME).then(c => c.put(requestUrl.pathname, clone));
                     }
                     return response;
                 })
-                .catch(() => caches.match(event.request))
+                .catch(() => caches.match(requestUrl.pathname).then(r => r || caches.match(event.request)))
         );
         return;
     }
 
     // Stale-While-Revalidate for CSS/JS/assets
     event.respondWith(
-        caches.match(event.request).then((cachedResponse) => {
+        caches.match(event.request, { ignoreSearch: true }).then((cachedResponse) => {
             const networkFetch = fetch(event.request).then((response) => {
                 if (response && response.status === 200 && response.type === 'basic') {
                     const responseClone = response.clone();

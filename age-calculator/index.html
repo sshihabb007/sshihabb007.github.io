@@ -50,6 +50,11 @@
     <link rel="stylesheet" href="../css/style.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            corePlugins: { preflight: false }
+        }
+    </script>
 
     <style>
         .sshihab007-glass {
@@ -67,6 +72,10 @@
             border: 1px solid var(--border-color) !important;
             color-scheme: dark;
             /* Helps calendar icon in dark mode */
+        }
+
+        body.light-mode input[type="date"] {
+            color-scheme: light;
         }
 
         .fade-in {
@@ -106,12 +115,12 @@
     <!-- End Google Tag Manager (noscript) -->
 
     <!-- Navbar -->
-    <div id="site-header"></div>
+    <div id="site-header" data-basepath="../"></div>
 
     <main class="flex-grow w-full mx-auto px-4 py-12 max-w-5xl">
         <!-- Header -->
         <div
-            class="mb-8 md:mb-12 flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 border-b pb-4 border-gray-200">
+            class="mb-8 md:mb-12 flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 border-b pb-4 border-[var(--border-color)]">
             <div class="text-center md:text-left">
                 <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-2 sm:mb-3"><span
                         style="color: var(--text-main);">Age Calculator</span> <span
@@ -123,7 +132,7 @@
             <!-- Input Section -->
             <section
                 class="sshihab007-glass p-4 sm:p-6 rounded-3xl shadow-xl flex flex-col sm:flex-row items-center gap-4 w-full md:w-auto">
-                <input type="date" id="mehedi_dob"
+                <input type="date" id="mehedi_dob" aria-label="Date of Birth"
                     class="p-3 sm:p-3.5 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-inner font-semibold text-lg cursor-pointer w-full sm:w-auto">
                 <button id="Shihab_calculateBtn"
                     class="bg-blue-600 text-white px-5 sm:px-6 py-3 sm:py-3.5 rounded-xl font-bold hover:bg-blue-700 transition shadow-lg hover:shadow-blue-500/50 flex items-center justify-center gap-2 w-full sm:w-auto">
@@ -256,7 +265,7 @@
     </main>
 
     <!-- Footer -->
-    <div id="site-footer"></div>
+    <div id="site-footer" data-basepath="../"></div>
 
     <!-- Custom Cursor -->
     <div class="cursor-dot"></div>
@@ -310,7 +319,8 @@
                 if (!mehedi_dobInput.value) return;
 
                 localStorage.setItem('sshihabb007_birthday', mehedi_dobInput.value);
-                const birthDate = new Date(mehedi_dobInput.value);
+                const [bYear, bMonth, bDay] = mehedi_dobInput.value.split('-').map(Number);
+                const birthDate = new Date(bYear, bMonth - 1, bDay, 0, 0, 0, 0);
                 const now = new Date();
 
                 if (birthDate > now) {
@@ -344,11 +354,13 @@
                 const chinese = Shihab_getChineseZodiac(birthDate.getFullYear());
                 const dayOfWeek = birthDate.toLocaleDateString('en-US', { weekday: 'long' });
 
+                const isBirthdayToday = now.getMonth() === birthDate.getMonth() && now.getDate() === birthDate.getDate();
+                const todayMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate());
                 let nextBday = new Date(now.getFullYear(), birthDate.getMonth(), birthDate.getDate());
-                if (now > nextBday && (now.getDate() !== nextBday.getDate() || now.getMonth() !== nextBday.getMonth())) {
+                if (!isBirthdayToday && todayMidnight > nextBday) {
                     nextBday.setFullYear(now.getFullYear() + 1);
                 }
-                const daysToBday = Math.ceil((nextBday - now) / msInDay);
+                const daysToBday = isBirthdayToday ? 0 : Math.round((nextBday - todayMidnight) / msInDay);
 
                 let progressPercent = (totalDays / 29200) * 100;
                 if (progressPercent > 100) progressPercent = 100;
@@ -363,7 +375,7 @@
                 document.getElementById('mehedi_generationLabel').innerText = gen;
                 document.getElementById('sshihabb007_chineseZodiac').innerHTML = `Chinese: <span class="text-white">${chinese}</span>`;
 
-                document.getElementById('Shihab_daysToBirthday').innerText = daysToBday === 0 || daysToBday === 365 ? "Today!" : daysToBday;
+                document.getElementById('Shihab_daysToBirthday').innerText = daysToBday === 0 ? "Today!" : daysToBday;
                 document.getElementById('mehedi_birthDayOfWeek').innerHTML = `Born on a <span class="text-blue-500">${dayOfWeek}</span>`;
 
                 document.getElementById('stat_months').innerText = totalMonths.toLocaleString();
@@ -378,7 +390,7 @@
 
                 // Copy Features
                 const ageText = `${years} Years, ${months} Months and ${days} Days`;
-                const allStatsText = `Age: ${ageText}\nZodiac: ${zodiac}\nGeneration: ${gen}\nChinese Zodiac: ${chinese}\nNext Birthday: ${daysToBday} days\nTotal Days Lived: ${totalDays.toLocaleString()}`;
+                const allStatsText = `Age: ${ageText}\nZodiac: ${zodiac}\nGeneration: ${gen}\nChinese Zodiac: ${chinese}\nNext Birthday: ${daysToBday === 0 ? 'Today!' : daysToBday + ' days'}\nTotal Days Lived: ${totalDays.toLocaleString()}`;
 
                 document.getElementById('Shihab_copyAgeBtn').onclick = function () {
                     navigator.clipboard.writeText(ageText).then(() => {

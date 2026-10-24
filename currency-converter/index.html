@@ -97,9 +97,9 @@
             <div class="space-y-4">
                 <!-- Amount Input -->
                 <div>
-                    <label class="block text-xs font-bold uppercase mb-2"
+                    <label for="mehedi_amount" class="block text-xs font-bold uppercase mb-2"
                         style="color: var(--text-muted);">Amount</label>
-                    <input type="number" id="mehedi_amount" value="1"
+                    <input type="number" id="mehedi_amount" value="1" min="0"
                         class="sshihabb007_input w-full border-none text-2xl p-4 rounded-2xl outline-none transition-all focus:ring-2 focus:ring-indigo-500 font-semibold"
                         style="background-color: var(--bg-hover); color: var(--text-main);">
                 </div>
@@ -107,7 +107,7 @@
                 <!-- Currency Selection -->
                 <div class="grid grid-cols-1 gap-2 mt-4">
                     <div>
-                        <label class="block text-xs font-bold uppercase mb-2"
+                        <label for="shihab_fromCurrency" class="block text-xs font-bold uppercase mb-2"
                             style="color: var(--text-muted);">From</label>
                         <select id="shihab_fromCurrency"
                             class="sshihabb007_input w-full p-4 rounded-2xl outline-none appearance-none cursor-pointer font-semibold border-none focus:ring-2 focus:ring-indigo-500"
@@ -116,9 +116,9 @@
 
                     <!-- Swap Button Row with TO label for equal spacing -->
                     <div class="flex justify-center items-center relative" style="height: 40px;">
-                        <label class="absolute left-0 text-xs font-bold uppercase"
+                        <label for="shihab_toCurrency" class="absolute left-0 text-xs font-bold uppercase"
                             style="color: var(--text-muted);">To</label>
-                        <button id="mehedi_swapBtn"
+                        <button id="mehedi_swapBtn" aria-label="Swap currencies"
                             class="bg-indigo-600 p-2 rounded-full hover:rotate-180 transition-transform duration-300 text-white shadow-lg cursor-pointer flex items-center justify-center w-10 h-10 border-none"
                             title="Swap currencies">
                             <i class="fas fa-exchange-alt"></i>
@@ -138,13 +138,14 @@
                         Getting latest rates...</p>
                     <h2 id="mehedi_resultText" class="text-3xl sm:text-4xl font-black break-words"
                         style="color: var(--text-main);">--.--</h2>
+                    <p id="mehedi_lastUpdated" class="text-xs mt-2 font-medium" style="color: var(--text-muted);"></p>
                 </div>
             </div>
         </div>
     </main>
 
     <!-- Footer -->
-    <div id="site-footer"></div>
+    <div id="site-footer" data-basepath="../"></div>
 
     <script src="../js/load-components.js"></script>
     <script src="../js/theme.js"></script>

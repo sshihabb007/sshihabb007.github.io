@@ -35,11 +35,13 @@
     <meta property="og:description"
         content="Create custom QR codes for free with our advanced QR Code Generator. Generate QR codes for URLs, WhatsApp, WiFi, vCard, and more. Add logos and colors instantly.">
     <meta property="og:url" content="https://sshihabb007.github.io/qr-generator/">
+    <meta property="og:image" content="https://sshihabb007.github.io/qr-generator/icon.png">
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Free Custom QR Code Generator Online">
     <meta name="twitter:description"
         content="Generate high-quality, custom QR codes for free. Add your own logo, change colors, and download in SVG or PNG format.">
+    <meta name="twitter:image" content="https://sshihabb007.github.io/qr-generator/icon.png">
 
     <!-- PWA and SEO tags -->
     <link rel="canonical" href="https://sshihabb007.github.io/qr-generator/" />
@@ -76,15 +78,54 @@
     <!-- External Libraries -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            corePlugins: { preflight: false }
+        }
+    </script>
     <script type="text/javascript" src="https://unpkg.com/qr-code-styling@1.5.0/lib/qr-code-styling.js"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/svg2pdf.js/2.2.3/svg2pdf.umd.min.js"></script>
 
     <style>
         body {
             background-color: var(--bg-dark);
             color: var(--text-main);
+        }
+
+        .mehedi-container,
+        .mehedi-container *,
+        .mehedi-container *::before,
+        .mehedi-container *::after,
+        #shihab-more-dropdown,
+        #shihab-more-dropdown * {
+            box-sizing: border-box;
+            border-width: 0;
+            border-style: solid;
+            border-color: var(--border-color);
+        }
+
+        .mehedi-container button {
+            background-color: transparent;
+            cursor: pointer;
+            font-family: inherit;
+            color: inherit;
+        }
+
+        .mehedi-container input,
+        .mehedi-container textarea,
+        .mehedi-container select {
+            font-family: inherit;
+            font-size: 100%;
+            margin: 0;
+        }
+
+        .mehedi-container h1,
+        .mehedi-container h2,
+        .mehedi-container h3,
+        .mehedi-container p,
+        .mehedi-container ol {
+            margin: 0;
         }
 
         .mehedi-container {
@@ -339,7 +380,7 @@
 
     <div id="site-header" data-basepath="../"></div>
 
-    <div class="mehedi-container flex-grow">
+    <main class="mehedi-container flex-grow">
         <div class="text-center space-y-2 mt-4 mb-8">
             <h1
                 class="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500">
@@ -1101,7 +1142,7 @@
             </div>
         </div>
 
-    </div>
+    </main>
 
     <div id="site-footer"></div>
 
@@ -1170,7 +1211,19 @@
             imageOptions: { crossOrigin: "anonymous", margin: 10, imageSize: 0.4 },
             qrOptions: { errorCorrectionLevel: 'H' }
         });
-        sshihabb007QrCode.append(document.getElementById("mehedi-canvas-container"));
+        const mehediCanvasContainer = document.getElementById("mehedi-canvas-container");
+        sshihabb007QrCode.append(mehediCanvasContainer);
+
+        // Observe #mehedi-canvas-container so shihabApplyTextOverlay() always runs whenever <svg> is injected or replaced
+        const shihabSvgObserver = new MutationObserver(() => {
+            const size = parseInt(document.getElementById('mehedi-size-slider')?.value) || 400;
+            const svgEl = mehediCanvasContainer.querySelector('svg');
+            if (svgEl) {
+                svgEl.setAttribute('viewBox', `0 0 ${size} ${size}`);
+                shihabApplyTextOverlay();
+            }
+        });
+        shihabSvgObserver.observe(mehediCanvasContainer, { childList: true });
 
         // Add initial viewBox for responsiveness
         setTimeout(() => {
@@ -1312,8 +1365,9 @@
                 const lng = document.getElementById('sshihabb007-loc-lng').value || "0";
                 shihabFinalData = `geo:${lat},${lng}`;
             } else if (currentType === 'wifi') {
-                const ssid = document.getElementById('sshihabb007-wf-ssid').value || "";
-                const pass = document.getElementById('sshihabb007-wf-pass').value || "";
+                const escapeWifi = (str) => (str || "").replace(/([\\;,:"])/g, '\\$1');
+                const ssid = escapeWifi(document.getElementById('sshihabb007-wf-ssid').value);
+                const pass = escapeWifi(document.getElementById('sshihabb007-wf-pass').value);
                 const enc = document.getElementById('sshihabb007-wf-enc').value || "WPA";
                 shihabFinalData = `WIFI:T:${enc};S:${ssid};P:${pass};;`;
             } else if (currentType === 'vcard') {
@@ -1338,8 +1392,10 @@
                 shihabFinalData = document.getElementById('sshihabb007-yt-url').value || "https://youtube.com";
             } else if (currentType === 'event') {
                 const title = document.getElementById('mehedi-ev-title').value || "";
-                const start = document.getElementById('mehedi-ev-start').value.replace(/[-:]/g, '') + "00Z" || "";
-                const end = document.getElementById('mehedi-ev-end').value.replace(/[-:]/g, '') + "00Z" || "";
+                const rawStart = document.getElementById('mehedi-ev-start').value.replace(/[-:]/g, '');
+                const rawEnd = document.getElementById('mehedi-ev-end').value.replace(/[-:]/g, '');
+                const start = rawStart ? rawStart + "00Z" : "";
+                const end = rawEnd ? rawEnd + "00Z" : "";
                 const loc = document.getElementById('mehedi-ev-location').value || "";
                 shihabFinalData = `BEGIN:VEVENT\nSUMMARY:${title}\nDTSTART:${start}\nDTEND:${end}\nLOCATION:${loc}\nEND:VEVENT`;
             } else if (currentType === 'bitcoin') {
@@ -1382,14 +1438,18 @@
                 cornersDotOptions: { color: eyeColor, type: eyeBallShape }
             });
 
-            // Ensure SVG scales correctly and apply text overlay
-            setTimeout(() => {
+            const applyOverlayAfterRender = () => {
                 const svgEl = document.querySelector('#mehedi-canvas-container svg');
                 if (svgEl) {
                     svgEl.setAttribute('viewBox', `0 0 ${size} ${size}`);
                     shihabApplyTextOverlay();
                 }
-            }, 80);
+            };
+
+            if (sshihabb007QrCode._drawingPromise && typeof sshihabb007QrCode._drawingPromise.then === 'function') {
+                sshihabb007QrCode._drawingPromise.then(() => setTimeout(applyOverlayAfterRender, 0)).catch(() => {});
+            }
+            setTimeout(applyOverlayAfterRender, 80);
         }
 
         // === Center Text Label Overlay ===
@@ -1483,32 +1543,97 @@
             return name;
         }
 
-        function mehediDownload(ext) {
-            sshihabb007QrCode.download({ name: getQrFileName(), extension: ext });
+        async function shihabGetSerializedSvg(size) {
+            if (sshihabb007QrCode._drawingPromise && typeof sshihabb007QrCode._drawingPromise.then === 'function') {
+                try { await sshihabb007QrCode._drawingPromise; } catch (_) {}
+            }
+            shihabApplyTextOverlay();
+            const svgEl = document.querySelector('#mehedi-canvas-container svg');
+            if (!svgEl) return null;
+            const clone = svgEl.cloneNode(true);
+            clone.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+            clone.setAttribute('xmlns:xlink', 'http://www.w3.org/1999/xlink');
+            clone.setAttribute('width', size);
+            clone.setAttribute('height', size);
+            clone.setAttribute('viewBox', `0 0 ${size} ${size}`);
+            return new XMLSerializer().serializeToString(clone);
+        }
+
+        async function shihabRenderQrCanvas(size, fillWhiteBg = false) {
+            const svgString = await shihabGetSerializedSvg(size);
+            if (!svgString) throw new Error('QR SVG not found');
+            const svgBlob = new Blob([svgString], { type: 'image/svg+xml;charset=utf-8' });
+            const url = URL.createObjectURL(svgBlob);
+            return new Promise((resolve, reject) => {
+                const img = new Image();
+                img.crossOrigin = 'anonymous';
+                img.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    canvas.width = size;
+                    canvas.height = size;
+                    const ctx = canvas.getContext('2d');
+                    if (fillWhiteBg) {
+                        ctx.fillStyle = '#ffffff';
+                        ctx.fillRect(0, 0, size, size);
+                    }
+                    ctx.drawImage(img, 0, 0, size, size);
+                    URL.revokeObjectURL(url);
+                    resolve(canvas);
+                };
+                img.onerror = (err) => {
+                    URL.revokeObjectURL(url);
+                    reject(err);
+                };
+                img.src = url;
+            });
+        }
+
+        async function mehediDownload(ext) {
+            const size = parseInt(document.getElementById('mehedi-size-slider').value) || 400;
+            const fileName = getQrFileName();
+            try {
+                if (ext === 'svg') {
+                    const svgString = await shihabGetSerializedSvg(size);
+                    if (svgString) {
+                        const blob = new Blob([svgString], { type: 'image/svg+xml;charset=utf-8' });
+                        const url = URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = fileName + '.svg';
+                        a.click();
+                        URL.revokeObjectURL(url);
+                        return;
+                    }
+                } else if (ext === 'png') {
+                    const canvas = await shihabRenderQrCanvas(size, false);
+                    const dataUrl = canvas.toDataURL('image/png');
+                    const a = document.createElement('a');
+                    a.href = dataUrl;
+                    a.download = fileName + '.png';
+                    a.click();
+                    return;
+                }
+            } catch (e) {
+                console.warn('Custom SVG/Canvas export fallback:', e);
+            }
+            sshihabb007QrCode.download({ name: fileName, extension: ext });
         }
 
         async function downloadPDF() {
             try {
                 const size = parseInt(document.getElementById('mehedi-size-slider').value) || 400;
-                // Grab the raw PNG blob from the library to ensure all logos/colors are baked in perfectly
-                const blob = await sshihabb007QrCode.getRawData("png");
-                if (!blob) return alert('Please generate the QR code first.');
+                const canvas = await shihabRenderQrCanvas(size, true);
+                const pngDataUrl = canvas.toDataURL('image/png');
 
-                const url = URL.createObjectURL(blob);
-                const img = new Image();
-                img.onload = function () {
-                    const { jsPDF } = window.jspdf;
-                    const doc = new jsPDF({
-                        orientation: 'portrait',
-                        unit: 'px',
-                        format: [size, size]
-                    });
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF({
+                    orientation: 'portrait',
+                    unit: 'px',
+                    format: [size, size]
+                });
 
-                    doc.addImage(img, 'PNG', 0, 0, size, size);
-                    doc.save(getQrFileName() + '.pdf');
-                    URL.revokeObjectURL(url);
-                };
-                img.src = url;
+                doc.addImage(pngDataUrl, 'PNG', 0, 0, size, size);
+                doc.save(getQrFileName() + '.pdf');
             } catch (e) {
                 console.error(e);
                 alert("Failed to generate PDF. Make sure all external assets (like logos) are accessible.");
@@ -1518,45 +1643,29 @@
         async function downloadEPS() {
             try {
                 const size = parseInt(document.getElementById('mehedi-size-slider').value) || 400;
+                const canvas = await shihabRenderQrCanvas(size, true);
 
-                // Get a safe PNG blob from the library to avoid canvas tainting from external SVG logos
-                const blob = await sshihabb007QrCode.getRawData("png");
-                const url = URL.createObjectURL(blob);
+                // Extract JPEG data to utilize PostScript's DCTDecode filter
+                const imgData = canvas.toDataURL("image/jpeg", 1.0);
+                const b64 = imgData.split(',')[1];
+                const raw = atob(b64);
 
-                const img = new Image();
-                img.onload = function () {
-                    const canvas = document.createElement("canvas");
-                    canvas.width = size;
-                    canvas.height = size;
-                    const ctx = canvas.getContext("2d");
+                // Convert raw binary string to a hex array
+                let hexArr = new Array(raw.length);
+                for (let i = 0; i < raw.length; i++) {
+                    let h = raw.charCodeAt(i).toString(16);
+                    if (h.length === 1) h = '0' + h;
+                    hexArr[i] = h;
+                }
 
-                    // JPEGs do not support transparency, so fill with white background first
-                    ctx.fillStyle = '#ffffff';
-                    ctx.fillRect(0, 0, size, size);
-                    ctx.drawImage(img, 0, 0);
-                    URL.revokeObjectURL(url);
+                // Split hex string into 64-character lines to meet strict EPS formatting standards
+                let flatHex = hexArr.join('');
+                let formattedHex = '';
+                for (let i = 0; i < flatHex.length; i += 64) {
+                    formattedHex += flatHex.substring(i, i + 64) + '\n';
+                }
 
-                    // Extract JPEG data to utilize PostScript's DCTDecode filter
-                    const imgData = canvas.toDataURL("image/jpeg", 1.0);
-                    const b64 = imgData.split(',')[1];
-                    const raw = atob(b64);
-
-                    // Convert raw binary string to a hex array
-                    let hexArr = new Array(raw.length);
-                    for (let i = 0; i < raw.length; i++) {
-                        let h = raw.charCodeAt(i).toString(16);
-                        if (h.length === 1) h = '0' + h;
-                        hexArr[i] = h;
-                    }
-
-                    // Split hex string into 64-character lines to meet strict EPS formatting standards
-                    let flatHex = hexArr.join('');
-                    let formattedHex = '';
-                    for (let i = 0; i < flatHex.length; i += 64) {
-                        formattedHex += flatHex.substring(i, i + 64) + '\n';
-                    }
-
-                    const epsString = `%!PS-Adobe-3.0 EPSF-3.0
+                const epsString = `%!PS-Adobe-3.0 EPSF-3.0
 %%Creator: Mehedi Hasan Shihab QR Generator
 %%BoundingBox: 0 0 ${size} ${size}
 %%LanguageLevel: 2
@@ -1576,15 +1685,13 @@ image
 ${formattedHex}>
 %%EOF`;
 
-                    const epsBlob = new Blob([epsString], { type: "application/postscript" });
-                    const epsUrl = URL.createObjectURL(epsBlob);
-                    const a = document.createElement("a");
-                    a.href = epsUrl;
-                    a.download = getQrFileName() + '.eps';
-                    a.click();
-                    URL.revokeObjectURL(epsUrl);
-                };
-                img.src = url;
+                const epsBlob = new Blob([epsString], { type: "application/postscript" });
+                const epsUrl = URL.createObjectURL(epsBlob);
+                const a = document.createElement("a");
+                a.href = epsUrl;
+                a.download = getQrFileName() + '.eps';
+                a.click();
+                URL.revokeObjectURL(epsUrl);
             } catch (e) {
                 console.error(e);
                 alert("EPS generation failed.");

@@ -10,13 +10,26 @@ async function loadSiteComponents() {
         basePath = headerPlaceholder.getAttribute('data-basepath');
     } else {
         const path = window.location.pathname;
-        if (path.includes('/front/') || path.includes('/compressor/') || path.includes('/audio-to-text/') || path.includes('/tax-calculator/') || path.includes('/power-calculator/') || path.includes('/age-calculator/') || path.includes('/bmi-calculator/') || path.includes('/universal-downloader/')) {
+        if (
+            path.includes('/front/') ||
+            path.includes('/compressor/') ||
+            path.includes('/audio-to-text/') ||
+            path.includes('/tax-calculator/') ||
+            path.includes('/power-calculator/') ||
+            path.includes('/age-calculator/') ||
+            path.includes('/bmi-calculator/') ||
+            path.includes('/universal-downloader/') ||
+            path.includes('/advanced-calculator/') ||
+            path.includes('/currency-converter/') ||
+            path.includes('/land-calculator/') ||
+            path.includes('/qr-generator/')
+        ) {
             basePath = '../';
         }
     }
 
     try {
-        const cacheBuster = '?v=' + new Date().getTime();
+        const cacheBuster = '?v=2.7';
         if (headerPlaceholder) {
             const res = await fetch(basePath + 'components/header.html' + cacheBuster);
             if (res.ok) {
@@ -37,7 +50,22 @@ async function loadSiteComponents() {
         console.error('Failed to load site components', e);
     }
 
-    // Re-initialize theme toggle after the header is dynamically inserted into the DOM
+    // Remove any duplicate color switcher / back-to-top elements that were hardcoded on old pages
+    // BEFORE initializing theme & back-to-top listeners so listeners attach to the surviving elements.
+    const allPalettes = document.querySelectorAll('.color-switcher-container');
+    if (allPalettes.length > 1) {
+        for (let i = 1; i < allPalettes.length; i++) {
+            allPalettes[i].remove();
+        }
+    }
+    const allBackTops = document.querySelectorAll('#back-to-top');
+    if (allBackTops.length > 1) {
+        for (let i = 1; i < allBackTops.length; i++) {
+            allBackTops[i].remove();
+        }
+    }
+
+    // Re-initialize theme toggle, color palette, and back-to-top after header is inserted into the DOM
     if (typeof window.mehedi_initTheme === 'function') {
         window.mehedi_initTheme();
     } else if (typeof mehedi_initTheme === 'function') {
@@ -63,22 +91,6 @@ async function loadSiteComponents() {
                 if (toggleBtn) toggleBtn.setAttribute('aria-expanded', 'false');
             }
         });
-    }
-
-    // Remove any duplicate color switcher / back-to-top elements that were hardcoded on old pages
-    // (the shared header now injects these elements, so page-level copies must be removed)
-    const allPalettes = document.querySelectorAll('.color-switcher-container');
-    if (allPalettes.length > 1) {
-        // Keep only the first one (injected by header) and remove the rest
-        for (let i = 1; i < allPalettes.length; i++) {
-            allPalettes[i].remove();
-        }
-    }
-    const allBackTops = document.querySelectorAll('#back-to-top');
-    if (allBackTops.length > 1) {
-        for (let i = 1; i < allBackTops.length; i++) {
-            allBackTops[i].remove();
-        }
     }
 
     // PWA Install Popup Logic
@@ -131,7 +143,7 @@ async function loadSiteComponents() {
         popup.innerHTML = `
             <i class="fas fa-download" style="color: var(--primary-color, #6366f1); font-size: 0.85rem;"></i>
             <span style="font-weight: 700;">Install App</span>
-            <button id="pwa-popup-close" style="background:none; border:none; color: var(--text-muted, #9ca3af); cursor: pointer; margin-left: 2px; font-size: 0.85rem; padding: 2px"><i class="fas fa-times"></i></button>
+            <button id="pwa-popup-close" aria-label="Close install prompt" style="background:none; border:none; color: var(--text-muted, #9ca3af); cursor: pointer; margin-left: 2px; font-size: 0.85rem; padding: 2px"><i class="fas fa-times"></i></button>
         `;
         
         document.body.appendChild(popup);
