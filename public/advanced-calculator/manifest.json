@@ -1,0 +1,23 @@
+{
+  "name": "Advanced Scientific Calculator | Mehedi Hasan Shihab",
+  "short_name": "Adv Calc",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#070B14",
+  "theme_color": "#3B82F6",
+  "icons": [
+    {
+      "src": "../asset/fav.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "../asset/fav.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "description": "High-precision scientific calculator with graphing, algebra, and physics constants by Mehedi Hasan Shihab."
+}

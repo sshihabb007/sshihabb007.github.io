@@ -1,0 +1,33 @@
+{
+  "name": "Universal Downloader | Mehedi Hasan Shihab",
+  "short_name": "Downloader Pro",
+  "id": "/universal-downloader/",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#070B14",
+  "theme_color": "#3B82F6",
+  "description": "High-fidelity lossless video and audio stream extractor supporting YouTube, Instagram Reels, TikTok, Twitter/X, and Facebook streams.",
+  "categories": ["utilities", "productivity"],
+  "icons": [
+    {
+      "src": "../asset/fav.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "../asset/fav.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "../asset/fav.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "name": "Currency Converter Pro | Mehedi Hasan Shihab",
+  "short_name": "Currency Calc",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#18181b",
+  "theme_color": "#6366f1",
+  "icons": [
+    {
+      "src": "../asset/fav.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "../asset/fav.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

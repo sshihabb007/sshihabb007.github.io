@@ -1,0 +1,54 @@
+<nav class="navbar">
+    <a href="{{basePath}}" class="nav-brand" style="text-decoration: none;"><span>Mehedi
+            Hasan</span>Shihab</a>
+    <div class="nav-links">
+        <a href="{{basePath}}">Home</a>
+        <a href="{{basePath}}front/projects">Notable Projects</a>
+        <a href="{{basePath}}#certifications">Certifications</a>
+        <a href="{{basePath}}#experience">Experience</a>
+        <div class="nav-dropdown">
+            <a href="javascript:void(0)" class="nav-dropdown-toggle" role="button" aria-haspopup="true" aria-expanded="false">Tools <i class="fas fa-chevron-down" style="font-size: 0.7rem;"></i></a>
+            <div class="nav-dropdown-content">
+                <a href="{{basePath}}advanced-calculator/"><i class="fas fa-square-root-alt"></i> Advanced Calculator</a>
+                <a href="{{basePath}}compressor/"><i class="fas fa-image"></i> Image & Audio Converter</a>
+                <a href="{{basePath}}audio-to-text/"><i class="fas fa-microphone"></i> Audio to Text</a>
+                <a href="{{basePath}}tax-calculator/"><i class="fas fa-calculator"></i> Tax Calculator</a>
+                <a href="{{basePath}}power-calculator/"><i class="fas fa-plug"></i> Power Calculator</a>
+                <a href="{{basePath}}age-calculator/"><i class="fas fa-calendar-alt"></i> Age Calculator Pro</a>
+                <a href="{{basePath}}bmi-calculator/"><i class="fas fa-weight"></i> BMI Calculator</a>
+                <a href="{{basePath}}land-calculator/"><i class="fas fa-map-marked-alt"></i> Land Calculator</a>
+                <a href="{{basePath}}currency-converter/"><i class="fas fa-money-bill-wave"></i> Currency Converter</a>
+                <a href="{{basePath}}qr-generator/"><i class="fas fa-qrcode"></i> QR Generator Pro</a>
+                <a href="{{basePath}}universal-downloader/"><i class="fas fa-download"></i> Universal Downloader</a>
+            </div>
+        </div>
+    </div>
+    <div class="nav-actions" style="display: flex; align-items: center; gap: 12px;">
+        <button id="sshihabb007-theme-toggle" class="btn btn-outline"
+            style="font-size: 0.9rem; padding: 8px 12px; border-color: var(--border-color); color: var(--text-main); background: transparent; cursor: pointer; border-radius: 4px;"
+            aria-label="Toggle Theme"><i class="fas fa-moon"></i></button>
+        <a href="{{basePath}}front/contact" class="btn btn-outline" style="font-size: 0.9rem; padding: 8px 16px;"><i
+                class="fas fa-envelope"></i> Contact Me</a>
+    </div>
+</nav>
+
+<!-- Color Switcher (fixed, bottom-left) -->
+<div class="color-switcher-container">
+    <div class="color-palette" id="color-palette" style="display: none;">
+        <button class="color-btn active" data-color="default" style="background: #F8FAFC; border: 1px solid #ccc;" aria-label="Default theme"></button>
+        <button class="color-btn" data-color="#0EA5E9" style="background: #0EA5E9;" aria-label="Cyan theme"></button>
+        <button class="color-btn" data-color="#3B82F6" style="background: #3B82F6;" aria-label="Blue theme"></button>
+        <button class="color-btn" data-color="#A855F7" style="background: #A855F7;" aria-label="Purple theme"></button>
+        <button class="color-btn" data-color="#EC4899" style="background: #EC4899;" aria-label="Pink theme"></button>
+        <button class="color-btn" data-color="#10B981" style="background: #10B981;" aria-label="Green theme"></button>
+        <button class="color-btn" data-color="#F59E0B" style="background: #F59E0B;" aria-label="Orange theme"></button>
+    </div>
+    <div class="switcher-controls">
+        <button id="palette-toggle" class="icon-btn" aria-label="Open color palette"><i class="fas fa-palette"></i></button>
+    </div>
+</div>
+
+<!-- Back to Top -->
+<button id="back-to-top" class="back-to-top" aria-label="Back to Top">
+    <i class="fas fa-arrow-up"></i>
+</button>

@@ -1,0 +1,15 @@
+{
+  "name": "Dynamic BMI Calculator | Mehedi Hasan Shihab",
+  "short_name": "BMI Calc",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#18181b",
+  "theme_color": "#6366f1",
+  "icons": [
+    {
+      "src": "../asset/icons/bmi.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

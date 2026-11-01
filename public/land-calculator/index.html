@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Google Tag Manager -->
+    <script>(function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-537NPQRV');</script>
+    <!-- End Google Tag Manager -->
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3JN6PYW17Z"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-3JN6PYW17Z');
+    </script>
+
+    <title>Bangladesh Land Measurement Calculator | Katha, Bigha, Decimal to Sq Ft</title>
+    <meta name="description"
+        content="The ultimate land measurement calculator for Bangladesh and India. Accurately convert Decimal, Katha, Bigha, Acre, Hectare to Square Feet and Square Meters.">
+    <meta name="keywords"
+        content="land calculator, bangladesh land measurement, katha to square feet, decimal to katha, bigha to acre, land area converter">
+    <link rel="canonical" href="https://sshihabb007.github.io/land-calculator/">
+    <meta property="og:title" content="Bangladesh Land Measurement Calculator | Katha, Bigha, Decimal to Sq Ft">
+    <meta property="og:description"
+        content="The ultimate land measurement calculator for Bangladesh and India. Accurately convert Decimal, Katha, Bigha, Acre, Hectare to Square Feet and Square Meters.">
+    <meta property="og:url" content="https://sshihabb007.github.io/land-calculator/">
+    <meta property="og:image" content="https://sshihabb007.github.io/asset/Shihab.jpg">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Bangladesh Land Measurement Calculator | Katha, Bigha, Decimal to Sq Ft">
+    <meta name="twitter:description"
+        content="The ultimate land measurement calculator for Bangladesh and India. Accurately convert Decimal, Katha, Bigha, Acre, Hectare to Square Feet and Square Meters.">
+    <meta name="twitter:image" content="https://sshihabb007.github.io/asset/Shihab.jpg">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="icon" type="image/png" href="../asset/fav.png">
+    <link rel="manifest" href="manifest.json?v=4">
+    <meta name="theme-color" content="#10b981">
+    <link rel="apple-touch-icon" href="../asset/icons/land.svg">
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+
+    <script>
+        tailwind.config = {
+            corePlugins: { preflight: false },
+            theme: {
+                extend: {
+                    colors: {
+                        emerald: {
+                            50: '#ecfdf5',
+                            100: '#d1fae5',
+                            200: '#a7f3d0',
+                            300: '#6ee7b7',
+                            400: '#34d399',
+                            500: '#10b981',
+                            600: '#059669',
+                            700: '#047857',
+                            800: '#065f46',
+                            900: '#064e3b',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type="number"] {
+            -moz-appearance: textfield;
+            background-color: var(--bg-hover) !important;
+            color: var(--text-main) !important;
+            border-color: var(--border-color) !important;
+        }
+
+        input[type="number"]:focus {
+            border-color: var(--primary-color) !important;
+        }
+
+        .mehedi_card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+        }
+
+        .shihab_accent {
+            color: var(--primary-color);
+        }
+
+        .visualizer-container {
+            position: relative;
+            width: 100%;
+            height: 250px;
+            background-color: rgba(16, 185, 129, 0.1);
+            border: 2px dashed #10b981;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .shihab_box_visual {
+            background-color: rgba(16, 185, 129, 0.5);
+            border: 2px solid #10b981;
+            border-radius: 4px;
+            transition: all 0.5s ease-out;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-weight: bold;
+            color: white;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+            min-width: 10px;
+            min-height: 10px;
+        }
+    </style>
+</head>
+
+<body class="flex flex-col min-h-screen">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-537NPQRV" height="0" width="0"
+            style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+    <!-- Navbar -->
+    <div id="site-header" data-basepath="../"></div>
+
+    <main class="w-full max-w-7xl mx-auto flex-grow flex flex-col px-4 py-8">
+        <div class="text-center mb-8">
+            <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-2" style="color: var(--text-main);">
+                Land Calculator <span class="text-emerald-500">Pro</span>
+            </h1>
+            <p style="color: var(--text-muted);" class="font-medium text-sm sm:text-base mb-1">Convert Acre, Hectare,
+                Bigha, Katha, Decimal & more.</p>
+            <p style="color: var(--text-muted);" class="text-xs sm:text-sm font-semibold">Developer: <span
+                    style="color: var(--primary-color);">MEHEDI HASAN SHIHAB</span></p>
+        </div>
+
+        <div class="max-w-5xl mx-auto w-full space-y-6">
+
+            <!-- Regional Toggle & Master Grid -->
+            <div class="mehedi_card p-4 sm:p-6 rounded-2xl shadow-xl">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4 border-b border-gray-700 pb-4"
+                    style="border-color: var(--border-color);">
+                    <h2 class="text-xl font-bold" style="color: var(--text-main);">Master Converter</h2>
+
+                    <div class="flex items-center gap-3">
+                        <span class="text-xs font-bold uppercase tracking-wide"
+                            style="color: var(--text-muted);">Standard <br> (33 Dec)</span>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" id="sshihabb007_regionalToggle" class="sr-only peer">
+                            <div
+                                class="w-11 h-6 bg-gray-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-500">
+                            </div>
+                        </label>
+                        <span class="text-xs font-bold uppercase tracking-wide"
+                            style="color: var(--text-muted);">Regional <br> (52 Dec)</span>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+                    <!-- Decimal Input -->
+                    <div class="space-y-1">
+                        <label class="font-bold text-xs uppercase" style="color: var(--text-muted);">Shotangsho
+                            (Decimal)</label>
+                        <input type="number" data-unit="decimal"
+                            class="sshihabb007_input w-full p-3 sm:p-4 border-2 rounded-xl outline-none transition font-semibold text-lg"
+                            placeholder="0">
+                    </div>
+
+                    <!-- Katha Input -->
+                    <div class="space-y-1">
+                        <label class="font-bold text-xs uppercase" style="color: var(--text-muted);">Katha</label>
+                        <input type="number" data-unit="katha"
+                            class="sshihabb007_input w-full p-3 sm:p-4 border-2 rounded-xl outline-none transition font-semibold text-lg"
+                            placeholder="0">
+                    </div>
+
+                    <!-- Bigha Input -->
+                    <div class="space-y-1">
+                        <label class="font-bold text-xs uppercase" style="color: var(--text-muted);">Bigha</label>
+                        <input type="number" data-unit="bigha"
+                            class="sshihabb007_input w-full p-3 sm:p-4 border-2 rounded-xl outline-none transition font-semibold text-lg"
+                            placeholder="0">
+                    </div>
+
+                    <!-- Acre Input -->
+                    <div class="space-y-1">
+                        <label class="font-bold text-xs uppercase" style="color: var(--text-muted);">Acre</label>
+                        <input type="number" data-unit="acre"
+                            class="sshihabb007_input w-full p-3 sm:p-4 border-2 rounded-xl outline-none transition font-semibold text-lg"
+                            placeholder="0">
+                    </div>
+
+                    <!-- Hectare Input -->
+                    <div class="space-y-1">
+                        <label class="font-bold text-xs uppercase" style="color: var(--text-muted);">Hectare</label>
+                        <input type="number" data-unit="hectare"
+                            class="sshihabb007_input w-full p-3 sm:p-4 border-2 rounded-xl outline-none transition font-semibold text-lg"
+                            placeholder="0">
+                    </div>
+
+                    <!-- Sq Meter Input -->
+                    <div class="space-y-1">
+                        <label class="font-bold text-xs uppercase" style="color: var(--text-muted);">Square Meter (Sq
+                            M)</label>
+                        <input type="number" data-unit="sqmeter"
+                            class="sshihabb007_input w-full p-3 sm:p-4 border-2 rounded-xl outline-none transition font-semibold text-lg"
+                            placeholder="0">
+                    </div>
+
+                    <!-- Sq Ft Input -->
+                    <div class="space-y-1">
+                        <label class="font-bold text-xs uppercase" style="color: var(--text-muted);">Square Feet (Sq
+                            Ft)</label>
+                        <input type="number" data-unit="sqft"
+                            class="sshihabb007_input w-full p-3 sm:p-4 border-2 rounded-xl outline-none transition font-semibold text-lg"
+                            placeholder="0">
+                    </div>
+
+                    <!-- Sq Links Input -->
+                    <div class="space-y-1">
+                        <label class="font-bold text-xs uppercase" style="color: var(--text-muted);">Square
+                            Links</label>
+                        <input type="number" data-unit="sqlink"
+                            class="sshihabb007_input w-full p-3 sm:p-4 border-2 rounded-xl outline-none transition font-semibold text-lg"
+                            placeholder="0">
+                    </div>
+                </div>
+
+                <!-- Human Readable Breakdown -->
+                <div class="mt-6 p-4 bg-emerald-900/20 border border-emerald-500/30 rounded-xl text-center">
+                    <p class="text-sm font-semibold uppercase tracking-wider text-emerald-400 mb-1">Human Readable
+                        Breakdown</p>
+                    <p id="shihab_breakdown_display" class="text-lg sm:text-xl font-black"
+                        style="color: var(--text-main);">0 Acre, 0 Bigha, 0 Katha, 0 Decimal</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Area Visualizer -->
+                <div class="mehedi_card p-4 sm:p-6 rounded-2xl shadow-xl">
+                    <h2 class="text-lg font-bold mb-4" style="color: var(--text-main);"><i
+                            class="fas fa-vector-square mr-2 text-emerald-500"></i>Area Visualizer</h2>
+                    <p class="text-xs mb-3" style="color: var(--text-muted);">Compared to a standard Tennis Court (2,808
+                        Sq Ft)</p>
+                    <div class="visualizer-container">
+                        <div id="mehedi_visualizer_box" class="shihab_box_visual">0%</div>
+                    </div>
+                </div>
+
+                <!-- Gunter's Chain Calculator -->
+                <div class="mehedi_card p-4 sm:p-6 rounded-2xl shadow-xl flex flex-col justify-between">
+                    <div>
+                        <h2 class="text-lg font-bold mb-4" style="color: var(--text-main);"><i
+                                class="fas fa-link mr-2 text-emerald-500"></i>Gunter's Chain Calculator</h2>
+                        <p class="text-sm mb-4" style="color: var(--text-muted);">Calculate Decimal directly from
+                            Surveyor Chain links.</p>
+
+                        <div class="grid grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <label class="text-xs font-bold uppercase" style="color: var(--text-muted);">Length
+                                    (Links)</label>
+                                <input type="number" id="shihab_chain_length"
+                                    class="w-full p-3 border-2 rounded-xl outline-none transition font-semibold"
+                                    placeholder="0">
+                            </div>
+                            <div>
+                                <label class="text-xs font-bold uppercase" style="color: var(--text-muted);">Width
+                                    (Links)</label>
+                                <input type="number" id="shihab_chain_width"
+                                    class="w-full p-3 border-2 rounded-xl outline-none transition font-semibold"
+                                    placeholder="0">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-4 bg-emerald-900/20 border border-emerald-500/30 rounded-xl text-center">
+                        <p class="text-xs font-bold uppercase text-emerald-400 mb-1">Result (Decimal)</p>
+                        <p id="mehedi_chain_result" class="text-2xl font-black" style="color: var(--text-main);">0.0000
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Reference & Wiki -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6" x-data="{ activeTab: null }">
+                <!-- Quick Reference Table -->
+                <div class="mehedi_card p-4 sm:p-6 rounded-2xl shadow-xl overflow-x-auto">
+                    <h2 class="text-lg font-bold mb-4" style="color: var(--text-main);"><i
+                            class="fas fa-table mr-2 text-emerald-500"></i>Standard Conversions</h2>
+                    <table class="w-full text-left text-sm" style="color: var(--text-main);">
+                        <thead>
+                            <tr style="border-bottom: 2px solid var(--border-color);">
+                                <th class="pb-2">Unit</th>
+                                <th class="pb-2">Equals To</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom: 1px solid var(--border-color);">
+                                <td class="py-2 font-semibold">1 Acre</td>
+                                <td class="py-2 text-emerald-400">100 Decimal</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--border-color);">
+                                <td class="py-2 font-semibold">1 Bigha (Std)</td>
+                                <td class="py-2 text-emerald-400">33 Decimal</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--border-color);">
+                                <td class="py-2 font-semibold">1 Katha</td>
+                                <td class="py-2 text-emerald-400">1.65 Decimal</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--border-color);">
+                                <td class="py-2 font-semibold">1 Decimal</td>
+                                <td class="py-2 text-emerald-400">435.6 Sq Ft</td>
+                            </tr>
+                            <tr>
+                                <td class="py-2 font-semibold">1 Decimal</td>
+                                <td class="py-2 text-emerald-400">1,000 Sq Links</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Land Laws Wiki -->
+                <div class="mehedi_card p-4 sm:p-6 rounded-2xl shadow-xl">
+                    <h2 class="text-lg font-bold mb-4" style="color: var(--text-main);"><i
+                            class="fas fa-book mr-2 text-emerald-500"></i>Land Terms Wiki</h2>
+                    <div class="space-y-3">
+                        <div class="border rounded-lg" style="border-color: var(--border-color);">
+                            <button @click="activeTab = activeTab === 1 ? null : 1"
+                                class="w-full flex justify-between items-center p-3 font-semibold text-sm transition-colors hover:bg-emerald-900/10 bg-transparent border-none cursor-pointer"
+                                style="color: var(--text-main);">
+                                RS Khatian (Revisional Survey)
+                                <i class="fas fa-chevron-down transition-transform"
+                                    :class="activeTab === 1 ? 'rotate-180' : ''"></i>
+                            </button>
+                            <div x-show="activeTab === 1" x-collapse class="p-3 text-xs border-t"
+                                style="border-color: var(--border-color); color: var(--text-muted);">
+                                Conducted to update the previous CS record. Very reliable standard used heavily for land
+                                verification in Bangladesh.
+                            </div>
+                        </div>
+                        <div class="border rounded-lg" style="border-color: var(--border-color);">
+                            <button @click="activeTab = activeTab === 2 ? null : 2"
+                                class="w-full flex justify-between items-center p-3 font-semibold text-sm transition-colors hover:bg-emerald-900/10 bg-transparent border-none cursor-pointer"
+                                style="color: var(--text-main);">
+                                SA Khatian (State Acquisition)
+                                <i class="fas fa-chevron-down transition-transform"
+                                    :class="activeTab === 2 ? 'rotate-180' : ''"></i>
+                            </button>
+                            <div x-show="activeTab === 2" x-collapse class="p-3 text-xs border-t"
+                                style="border-color: var(--border-color); color: var(--text-muted);">
+                                Prepared during 1956-62 after the abolition of the Zamindari system. Often handwritten
+                                and forms the chain of ownership.
+                            </div>
+                        </div>
+                        <div class="border rounded-lg" style="border-color: var(--border-color);">
+                            <button @click="activeTab = activeTab === 3 ? null : 3"
+                                class="w-full flex justify-between items-center p-3 font-semibold text-sm transition-colors hover:bg-emerald-900/10 bg-transparent border-none cursor-pointer"
+                                style="color: var(--text-main);">
+                                Mouza
+                                <i class="fas fa-chevron-down transition-transform"
+                                    :class="activeTab === 3 ? 'rotate-180' : ''"></i>
+                            </button>
+                            <div x-show="activeTab === 3" x-collapse class="p-3 text-xs border-t"
+                                style="border-color: var(--border-color); color: var(--text-muted);">
+                                A specific land area/village boundary within a jurisdiction. Every land plot belongs to
+                                a numbered Mouza mapping.
+                            </div>
+                        </div>
+                        <div class="border rounded-lg" style="border-color: var(--border-color);">
+                            <button @click="activeTab = activeTab === 4 ? null : 4"
+                                class="w-full flex justify-between items-center p-3 font-semibold text-sm transition-colors hover:bg-emerald-900/10 bg-transparent border-none cursor-pointer"
+                                style="color: var(--text-main);">
+                                Standard (33 Dec) vs Regional (52 Dec)
+                                <i class="fas fa-chevron-down transition-transform"
+                                    :class="activeTab === 4 ? 'rotate-180' : ''"></i>
+                            </button>
+                            <div x-show="activeTab === 4" x-collapse class="p-3 text-xs border-t space-y-2"
+                                style="border-color: var(--border-color); color: var(--text-muted);">
+                                <p><strong>Standard Bigha (33 Decimal):</strong> This is the official government
+                                    standard across Bangladesh. It is universally used for all legal deeds, government
+                                    land registries, and taxation. (1 Bigha = 33 Decimal = 14,400 Sq Ft).</p>
+                                <p><strong>Regional Bigha (52 Decimal):</strong> Used locally in specific rural regions
+                                    of Bangladesh (e.g., parts of Rajshahi/Northern areas) based on older customary
+                                    measurements set by historical local Zamindars. Always clarify which "Bigha" is
+                                    meant during local transactions!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <div id="site-footer"></div>
+
+    <script src="../js/load-components.js"></script>
+    <script src="../js/theme.js"></script>
+    <script src="../js/shihab-security.js"></script>
+
+    <script>
+        // Land Calculator Core Logic - By Mehedi Hasan Shihab (sshihabb007)
+        document.addEventListener('DOMContentLoaded', () => {
+            const shihab_inputs = document.querySelectorAll('.sshihabb007_input');
+            const toggleRegional = document.getElementById('sshihabb007_regionalToggle');
+            const breakdownDisplay = document.getElementById('shihab_breakdown_display');
+            const visualizerBox = document.getElementById('mehedi_visualizer_box');
+
+            // Gunter's Chain inputs
+            const chainLength = document.getElementById('shihab_chain_length');
+            const chainWidth = document.getElementById('shihab_chain_width');
+            const chainResult = document.getElementById('mehedi_chain_result');
+
+            // Conversion Ratios (Base = Decimal)
+            const getRatios = () => {
+                const isRegional = toggleRegional.checked;
+                return {
+                    decimal: 1,
+                    katha: isRegional ? (52 / 20) : 1.65, // If 1 Bigha = 52 Dec, and 20 Katha = 1 Bigha, 1 Katha = 2.6 Dec
+                    bigha: isRegional ? 52 : 33,
+                    acre: 100,
+                    hectare: 247.105,
+                    sqmeter: 1 / 40.4686,
+                    sqft: 1 / 435.6,
+                    sqlink: 1 / 1000
+                };
+            };
+
+            const resetAllInputs = () => {
+                shihab_inputs.forEach(input => input.value = '');
+                breakdownDisplay.innerText = "0 Acre, 0 Bigha, 0 Katha, 0 Decimal";
+                updateVisualizer(0);
+            };
+
+            const updateHumanReadable = (totalDecimal) => {
+                const ratios = getRatios();
+
+                let remainingDec = totalDecimal;
+
+                const acres = Math.floor(remainingDec / ratios.acre);
+                remainingDec %= ratios.acre;
+
+                const bighas = Math.floor(remainingDec / ratios.bigha);
+                remainingDec %= ratios.bigha;
+
+                const kathas = Math.floor(remainingDec / ratios.katha);
+                remainingDec %= ratios.katha;
+
+                const decimals = remainingDec.toFixed(2);
+
+                breakdownDisplay.innerText = `${acres} Acre, ${bighas} Bigha, ${kathas} Katha, ${decimals} Decimal`;
+            };
+
+            const updateVisualizer = (sqftValue) => {
+                // Tennis court is ~2808 sqft. We cap it at 10x tennis court for visual.
+                const TENNIS_COURT = 2808;
+                let percentage = (sqftValue / TENNIS_COURT) * 100;
+
+                if (percentage === 0) {
+                    visualizerBox.style.width = '0%';
+                    visualizerBox.style.height = '0%';
+                    visualizerBox.innerText = '';
+                    return;
+                }
+
+                // Scale it so 100% fills the container, but keep it roughly square
+                let visualSize = Math.sqrt(percentage) * 10; // 100% sqft -> 100% visual size
+                if (visualSize > 100) visualSize = 100;
+                if (visualSize < 5) visualSize = 5;
+
+                visualizerBox.style.width = `${visualSize}%`;
+                visualizerBox.style.height = `${visualSize}%`;
+                visualizerBox.innerText = percentage > 10 ? `${Math.round(percentage)}%` : '';
+            };
+
+            const mehedi_calc_update = (e) => {
+                const ratios = getRatios();
+                // If triggered by toggle, use Decimal input as source of truth
+                const sourceInput = e.target.type === 'checkbox' ?
+                    document.querySelector('[data-unit="decimal"]') : e.target;
+
+                const value = parseFloat(sourceInput.value);
+                const unit = sourceInput.dataset.unit;
+
+                if (isNaN(value)) {
+                    if (e.target.type !== 'checkbox') resetAllInputs();
+                    return;
+                }
+
+                // 1. Convert to Base (Decimal)
+                const baseValue = value * ratios[unit];
+
+                // 2. Update others
+                shihab_inputs.forEach(targetInput => {
+                    if (targetInput !== sourceInput) {
+                        const targetUnit = targetInput.dataset.unit;
+                        const result = baseValue / ratios[targetUnit];
+                        targetInput.value = parseFloat(result.toFixed(4));
+                    }
+                });
+
+                // Update Pro Features
+                updateHumanReadable(baseValue);
+                updateVisualizer(baseValue / ratios.sqft);
+            };
+
+            // Event Listeners
+            shihab_inputs.forEach(input => {
+                input.addEventListener('input', mehedi_calc_update);
+            });
+
+            toggleRegional.addEventListener('change', mehedi_calc_update);
+
+            // Gunter's Chain logic
+            const calculateChain = () => {
+                const l = parseFloat(chainLength.value) || 0;
+                const w = parseFloat(chainWidth.value) || 0;
+                const dec = (l * w) / 1000;
+                chainResult.innerText = dec.toFixed(4);
+            };
+
+            chainLength.addEventListener('input', calculateChain);
+            chainWidth.addEventListener('input', calculateChain);
+        });
+    </script>
+    <!-- Custom Cursor -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('../sw.js').then(reg => {
+                    console.log('Service Worker registered!');
+                }).catch(err => console.log('Service Worker registration failed', err));
+            });
+        }
+    </script>
+</body>
+
+</html>

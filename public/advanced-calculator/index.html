@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <!-- Google Tag Manager -->
+    <script>(function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-537NPQRV');</script>
+    <!-- End Google Tag Manager -->
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3JN6PYW17Z"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-3JN6PYW17Z');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Scientific Calculator Online | Math, Algebra & Physics</title>
+    <meta name="description" content="Free online advanced scientific calculator for solving complex math, algebra, and calculus equations with high-precision results and physics constants.">
+    <meta name="keywords" content="scientific calculator online, advanced calculator, calculus calculator, algebra solver, high-precision math calculator, free scientific calculator, physics constants calculator, mathquill calculator">
+    <link rel="canonical" href="https://sshihabb007.github.io/advanced-calculator/">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:title" content="Advanced Scientific Calculator Online | Math, Algebra & Physics">
+    <meta property="og:description" content="Free online advanced scientific calculator for solving complex math, algebra, and calculus equations with high-precision results and physics constants.">
+    <meta property="og:url" content="https://sshihabb007.github.io/advanced-calculator/">
+    <meta property="og:image" content="https://sshihabb007.github.io/asset/Shihab.jpg">
+    <meta property="og:type" content="website">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Advanced Scientific Calculator Online | Math, Algebra & Physics">
+    <meta name="twitter:description" content="Free online advanced scientific calculator for solving complex math, algebra, and calculus equations with high-precision results and physics constants.">
+    <meta name="twitter:image" content="https://sshihabb007.github.io/asset/Shihab.jpg">
+    
+    <!-- JSON-LD Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Advanced Scientific Calculator",
+      "url": "https://sshihabb007.github.io/advanced-calculator/",
+      "description": "Free online advanced scientific calculator for solving complex math, algebra, and calculus equations.",
+      "applicationCategory": "EducationalApplication",
+      "operatingSystem": "All",
+      "author": {
+        "@type": "Person",
+        "name": "Mehedi Hasan Shihab",
+        "url": "https://sshihabb007.github.io/"
+      }
+    }
+    </script>
+    <link rel="icon" type="image/png" href="../asset/fav.png">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#3B82F6">
+
+    <!-- Global CSS -->
+    <link rel="stylesheet" href="../css/style.css">
+    
+    <!-- Vendor CSS -->
+    <link rel="stylesheet" href="vendor/mathquill/mathquill.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            corePlugins: { preflight: false },
+            theme: {
+                extend: {
+                    colors: {
+                        dark: 'var(--bg-dark)',
+                        card: 'var(--bg-card)',
+                        hover: 'var(--bg-hover)',
+                        brd: 'var(--border-color)',
+                        primary: 'var(--primary-color)',
+                        txtmain: 'var(--text-main)',
+                        txtmuted: 'var(--text-muted)'
+                    },
+                    boxShadow: {
+                        'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.15)',
+                        'inset-glass': 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.1)'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Vendor Scripts -->
+    <script src="vendor/jquery.min.js"></script>
+    <script src="vendor/mathquill/mathquill.js"></script>
+    <script src="vendor/math.js"></script>
+    <script src="vendor/nerdamer/nerdamer.core.js"></script>
+    <script src="vendor/nerdamer/Algebra.js"></script>
+    <script src="vendor/nerdamer/Calculus.js"></script>
+    <script src="vendor/nerdamer/Solve.js"></script>
+    <script src="vendor/d3.min.js"></script>
+    <script src="vendor/function-plot.js"></script>
+
+    <style>
+        /* Tool-specific overrides for adaptive UI */
+        .glass-panel {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 1rem;
+        }
+
+        .calc-btn {
+            background: var(--bg-dark);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.125rem;
+            font-weight: 600;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .calc-btn:hover {
+            background: var(--bg-hover);
+            transform: translateY(-2px);
+            border-color: var(--primary-color);
+        }
+
+        .calc-btn:active {
+            transform: scale(0.95);
+        }
+
+        .calc-btn-primary {
+            background: var(--primary-color);
+            color: #ffffff;
+            border-color: var(--primary-color);
+        }
+
+        .calc-btn-primary:hover {
+            background: #2563eb;
+            color: #ffffff;
+        }
+
+        .calc-btn-secondary {
+            background: var(--bg-hover);
+            color: var(--text-main);
+        }
+
+        /* MathQuill Display Overrides */
+        .mq-editable-field {
+            border: none !important;
+            box-shadow: none !important;
+            width: 100%;
+            font-size: 2rem !important;
+            color: var(--text-main) !important;
+            background: transparent !important;
+            padding: 0.2rem 0.5rem !important;
+            min-height: 3.5rem;
+            display: flex !important;
+            align-items: center;
+            justify-content: flex-end;
+        }
+        
+        .mq-root-block {
+            padding: 0 !important;
+            width: 100%;
+            text-align: right;
+        }
+        
+        .mq-cursor {
+            border-left: 3px solid var(--primary-color) !important;
+            animation: mq-blink 1s step-end infinite;
+        }
+        
+        @keyframes mq-blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* Custom Scrollbar for side palette */
+        .custom-scroll::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scroll::-webkit-scrollbar-track {
+            background: var(--bg-dark);
+        }
+        .custom-scroll::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 10px;
+        }
+        .custom-scroll::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-color);
+        }
+        
+        .mode-tab {
+            color: var(--text-main);
+        }
+        
+        .mode-tab.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+    </style>
+</head>
+
+<body class="flex flex-col min-h-screen text-txtmain bg-dark transition-colors duration-300">
+
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-537NPQRV" height="0" width="0"
+            style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+    <div id="site-header" data-basepath="../"></div>
+
+    <main class="w-full max-w-7xl mx-auto flex-grow px-4 py-4 md:py-8 flex flex-col space-y-4 md:space-y-6">
+        
+        <!-- Header -->
+        <div class="text-center space-y-1 md:space-y-2 mb-2 md:mb-4" data-aos="fade-down">
+            <h1 class="text-xl sm:text-2xl md:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">
+                Advanced Scientific Calculator
+            </h1>
+            <p class="font-medium text-txtmuted hidden md:block">
+                High-precision computational engine developed by <a href="../" class="text-primary hover:underline font-semibold">MEHEDI HASAN SHIHAB</a>
+            </p>
+        </div>
+
+        <!-- Main Calculator Layout -->
+        <div class="flex-grow flex justify-center w-full">
+            
+            <!-- Main Calculator Area -->
+            <div class="w-full max-w-3xl flex flex-col space-y-6">
+                
+                <!-- Display Shell -->
+                <div class="glass-panel p-4 md:p-5 flex flex-col justify-end min-h-[110px] md:min-h-[130px] relative shadow-glass overflow-hidden" data-aos="zoom-in">
+                    <!-- Format Toggle -->
+                    <div class="absolute top-2.5 left-3 flex space-x-2 z-10">
+                        <button id="shihab_formatBtn" class="text-[10px] px-2.5 py-0.5 rounded-full border border-brd bg-hover text-txtmuted hover:text-primary hover:border-primary transition" title="Toggle Exact/Decimal Format">
+                            DECIMAL
+                        </button>
+                    </div>
+                    <div class="absolute top-2.5 right-3 flex space-x-2 z-10">
+                        <button id="shihab_degRadBtn" class="text-[10px] px-2.5 py-0.5 rounded-full border border-brd bg-hover text-txtmuted hover:text-primary hover:border-primary transition">
+                            RAD
+                        </button>
+                    </div>
+
+                    <!-- Input MathQuill Container -->
+                    <div class="w-full overflow-x-auto custom-scroll pb-1 mt-6">
+                        <span id="mehedi_mathInput"></span>
+                    </div>
+
+                    <!-- Live Result / Error Output -->
+                    <div class="w-full flex justify-between items-end mt-1.5 pt-1.5 border-t border-brd">
+                        <div id="sshihabb007_errorBox" class="text-red-500 text-xs font-medium opacity-0 transition-opacity">Error: Invalid Expression</div>
+                        <div id="shihab_liveResult" class="text-2xl font-bold text-primary truncate max-w-[70%]">0</div>
+                    </div>
+                </div>
+
+                <!-- Active Workspaces -->
+                <div class="relative flex-grow">
+                    
+                    <!-- Scientific Keypad Workspace -->
+                    <div id="mehedi_ws_scientific" class="workspace-panel glass-panel p-4 md:p-6 transition-opacity duration-300">
+                        
+                        <!-- Toggle Scientific Button -->
+                        <div class="flex justify-end mb-3">
+                            <button id="shihab_toggleScientificBtn" class="text-[10px] md:text-xs px-3 py-1 rounded-full border border-brd bg-hover text-txtmuted hover:text-primary hover:border-primary transition flex items-center shadow-sm">
+                                <i id="shihab_scientificIcon" class="fas fa-chevron-down mr-1.5"></i> Scientific
+                            </button>
+                        </div>
+
+                        <!-- Advanced Math Pad (Hidden by Default) -->
+                        <div id="mehedi_advancedMathPad" class="hidden grid-cols-4 md:grid-cols-6 gap-2 mb-4 transition-all duration-300">
+                            <button class="calc-btn calc-btn-secondary py-2 text-sm" data-cmd="sin">sin</button>
+                            <button class="calc-btn calc-btn-secondary py-2 text-sm" data-cmd="cos">cos</button>
+                            <button class="calc-btn calc-btn-secondary py-2 text-sm" data-cmd="tan">tan</button>
+                            <button class="calc-btn calc-btn-secondary py-2 text-sm" data-cmd="log">log</button>
+                            <button class="calc-btn calc-btn-secondary py-2 text-sm" data-cmd="ln">ln</button>
+                            <button class="calc-btn calc-btn-secondary py-2 text-sm hidden md:flex" data-cmd="ans">Ans</button>
+
+                            <button class="calc-btn calc-btn-secondary py-2 text-sm" data-cmd="pi">π</button>
+                            <button class="calc-btn calc-btn-secondary py-2 text-sm" data-cmd="e">e</button>
+                            <button class="calc-btn calc-btn-secondary py-2 text-sm" data-cmd="sqrt">√</button>
+                            <button class="calc-btn calc-btn-secondary py-2 text-sm" data-cmd="^">x^y</button>
+                            <button class="calc-btn calc-btn-secondary py-2 text-sm" data-cmd="!">x!</button>
+                            <button class="calc-btn calc-btn-secondary py-2 text-sm hidden md:flex" data-cmd="derive">d/dx</button>
+
+                            <button class="calc-btn calc-btn-secondary py-2 text-sm" data-cmd="(">(</button>
+                            <button class="calc-btn calc-btn-secondary py-2 text-sm" data-cmd=")">)</button>
+                            <button class="calc-btn calc-btn-secondary py-2 text-sm" data-cmd="%">%</button>
+                            <button class="calc-btn calc-btn-secondary py-2 text-sm" data-cmd="x">x</button>
+                            <button class="calc-btn calc-btn-secondary py-2 text-sm hidden md:flex" data-cmd="y">y</button>
+                            <button class="calc-btn calc-btn-secondary py-2 text-sm hidden md:flex" data-cmd="integrate">∫</button>
+                        </div>
+
+                        <!-- Numeric Pad -->
+                        <div class="grid grid-cols-4 gap-2 md:gap-3">
+                            <button class="calc-btn calc-btn-secondary py-3 md:py-4 font-semibold" data-cmd="clear" style="color: #ef4444;">AC</button>
+                            <button class="calc-btn calc-btn-secondary py-3 md:py-4" data-cmd="backspace" style="color: #f59e0b;"><i class="fas fa-backspace"></i></button>
+                            <button class="calc-btn calc-btn-secondary py-3 md:py-4 font-semibold text-sm" data-cmd="store">Store</button>
+                            <button class="calc-btn calc-btn-secondary py-3 md:py-4 text-xl" data-cmd="/">÷</button>
+
+                            <button class="calc-btn py-3 md:py-4 text-xl font-bold" data-cmd="7">7</button>
+                            <button class="calc-btn py-3 md:py-4 text-xl font-bold" data-cmd="8">8</button>
+                            <button class="calc-btn py-3 md:py-4 text-xl font-bold" data-cmd="9">9</button>
+                            <button class="calc-btn calc-btn-secondary py-3 md:py-4 text-xl" data-cmd="*">×</button>
+
+                            <button class="calc-btn py-3 md:py-4 text-xl font-bold" data-cmd="4">4</button>
+                            <button class="calc-btn py-3 md:py-4 text-xl font-bold" data-cmd="5">5</button>
+                            <button class="calc-btn py-3 md:py-4 text-xl font-bold" data-cmd="6">6</button>
+                            <button class="calc-btn calc-btn-secondary py-3 md:py-4 text-xl" data-cmd="-">−</button>
+
+                            <button class="calc-btn py-3 md:py-4 text-xl font-bold" data-cmd="1">1</button>
+                            <button class="calc-btn py-3 md:py-4 text-xl font-bold" data-cmd="2">2</button>
+                            <button class="calc-btn py-3 md:py-4 text-xl font-bold" data-cmd="3">3</button>
+                            <button class="calc-btn calc-btn-secondary py-3 md:py-4 text-xl" data-cmd="+">+</button>
+
+                            <button class="calc-btn py-3 md:py-4 text-xl font-bold col-span-2" data-cmd="0">0</button>
+                            <button class="calc-btn py-3 md:py-4 text-xl font-bold" data-cmd=".">.</button>
+                            <button class="calc-btn calc-btn-primary py-3 md:py-4 text-2xl" data-cmd="=">=</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+        
+        <!-- Mobile Subtitle (Bottom) -->
+        <div class="text-center mt-2 md:hidden">
+            <p class="font-medium text-txtmuted text-sm">
+                High-precision computational engine developed by <a href="../" class="text-primary hover:underline font-semibold">MEHEDI HASAN SHIHAB</a>
+            </p>
+        </div>
+    </main>
+
+    <!-- Custom Cursor -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <!-- Footer -->
+    <div id="site-footer"></div>
+
+    <!-- PWA Registration & Navigation Loaders -->
+    <script src="../js/load-components.js"></script>
+    <script src="../js/theme.js"></script>
+    <script src="../js/shihab-security.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('../sw.js').then(reg => {
+                    console.log('Service Worker registered!');
+                }).catch(err => console.log('Service Worker registration failed', err));
+            });
+        }
+    </script>
+    
+    <!-- Calculator Logic -->
+    <script src="script.js"></script>
+</body>
+</html>

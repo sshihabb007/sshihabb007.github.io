@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Google Tag Manager -->
+    <script>(function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-537NPQRV');</script>
+    <!-- End Google Tag Manager -->
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3JN6PYW17Z"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-3JN6PYW17Z');
+    </script>
+
+    <title>Accurate Age Calculator Online | Calculate Exact Age from Date of Birth</title>
+    <meta name="description"
+        content="Use our free online Age Calculator to instantly find your exact age in years, months, days, and seconds. Calculate age difference and next birthday countdown.">
+    <meta name="keywords"
+        content="age calculator, online age calculator, date of birth calculator, calculate age difference, chronological age calculator">
+    <link rel="canonical" href="https://sshihabb007.github.io/age-calculator/">
+    <meta property="og:title" content="Accurate Age Calculator Online | Calculate Exact Age from Date of Birth">
+    <meta property="og:description"
+        content="Use our free online Age Calculator to instantly find your exact age in years, months, days, and seconds. Calculate age difference and next birthday countdown.">
+    <meta property="og:url" content="https://sshihabb007.github.io/age-calculator/">
+    <meta property="og:image" content="https://sshihabb007.github.io/asset/Shihab.jpg">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Accurate Age Calculator Online | Calculate Exact Age from Date of Birth">
+    <meta name="twitter:description"
+        content="Use our free online Age Calculator to instantly find your exact age in years, months, days, and seconds. Calculate age difference and next birthday countdown.">
+    <meta name="twitter:image" content="https://sshihabb007.github.io/asset/Shihab.jpg">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="icon" type="image/png" href="../asset/fav.png">
+    <link rel="manifest" href="manifest.json?v=2">
+    <meta name="theme-color" content="#6366f1">
+    <link rel="apple-touch-icon" href="../asset/icons/age.svg">
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        .sshihab007-glass {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+        }
+
+        .sshihab007-accent {
+            color: var(--primary-color);
+        }
+
+        input[type="date"] {
+            color: var(--text-main) !important;
+            background-color: var(--bg-dark) !important;
+            border: 1px solid var(--border-color) !important;
+            color-scheme: dark;
+            /* Helps calendar icon in dark mode */
+        }
+
+        .fade-in {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-delay-1 {
+            animation-delay: 0.1s;
+        }
+
+        .animate-delay-2 {
+            animation-delay: 0.2s;
+        }
+
+        .animate-delay-3 {
+            animation-delay: 0.3s;
+        }
+    </style>
+</head>
+
+<body class="flex flex-col min-h-screen">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-537NPQRV" height="0" width="0"
+            style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+    <!-- Navbar -->
+    <div id="site-header"></div>
+
+    <main class="flex-grow w-full mx-auto px-4 py-12 max-w-5xl">
+        <!-- Header -->
+        <div
+            class="mb-8 md:mb-12 flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 border-b pb-4 border-gray-200">
+            <div class="text-center md:text-left">
+                <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-2 sm:mb-3"><span
+                        style="color: var(--text-main);">Age Calculator</span> <span
+                        class="sshihab007-accent">Pro</span></h1>
+                <p style="color: var(--text-muted);" class="font-medium text-lg">Calculate exact age, generation,
+                    zodiacs & life milestones.</p>
+            </div>
+
+            <!-- Input Section -->
+            <section
+                class="sshihab007-glass p-4 sm:p-6 rounded-3xl shadow-xl flex flex-col sm:flex-row items-center gap-4 w-full md:w-auto">
+                <input type="date" id="mehedi_dob"
+                    class="p-3 sm:p-3.5 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-inner font-semibold text-lg cursor-pointer w-full sm:w-auto">
+                <button id="Shihab_calculateBtn"
+                    class="bg-blue-600 text-white px-5 sm:px-6 py-3 sm:py-3.5 rounded-xl font-bold hover:bg-blue-700 transition shadow-lg hover:shadow-blue-500/50 flex items-center justify-center gap-2 w-full sm:w-auto">
+                    <i class="fas fa-calculator"></i> Calculate
+                </button>
+            </section>
+        </div>
+
+        <!-- Dashboard Grid (Hidden initially) -->
+        <div id="sshihabb007_results" class="hidden">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+                <!-- Main Age Card -->
+                <div
+                    class="lg:col-span-2 bg-gradient-to-br from-blue-600 to-indigo-700 text-white p-5 sm:p-8 rounded-3xl shadow-lg relative overflow-hidden fade-in">
+                    <i
+                        class="fas fa-hourglass-half absolute -right-6 -bottom-6 text-9xl opacity-20 transform -rotate-12"></i>
+
+                    <div class="absolute top-6 right-6 flex gap-2 z-10">
+                        <button id="Shihab_copyAgeBtn"
+                            class="bg-white/20 hover:bg-white/30 text-white rounded-lg px-3 py-1.5 text-xs font-bold backdrop-blur-sm transition-colors shadow flex items-center gap-1.5"
+                            title="Copy Exact Age">
+                            <i class="fas fa-copy"></i> Age
+                        </button>
+                        <button id="Shihab_copyAllBtn"
+                            class="bg-white/20 hover:bg-white/30 text-white rounded-lg px-3 py-1.5 text-xs font-bold backdrop-blur-sm transition-colors shadow flex items-center gap-1.5"
+                            title="Copy Full Summary">
+                            <i class="fas fa-clipboard-list"></i> All Stats
+                        </button>
+                    </div>
+
+                    <h2 class="text-blue-200 uppercase tracking-widest text-sm font-bold mb-2">Total Exact Age</h2>
+                    <div class="text-2xl sm:text-4xl md:text-5xl font-black mb-1 drop-shadow-md" id="mehedi_mainAge">0
+                        Years, 0 Months</div>
+                    <div class="text-lg sm:text-xl text-blue-100 font-semibold" id="mehedi_mainDays">0 Days</div>
+
+                    <div class="mt-6">
+                        <div class="flex justify-between text-xs font-bold text-blue-200 mb-1">
+                            <span>Life Journey (Assuming 80 Years)</span>
+                            <span id="Shihab_lifeProgressText">0%</span>
+                        </div>
+                        <div class="w-full bg-blue-900/50 rounded-full h-2 overflow-hidden shadow-inner">
+                            <div id="mehedi_lifeProgressBar"
+                                class="bg-white h-2 rounded-full transition-all duration-1000 w-0"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Zodiac & Gen Card -->
+                <div
+                    class="bg-gradient-to-br from-purple-500 to-pink-500 text-white p-5 sm:p-8 rounded-3xl shadow-lg relative overflow-hidden fade-in animate-delay-1 flex flex-col justify-center">
+                    <i class="fas fa-star absolute -top-4 -right-4 text-7xl opacity-20"></i>
+                    <h3 class="text-pink-200 font-bold text-xs uppercase tracking-wider mb-1">The Vibe</h3>
+                    <div id="Shihab_zodiacSign" class="text-3xl font-black drop-shadow-sm mb-2">Zodiac</div>
+                    <div id="mehedi_generationLabel"
+                        class="text-sm uppercase font-bold text-white bg-white/20 inline-block px-3 py-1 rounded-full w-max backdrop-blur-sm">
+                        Generation</div>
+                    <div id="sshihabb007_chineseZodiac" class="text-sm font-semibold mt-3 text-pink-100">Chinese: <span
+                            class="text-white"></span></div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Countdown Card -->
+                <div
+                    class="sshihab007-glass p-5 sm:p-8 rounded-3xl shadow-lg flex flex-col items-center justify-center text-center fade-in animate-delay-2">
+                    <div
+                        class="w-16 h-16 rounded-full bg-blue-500/10 flex items-center justify-center mb-4 text-blue-500">
+                        <i class="fas fa-birthday-cake text-3xl"></i>
+                    </div>
+                    <h3 style="color: var(--text-muted);" class="font-bold text-xs uppercase tracking-widest mb-2">Days
+                        to Next Birthday</h3>
+                    <div id="Shihab_daysToBirthday" class="text-5xl font-black sshihab007-accent drop-shadow-sm">0</div>
+                    <div id="mehedi_birthDayOfWeek" class="mt-4 text-sm font-semibold" style="color: var(--text-main);">
+                        Born on a <span class="text-blue-500">Day</span></div>
+                </div>
+
+                <!-- Life in Numbers Table -->
+                <div class="lg:col-span-2 sshihab007-glass p-5 sm:p-8 rounded-3xl shadow-lg fade-in animate-delay-3">
+                    <h3 class="font-bold uppercase tracking-widest text-sm mb-6 flex items-center gap-2"
+                        style="color: var(--text-muted);">
+                        <i class="fas fa-chart-pie text-purple-500"></i> Life in Numbers
+                    </h3>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                        <div class="space-y-1">
+                            <p class="text-xs uppercase font-bold text-gray-500">Total Months</p>
+                            <p class="text-2xl font-bold" style="color: var(--text-main);" id="stat_months">0</p>
+                        </div>
+                        <div class="space-y-1">
+                            <p class="text-xs uppercase font-bold text-gray-500">Total Weeks</p>
+                            <p class="text-2xl font-bold" style="color: var(--text-main);" id="stat_weeks">0</p>
+                        </div>
+                        <div class="space-y-1">
+                            <p class="text-xs uppercase font-bold text-gray-500">Total Days</p>
+                            <p class="text-2xl font-bold" style="color: var(--text-main);" id="stat_days">0</p>
+                        </div>
+                        <div class="space-y-1">
+                            <p class="text-xs uppercase font-bold text-gray-500">Total Hours</p>
+                            <p class="text-2xl font-bold" style="color: var(--text-main);" id="stat_hours">0</p>
+                        </div>
+                    </div>
+
+                    <div class="mt-8 pt-6 border-t" style="border-color: var(--border-color);">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="flex items-center gap-4 bg-gray-500/5 p-4 rounded-xl border border-gray-500/10">
+                                <div
+                                    class="w-10 h-10 rounded-full bg-red-500/10 flex items-center justify-center text-red-500">
+                                    <i class="fas fa-heartbeat"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs font-bold text-gray-500 uppercase">Est. Heartbeats</p>
+                                    <p class="text-lg font-bold" style="color: var(--text-main);" id="stat_heartbeats">0
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4 bg-gray-500/5 p-4 rounded-xl border border-gray-500/10">
+                                <div
+                                    class="w-10 h-10 rounded-full bg-indigo-500/10 flex items-center justify-center text-indigo-500">
+                                    <i class="fas fa-bed"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs font-bold text-gray-500 uppercase">Hours Slept</p>
+                                    <p class="text-lg font-bold" style="color: var(--text-main);" id="stat_sleep">0</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <div id="site-footer"></div>
+
+    <!-- Custom Cursor -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <!-- Scripts -->
+    <script src="../js/load-components.js"></script>
+    <script src="../js/theme.js"></script>
+    <script src="../js/shihab-security.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const mehedi_dobInput = document.getElementById('mehedi_dob');
+            const savedDate = localStorage.getItem('sshihabb007_birthday');
+            if (savedDate) {
+                mehedi_dobInput.value = savedDate;
+                setTimeout(() => document.getElementById('Shihab_calculateBtn').click(), 300);
+            }
+
+            function sshihabb007_getZodiac(day, month) {
+                if ((month == 3 && day >= 21) || (month == 4 && day <= 19)) return "Aries ♈";
+                if ((month == 4 && day >= 20) || (month == 5 && day <= 20)) return "Taurus ♉";
+                if ((month == 5 && day >= 21) || (month == 6 && day <= 20)) return "Gemini ♊";
+                if ((month == 6 && day >= 21) || (month == 7 && day <= 22)) return "Cancer ♋";
+                if ((month == 7 && day >= 23) || (month == 8 && day <= 22)) return "Leo ♌";
+                if ((month == 8 && day >= 23) || (month == 9 && day <= 22)) return "Virgo ♍";
+                if ((month == 9 && day >= 23) || (month == 10 && day <= 22)) return "Libra ♎";
+                if ((month == 10 && day >= 23) || (month == 11 && day <= 21)) return "Scorpio ♏";
+                if ((month == 11 && day >= 22) || (month == 12 && day <= 21)) return "Sagittarius ♐";
+                if ((month == 12 && day >= 22) || (month == 1 && day <= 19)) return "Capricorn ♑";
+                if ((month == 1 && day >= 20) || (month == 2 && day <= 18)) return "Aquarius ♒";
+                if ((month == 2 && day >= 19) || (month == 3 && day <= 20)) return "Pisces ♓";
+                return "Unknown";
+            }
+
+            function mehedi_getGeneration(year) {
+                if (year >= 2013) return "Gen Alpha";
+                if (year >= 1997) return "Gen Z";
+                if (year >= 1981) return "Millennial (Gen Y)";
+                if (year >= 1965) return "Gen X";
+                if (year >= 1946) return "Boomers";
+                return "Silent Gen";
+            }
+
+            function Shihab_getChineseZodiac(year) {
+                const signs = ["Monkey 🐒", "Rooster 🐓", "Dog 🐕", "Pig 🐖", "Rat 🐀", "Ox 🐂", "Tiger 🐅", "Rabbit 🐇", "Dragon 🐉", "Snake 🐍", "Horse 🐎", "Goat 🐐"];
+                return signs[year % 12];
+            }
+
+            document.getElementById('Shihab_calculateBtn').addEventListener('click', () => {
+                if (!mehedi_dobInput.value) return;
+
+                localStorage.setItem('sshihabb007_birthday', mehedi_dobInput.value);
+                const birthDate = new Date(mehedi_dobInput.value);
+                const now = new Date();
+
+                if (birthDate > now) {
+                    alert("Birth date cannot be in the future!");
+                    return;
+                }
+
+                // 1. Exact Age Calculation
+                let years = now.getFullYear() - birthDate.getFullYear();
+                let months = now.getMonth() - birthDate.getMonth();
+                let days = now.getDate() - birthDate.getDate();
+
+                if (days < 0) {
+                    months--;
+                    const prevMonth = new Date(now.getFullYear(), now.getMonth(), 0);
+                    days += prevMonth.getDate();
+                }
+                if (months < 0) {
+                    years--;
+                    months += 12;
+                }
+
+                const msInDay = 24 * 60 * 60 * 1000;
+                const totalDays = Math.floor((now - birthDate) / msInDay);
+                const totalMonths = (years * 12) + months;
+                const totalWeeks = Math.floor(totalDays / 7);
+                const totalHours = totalDays * 24;
+
+                const zodiac = sshihabb007_getZodiac(birthDate.getDate(), birthDate.getMonth() + 1);
+                const gen = mehedi_getGeneration(birthDate.getFullYear());
+                const chinese = Shihab_getChineseZodiac(birthDate.getFullYear());
+                const dayOfWeek = birthDate.toLocaleDateString('en-US', { weekday: 'long' });
+
+                let nextBday = new Date(now.getFullYear(), birthDate.getMonth(), birthDate.getDate());
+                if (now > nextBday && (now.getDate() !== nextBday.getDate() || now.getMonth() !== nextBday.getMonth())) {
+                    nextBday.setFullYear(now.getFullYear() + 1);
+                }
+                const daysToBday = Math.ceil((nextBday - now) / msInDay);
+
+                let progressPercent = (totalDays / 29200) * 100;
+                if (progressPercent > 100) progressPercent = 100;
+
+                const heartbeats = totalDays * 24 * 60 * 70;
+                const sleepHours = totalDays * 8;
+
+                document.getElementById('mehedi_mainAge').innerText = `${years} Years, ${months} Months`;
+                document.getElementById('mehedi_mainDays').innerText = `and ${days} Days`;
+
+                document.getElementById('Shihab_zodiacSign').innerText = zodiac;
+                document.getElementById('mehedi_generationLabel').innerText = gen;
+                document.getElementById('sshihabb007_chineseZodiac').innerHTML = `Chinese: <span class="text-white">${chinese}</span>`;
+
+                document.getElementById('Shihab_daysToBirthday').innerText = daysToBday === 0 || daysToBday === 365 ? "Today!" : daysToBday;
+                document.getElementById('mehedi_birthDayOfWeek').innerHTML = `Born on a <span class="text-blue-500">${dayOfWeek}</span>`;
+
+                document.getElementById('stat_months').innerText = totalMonths.toLocaleString();
+                document.getElementById('stat_weeks').innerText = totalWeeks.toLocaleString();
+                document.getElementById('stat_days').innerText = totalDays.toLocaleString();
+                document.getElementById('stat_hours').innerText = totalHours.toLocaleString();
+
+                document.getElementById('stat_heartbeats').innerText = heartbeats.toLocaleString();
+                document.getElementById('stat_sleep').innerText = sleepHours.toLocaleString();
+
+                document.getElementById('Shihab_lifeProgressText').innerText = `${progressPercent.toFixed(2)}%`;
+
+                // Copy Features
+                const ageText = `${years} Years, ${months} Months and ${days} Days`;
+                const allStatsText = `Age: ${ageText}\nZodiac: ${zodiac}\nGeneration: ${gen}\nChinese Zodiac: ${chinese}\nNext Birthday: ${daysToBday} days\nTotal Days Lived: ${totalDays.toLocaleString()}`;
+
+                document.getElementById('Shihab_copyAgeBtn').onclick = function () {
+                    navigator.clipboard.writeText(ageText).then(() => {
+                        const originalHtml = this.innerHTML;
+                        this.innerHTML = '<i class="fas fa-check text-green-400"></i> Copied!';
+                        setTimeout(() => this.innerHTML = originalHtml, 2000);
+                    });
+                };
+
+                document.getElementById('Shihab_copyAllBtn').onclick = function () {
+                    navigator.clipboard.writeText(allStatsText).then(() => {
+                        const originalHtml = this.innerHTML;
+                        this.innerHTML = '<i class="fas fa-check text-green-400"></i> Copied!';
+                        setTimeout(() => this.innerHTML = originalHtml, 2000);
+                    });
+                };
+
+                const resultsGrid = document.getElementById('sshihabb007_results');
+                resultsGrid.classList.remove('hidden');
+
+                document.getElementById('mehedi_lifeProgressBar').style.width = '0%';
+                setTimeout(() => {
+                    document.getElementById('mehedi_lifeProgressBar').style.width = `${progressPercent}%`;
+                }, 100);
+            });
+        });
+
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('../sw.js').then(reg => {
+                    console.log('Service Worker registered!');
+                }).catch(err => console.log('Service Worker registration failed', err));
+            });
+        }
+    </script>
+</body>
+
+</html>

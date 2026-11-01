@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Google Tag Manager -->
+    <script>(function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-537NPQRV');</script>
+    <!-- End Google Tag Manager -->
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3JN6PYW17Z"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-3JN6PYW17Z');
+    </script>
+
+    <title>Free BMI Calculator Online | Check Body Mass Index & Ideal Weight</title>
+    <meta name="description"
+        content="Calculate your Body Mass Index (BMI) instantly. Our free BMI calculator provides accurate health insights, ideal weight ranges, and personalized fitness goals.">
+    <meta name="keywords"
+        content="bmi calculator, body mass index calculator, ideal weight calculator, healthy weight range, bmi calculator for men and women">
+    <link rel="canonical" href="https://sshihabb007.github.io/bmi-calculator/">
+    <meta property="og:title" content="Free BMI Calculator Online | Check Body Mass Index & Ideal Weight">
+    <meta property="og:description"
+        content="Calculate your Body Mass Index (BMI) instantly. Our free BMI calculator provides accurate health insights, ideal weight ranges, and personalized fitness goals.">
+    <meta property="og:url" content="https://sshihabb007.github.io/bmi-calculator/">
+    <meta property="og:image" content="https://sshihabb007.github.io/asset/Shihab.jpg">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Free BMI Calculator Online | Check Body Mass Index & Ideal Weight">
+    <meta name="twitter:description"
+        content="Calculate your Body Mass Index (BMI) instantly. Our free BMI calculator provides accurate health insights, ideal weight ranges, and personalized fitness goals.">
+    <meta name="twitter:image" content="https://sshihabb007.github.io/asset/Shihab.jpg">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="icon" type="image/png" href="../asset/fav.png">
+    <link rel="manifest" href="manifest.json?v=2">
+    <meta name="theme-color" content="#6366f1">
+    <link rel="apple-touch-icon" href="../asset/icons/bmi.svg">
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        .sshihabb007-glass {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+        }
+
+        .mehedi-input {
+            color: var(--text-main) !important;
+            background-color: var(--bg-dark) !important;
+            border: 1px solid var(--border-color) !important;
+            transition: all 0.3s ease;
+        }
+
+        .mehedi-input:focus {
+            border-color: #6366f1 !important;
+            /* Indigo 500 */
+            box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+            outline: none;
+        }
+
+        .shihab-gauge-container {
+            width: 100%;
+            height: 12px;
+            background: linear-gradient(to right, #3b82f6 0%, #3b82f6 24%, #22c55e 25%, #22c55e 50%, #eab308 51%, #eab308 75%, #ef4444 76%, #ef4444 100%);
+            border-radius: 9999px;
+            position: relative;
+            margin-top: 30px;
+            margin-bottom: 20px;
+        }
+
+        .shihab-needle {
+            position: absolute;
+            top: -10px;
+            width: 4px;
+            height: 32px;
+            background-color: var(--text-main);
+            border-radius: 4px;
+            transform: translateX(-50%);
+            transition: left 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            left: 0%;
+            /* Default */
+        }
+
+        .shihab-needle::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-top: 6px solid var(--text-main);
+        }
+
+        /* History Items */
+        .sshihabb007-history-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border-color);
+            transition: background-color 0.2s;
+        }
+
+        .sshihabb007-history-item:hover {
+            background-color: var(--bg-hover);
+        }
+
+        .sshihabb007-history-item:last-child {
+            border-bottom: none;
+        }
+    </style>
+</head>
+
+<body class="flex flex-col min-h-screen">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-537NPQRV" height="0" width="0"
+            style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+    <!-- Navbar -->
+    <div id="site-header" data-basepath="../"></div>
+
+    <main class="w-full max-w-7xl mx-auto flex-grow flex flex-col px-4 py-12">
+        <div class="text-center mb-12">
+            <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-2 sm:mb-3" style="color: var(--text-main);">
+                BMI Calculator <span class="text-indigo-500">Pro</span>
+            </h1>
+            <p style="color: var(--text-muted);" class="font-medium text-lg mb-1">Calculate your Body Mass Index
+                interactively.</p>
+            <p style="color: var(--text-muted);" class="text-sm">Developed by <a href="../"
+                    class="font-bold hover:underline" style="color: var(--primary-color);">Mehedi Hasan Shihab</a>.</p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto w-full">
+            <!-- Left: Inputs -->
+            <div class="sshihabb007-glass p-5 sm:p-8 rounded-3xl shadow-xl flex flex-col justify-between">
+                <div>
+                    <h2 class="text-xl font-bold mb-6 flex items-center gap-2" style="color: var(--text-main);">
+                        <i class="fas fa-sliders-h text-indigo-500"></i> Parameters
+                    </h2>
+
+                    <!-- Unit Toggle -->
+                    <div class="flex gap-2 mb-8 bg-zinc-800/20 p-1 rounded-xl border"
+                        style="border-color: var(--border-color);">
+                        <button id="mehedi_btnMetric"
+                            class="flex-1 py-2.5 rounded-lg bg-indigo-600 text-white font-bold shadow-md transition-all">Metric</button>
+                        <button id="mehedi_btnImperial"
+                            class="flex-1 py-2.5 rounded-lg text-gray-400 font-bold hover:text-gray-200 transition-all">Imperial</button>
+                    </div>
+
+                    <!-- Metric Inputs -->
+                    <div id="shihab_metricInputs" class="space-y-6">
+                        <div>
+                            <label class="block text-sm font-semibold mb-2 uppercase tracking-wide"
+                                style="color: var(--text-muted);">Weight (kg)</label>
+                            <input type="number" id="mehedi_weightKg" placeholder="e.g. 70"
+                                class="w-full p-4 rounded-xl mehedi-input font-bold text-lg" step="0.1">
+                        </div>
+                        <div>
+                            <label
+                                class="flex justify-between items-center text-sm font-semibold mb-2 uppercase tracking-wide"
+                                style="color: var(--text-muted);">
+                                <span>Height</span>
+                                <select id="shihab_metricHeightUnit"
+                                    class="bg-transparent text-indigo-500 font-bold outline-none cursor-pointer text-xs focus:ring-0">
+                                    <option value="cm">CM</option>
+                                    <option value="ft">FT & IN</option>
+                                </select>
+                            </label>
+                            <input type="number" id="mehedi_heightCm" placeholder="e.g. 175"
+                                class="w-full p-4 rounded-xl mehedi-input font-bold text-lg">
+                            <div id="shihab_metricHeightFtWrap" class="grid grid-cols-2 gap-4 hidden">
+                                <input type="number" id="mehedi_metricHeightFt" placeholder="e.g. 5 (ft)"
+                                    class="w-full p-4 rounded-xl mehedi-input font-bold text-lg">
+                                <input type="number" id="mehedi_metricHeightIn" placeholder="e.g. 9 (in)"
+                                    class="w-full p-4 rounded-xl mehedi-input font-bold text-lg">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Imperial Inputs (Hidden by default) -->
+                    <div id="shihab_imperialInputs" class="space-y-6 hidden">
+                        <div>
+                            <label class="block text-sm font-semibold mb-2 uppercase tracking-wide"
+                                style="color: var(--text-muted);">Weight (lbs)</label>
+                            <input type="number" id="mehedi_weightLbs" placeholder="e.g. 154"
+                                class="w-full p-4 rounded-xl mehedi-input font-bold text-lg" step="0.1">
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-semibold mb-2 uppercase tracking-wide"
+                                    style="color: var(--text-muted);">Height (ft)</label>
+                                <input type="number" id="mehedi_heightFt" placeholder="e.g. 5"
+                                    class="w-full p-4 rounded-xl mehedi-input font-bold text-lg">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold mb-2 uppercase tracking-wide"
+                                    style="color: var(--text-muted);">Height (in)</label>
+                                <input type="number" id="mehedi_heightIn" placeholder="e.g. 9"
+                                    class="w-full p-4 rounded-xl mehedi-input font-bold text-lg">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-8 pt-6 border-t" style="border-color: var(--border-color);">
+                    <button id="sshihabb007_saveBtn"
+                        class="w-full bg-zinc-700/50 hover:bg-zinc-700 text-white py-3 rounded-xl font-bold transition-colors flex items-center justify-center gap-2">
+                        <i class="fas fa-bookmark text-indigo-400"></i> Save Result to History
+                    </button>
+                </div>
+            </div>
+
+            <!-- Right: Dynamic Result -->
+            <div class="flex flex-col gap-6">
+                <!-- BMI Display Card -->
+                <div
+                    class="sshihabb007-glass p-5 sm:p-8 rounded-3xl shadow-xl flex flex-col justify-center items-center text-center relative overflow-hidden h-full">
+                    <div class="absolute top-0 left-0 w-full h-2 bg-gray-500 opacity-20" id="shihab_statusTopBar"></div>
+
+                    <button id="shihab_copyBmiBtn"
+                        class="absolute top-6 right-6 bg-white/10 hover:bg-white/20 text-white rounded-lg px-3 py-1.5 text-xs font-bold backdrop-blur-sm transition-colors shadow flex items-center gap-1.5 z-10"
+                        title="Copy BMI Stats">
+                        <i class="fas fa-copy"></i> Copy Stats
+                    </button>
+
+                    <h2 class="text-sm font-bold uppercase tracking-widest mb-4 mt-2" style="color: var(--text-muted);">
+                        Your BMI Score</h2>
+
+                    <div id="mehedi_bmiValue" class="text-6xl sm:text-8xl font-black mb-2 transition-all duration-300"
+                        style="color: var(--text-main);">--.-</div>
+
+                    <div id="shihab_bmiStatus"
+                        class="mt-2 px-6 py-2 rounded-full font-bold text-sm bg-gray-500/20 text-gray-400 transition-colors duration-300 uppercase tracking-wide border border-transparent">
+                        Awaiting Input
+                    </div>
+
+                    <!-- Gauge -->
+                    <div class="w-full px-4 mt-8 mb-4">
+                        <div class="shihab-gauge-container">
+                            <div id="sshihabb007_needle" class="shihab-needle"></div>
+                        </div>
+                        <div class="flex justify-between text-[10px] font-bold uppercase tracking-wider mt-3"
+                            style="color: var(--text-muted);">
+                            <span class="text-blue-400">Under</span>
+                            <span class="text-green-400">Healthy</span>
+                            <span class="text-yellow-400">Over</span>
+                            <span class="text-red-400">Obese</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Insights Card -->
+                <div class="sshihabb007-glass p-6 rounded-3xl shadow-xl hidden" id="mehedi_insightsCard">
+                    <h3 class="font-bold uppercase tracking-widest text-xs mb-4 flex items-center gap-2"
+                        style="color: var(--text-muted);">
+                        <i class="fas fa-lightbulb text-yellow-400"></i> Health Insights
+                    </h3>
+                    <div class="space-y-4 text-sm font-medium" style="color: var(--text-main);">
+                        <div
+                            class="flex justify-between items-center p-3 rounded-lg bg-zinc-800/30 border border-zinc-700/50">
+                            <span class="text-zinc-400">Ideal Weight Range:</span>
+                            <span id="shihab_idealWeight" class="font-bold text-indigo-400">--</span>
+                        </div>
+                        <div
+                            class="flex justify-between items-center p-3 rounded-lg bg-zinc-800/30 border border-zinc-700/50">
+                            <span class="text-zinc-400">Action Plan:</span>
+                            <span id="sshihabb007_actionPlan" class="font-bold text-green-400">--</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- History Section -->
+        <div class="max-w-5xl mx-auto w-full mt-8 sshihabb007-glass rounded-3xl shadow-xl overflow-hidden hidden"
+            id="shihab_historySection">
+            <div class="p-6 border-b flex justify-between items-center" style="border-color: var(--border-color);">
+                <h3 class="font-bold uppercase tracking-widest text-sm flex items-center gap-2"
+                    style="color: var(--text-muted);">
+                    <i class="fas fa-history text-indigo-500"></i> Recent Checks
+                </h3>
+                <button id="mehedi_clearHistoryBtn"
+                    class="text-xs text-red-400 hover:text-red-300 font-bold transition-colors">Clear All</button>
+            </div>
+            <div id="sshihabb007_historyList" class="flex flex-col">
+                <!-- Items injected via JS -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <div id="site-footer"></div>
+
+    <!-- Custom Cursor -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <script src="../js/load-components.js"></script>
+    <script src="../js/theme.js"></script>
+    <script src="../js/shihab-security.js"></script>
+
+    <script>
+        // DOM Elements
+        const mehedi_btnMetric = document.getElementById('mehedi_btnMetric');
+        const mehedi_btnImperial = document.getElementById('mehedi_btnImperial');
+        const shihab_metricInputs = document.getElementById('shihab_metricInputs');
+        const shihab_imperialInputs = document.getElementById('shihab_imperialInputs');
+
+        const mehedi_weightKg = document.getElementById('mehedi_weightKg');
+        const mehedi_heightCm = document.getElementById('mehedi_heightCm');
+        const shihab_metricHeightUnit = document.getElementById('shihab_metricHeightUnit');
+        const shihab_metricHeightFtWrap = document.getElementById('shihab_metricHeightFtWrap');
+        const mehedi_metricHeightFt = document.getElementById('mehedi_metricHeightFt');
+        const mehedi_metricHeightIn = document.getElementById('mehedi_metricHeightIn');
+
+        const mehedi_weightLbs = document.getElementById('mehedi_weightLbs');
+        const mehedi_heightFt = document.getElementById('mehedi_heightFt');
+        const mehedi_heightIn = document.getElementById('mehedi_heightIn');
+
+        const mehedi_bmiValue = document.getElementById('mehedi_bmiValue');
+        const shihab_bmiStatus = document.getElementById('shihab_bmiStatus');
+        const sshihabb007_needle = document.getElementById('sshihabb007_needle');
+        const shihab_statusTopBar = document.getElementById('shihab_statusTopBar');
+
+        const mehedi_insightsCard = document.getElementById('mehedi_insightsCard');
+        const shihab_idealWeight = document.getElementById('shihab_idealWeight');
+        const sshihabb007_actionPlan = document.getElementById('sshihabb007_actionPlan');
+
+        const sshihabb007_saveBtn = document.getElementById('sshihabb007_saveBtn');
+        const shihab_historySection = document.getElementById('shihab_historySection');
+        const sshihabb007_historyList = document.getElementById('sshihabb007_historyList');
+        const mehedi_clearHistoryBtn = document.getElementById('mehedi_clearHistoryBtn');
+
+        let shihab_currentMode = 'metric';
+        let mehedi_lastCalculatedBmi = null;
+        let sshihabb007_lastWeightStr = "";
+
+        // Toggle Modes
+        mehedi_btnMetric.addEventListener('click', () => {
+            shihab_currentMode = 'metric';
+            mehedi_btnMetric.className = "flex-1 py-2.5 rounded-lg bg-indigo-600 text-white font-bold shadow-md transition-all";
+            mehedi_btnImperial.className = "flex-1 py-2.5 rounded-lg text-gray-400 font-bold hover:text-gray-200 transition-all bg-transparent";
+            shihab_metricInputs.classList.remove('hidden');
+            shihab_imperialInputs.classList.add('hidden');
+            shihab_calculateBMI();
+        });
+
+        mehedi_btnImperial.addEventListener('click', () => {
+            shihab_currentMode = 'imperial';
+            mehedi_btnImperial.className = "flex-1 py-2.5 rounded-lg bg-indigo-600 text-white font-bold shadow-md transition-all";
+            mehedi_btnMetric.className = "flex-1 py-2.5 rounded-lg text-gray-400 font-bold hover:text-gray-200 transition-all bg-transparent";
+            shihab_imperialInputs.classList.remove('hidden');
+            shihab_metricInputs.classList.add('hidden');
+            shihab_calculateBMI();
+        });
+
+        // Height Unit Toggle in Metric
+        shihab_metricHeightUnit.addEventListener('change', (e) => {
+            if (e.target.value === 'cm') {
+                mehedi_heightCm.classList.remove('hidden');
+                shihab_metricHeightFtWrap.classList.add('hidden');
+            } else {
+                mehedi_heightCm.classList.add('hidden');
+                shihab_metricHeightFtWrap.classList.remove('hidden');
+            }
+            shihab_calculateBMI();
+        });
+
+        // Input Listeners
+        [mehedi_weightKg, mehedi_heightCm, mehedi_metricHeightFt, mehedi_metricHeightIn, mehedi_weightLbs, mehedi_heightFt, mehedi_heightIn].forEach(input => {
+            input.addEventListener('input', shihab_calculateBMI);
+        });
+
+        // Copy Feature
+        const shihab_copyBmiBtn = document.getElementById('shihab_copyBmiBtn');
+        shihab_copyBmiBtn.addEventListener('click', () => {
+            if (!mehedi_lastCalculatedBmi) return;
+
+            const copyText = `My BMI Stats:\nBMI: ${mehedi_lastCalculatedBmi}\nStatus: ${shihab_bmiStatus.innerText}\nIdeal Weight: ${shihab_idealWeight.innerText}\nAction Plan: ${sshihabb007_actionPlan.innerText}`;
+
+            navigator.clipboard.writeText(copyText).then(() => {
+                const originalHtml = shihab_copyBmiBtn.innerHTML;
+                shihab_copyBmiBtn.innerHTML = '<i class="fas fa-check text-green-400"></i> Copied!';
+                setTimeout(() => {
+                    shihab_copyBmiBtn.innerHTML = originalHtml;
+                }, 2000);
+            });
+        });
+
+        // Calculation Logic
+        function shihab_calculateBMI() {
+            let bmi = 0;
+            let weight = 0;
+            let height = 0;
+            let isMetric = shihab_currentMode === 'metric';
+
+            if (isMetric) {
+                weight = parseFloat(mehedi_weightKg.value);
+                const metricUnit = shihab_metricHeightUnit.value;
+                if (metricUnit === 'cm') {
+                    height = parseFloat(mehedi_heightCm.value) / 100; // to meters
+                } else {
+                    let ft = parseFloat(mehedi_metricHeightFt.value) || 0;
+                    let inc = parseFloat(mehedi_metricHeightIn.value) || 0;
+                    height = ((ft * 12) + inc) * 0.0254; // to meters
+                }
+
+                if (weight > 0 && height > 0) {
+                    bmi = weight / (height * height);
+                    sshihabb007_lastWeightStr = `${weight} kg`;
+                }
+            } else {
+                weight = parseFloat(mehedi_weightLbs.value);
+                let ft = parseFloat(mehedi_heightFt.value) || 0;
+                let inc = parseFloat(mehedi_heightIn.value) || 0;
+                height = (ft * 12) + inc; // in inches
+                if (weight > 0 && height > 0) {
+                    bmi = 703 * (weight / (height * height));
+                    sshihabb007_lastWeightStr = `${weight} lbs`;
+                }
+            }
+
+            if (bmi > 0 && bmi < 100) {
+                mehedi_lastCalculatedBmi = bmi.toFixed(1);
+                mehedi_updateUI(parseFloat(mehedi_lastCalculatedBmi), weight, height, isMetric);
+            } else {
+                mehedi_lastCalculatedBmi = null;
+                mehedi_resetUI();
+            }
+        }
+
+        function mehedi_updateUI(bmi, weight, height, isMetric) {
+            mehedi_bmiValue.innerText = bmi;
+            mehedi_insightsCard.classList.remove('hidden');
+
+            // Color Logic
+            let statusText = "";
+            let colorClass = "";
+            let borderColor = "";
+            let percentage = 0; // 0 to 100 for gauge
+
+            // Mapping BMI to a 0-100% scale. 
+            // <18.5 is 0-24%
+            // 18.5 - 24.9 is 25-50%
+            // 25 - 29.9 is 51-75%
+            // 30+ is 76-100%
+
+            if (bmi < 18.5) {
+                statusText = "Underweight";
+                colorClass = "bg-blue-500/20 text-blue-400 border-blue-500/50";
+                borderColor = "#3b82f6";
+                percentage = (bmi / 18.5) * 24;
+            } else if (bmi < 25) {
+                statusText = "Healthy Weight";
+                colorClass = "bg-green-500/20 text-green-400 border-green-500/50";
+                borderColor = "#22c55e";
+                percentage = 25 + ((bmi - 18.5) / (25 - 18.5)) * 25;
+            } else if (bmi < 30) {
+                statusText = "Overweight";
+                colorClass = "bg-yellow-500/20 text-yellow-400 border-yellow-500/50";
+                borderColor = "#eab308";
+                percentage = 50 + ((bmi - 25) / (30 - 25)) * 25;
+            } else {
+                statusText = "Obese";
+                colorClass = "bg-red-500/20 text-red-400 border-red-500/50";
+                borderColor = "#ef4444";
+                percentage = 75 + ((bmi - 30) / 10) * 25;
+            }
+
+            // Cap percentage
+            if (percentage < 0) percentage = 0;
+            if (percentage > 100) percentage = 100;
+
+            shihab_bmiStatus.innerText = statusText;
+            shihab_bmiStatus.className = `mt-2 px-6 py-2 rounded-full font-bold text-sm uppercase tracking-wide border transition-colors duration-300 ${colorClass}`;
+            mehedi_bmiValue.style.color = borderColor;
+            shihab_statusTopBar.style.backgroundColor = borderColor;
+            shihab_statusTopBar.style.opacity = "1";
+
+            // Move needle
+            sshihabb007_needle.style.left = `${percentage}%`;
+
+            // Insights
+            let idealMin, idealMax;
+            if (isMetric) {
+                idealMin = (18.5 * height * height).toFixed(1);
+                idealMax = (24.9 * height * height).toFixed(1);
+                shihab_idealWeight.innerText = `${idealMin} - ${idealMax} kg`;
+
+                if (bmi < 18.5) {
+                    let diff = (idealMin - weight).toFixed(1);
+                    sshihabb007_actionPlan.innerText = `Gain ${diff} kg`;
+                    sshihabb007_actionPlan.className = "font-bold text-blue-400";
+                } else if (bmi >= 25) {
+                    let diff = (weight - idealMax).toFixed(1);
+                    sshihabb007_actionPlan.innerText = `Lose ${diff} kg`;
+                    sshihabb007_actionPlan.className = "font-bold text-yellow-400";
+                    if (bmi >= 30) sshihabb007_actionPlan.className = "font-bold text-red-400";
+                } else {
+                    sshihabb007_actionPlan.innerText = `Maintain Weight! 🎉`;
+                    sshihabb007_actionPlan.className = "font-bold text-green-400";
+                }
+            } else {
+                // Imperial
+                idealMin = ((18.5 * height * height) / 703).toFixed(1);
+                idealMax = ((24.9 * height * height) / 703).toFixed(1);
+                shihab_idealWeight.innerText = `${idealMin} - ${idealMax} lbs`;
+
+                if (bmi < 18.5) {
+                    let diff = (idealMin - weight).toFixed(1);
+                    sshihabb007_actionPlan.innerText = `Gain ${diff} lbs`;
+                    sshihabb007_actionPlan.className = "font-bold text-blue-400";
+                } else if (bmi >= 25) {
+                    let diff = (weight - idealMax).toFixed(1);
+                    sshihabb007_actionPlan.innerText = `Lose ${diff} lbs`;
+                    sshihabb007_actionPlan.className = "font-bold text-yellow-400";
+                    if (bmi >= 30) sshihabb007_actionPlan.className = "font-bold text-red-400";
+                } else {
+                    sshihabb007_actionPlan.innerText = `Maintain Weight! 🎉`;
+                    sshihabb007_actionPlan.className = "font-bold text-green-400";
+                }
+            }
+        }
+
+        function mehedi_resetUI() {
+            mehedi_bmiValue.innerText = "--.-";
+            mehedi_bmiValue.style.color = "var(--text-main)";
+            shihab_bmiStatus.innerText = "Awaiting Input";
+            shihab_bmiStatus.className = "mt-2 px-6 py-2 rounded-full font-bold text-sm bg-gray-500/20 text-gray-400 transition-colors duration-300 uppercase tracking-wide border border-transparent";
+            shihab_statusTopBar.style.backgroundColor = "transparent";
+            sshihabb007_needle.style.left = "0%";
+            mehedi_insightsCard.classList.add('hidden');
+        }
+
+        // Local Storage History
+        function sshihabb007_loadHistory() {
+            const history = JSON.parse(localStorage.getItem('shihab_bmiHistory') || '[]');
+            if (history.length > 0) {
+                shihab_historySection.classList.remove('hidden');
+                sshihabb007_historyList.innerHTML = history.map(item => `
+                    <div class="sshihabb007-history-item">
+                        <div>
+                            <span class="font-bold text-indigo-400 text-lg mr-2">${item.bmi}</span>
+                            <span class="text-xs text-gray-500 font-semibold uppercase tracking-wider">${item.status}</span>
+                        </div>
+                        <div class="text-left sm:text-right">
+                            <div class="text-sm font-semibold" style="color: var(--text-main);">${item.weight}</div>
+                            <div class="text-xs text-gray-500">${new Date(item.date).toLocaleDateString()}</div>
+                        </div>
+                    </div>
+                `).join('');
+            } else {
+                shihab_historySection.classList.add('hidden');
+            }
+        }
+
+        sshihabb007_saveBtn.addEventListener('click', () => {
+            if (mehedi_lastCalculatedBmi) {
+                const history = JSON.parse(localStorage.getItem('shihab_bmiHistory') || '[]');
+                const newItem = {
+                    bmi: mehedi_lastCalculatedBmi,
+                    weight: sshihabb007_lastWeightStr,
+                    status: shihab_bmiStatus.innerText,
+                    date: new Date().toISOString()
+                };
+                history.unshift(newItem);
+                if (history.length > 5) history.pop(); // Keep last 5
+                localStorage.setItem('shihab_bmiHistory', JSON.stringify(history));
+
+                // Animate Button
+                const originalHtml = sshihabb007_saveBtn.innerHTML;
+                sshihabb007_saveBtn.innerHTML = '<i class="fas fa-check text-green-400"></i> Saved!';
+                sshihabb007_saveBtn.classList.add('bg-green-600/20', 'text-green-400');
+
+                setTimeout(() => {
+                    sshihabb007_saveBtn.innerHTML = originalHtml;
+                    sshihabb007_saveBtn.classList.remove('bg-green-600/20', 'text-green-400');
+                }, 2000);
+
+                sshihabb007_loadHistory();
+            }
+        });
+
+        mehedi_clearHistoryBtn.addEventListener('click', () => {
+            localStorage.removeItem('shihab_bmiHistory');
+            sshihabb007_loadHistory();
+        });
+
+        // Init
+        sshihabb007_loadHistory();
+
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('../sw.js').then(reg => {
+                    console.log('Service Worker registered!');
+                }).catch(err => console.log('Service Worker registration failed', err));
+            });
+        }
+    </script>
+</body>
+
+</html>

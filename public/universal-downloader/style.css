@@ -1,0 +1,106 @@
+/* universal-downloader/style.css - By Mehedi Hasan Shihab (sshihabb007) */
+
+.shihab_glass_card {
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.shihab_glass_card:hover {
+    border-color: var(--primary-color) !important;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* Custom Input Field */
+.sshihabb007_input {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sshihabb007_input:focus {
+    border-color: var(--primary-color) !important;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+/* Premium Mode Toggle (Video/Audio) Switch */
+.mehedi_toggle_container {
+    display: inline-flex;
+    background-color: var(--bg-hover);
+    padding: 4px;
+    border-radius: 9999px;
+    border: 1px solid var(--border-color);
+}
+
+.mehedi_toggle_btn {
+    padding: 8px 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: 9999px;
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    color: var(--text-muted);
+    transition: all 0.3s ease;
+}
+
+.mehedi_toggle_btn.active {
+    background-color: var(--primary-color);
+    color: var(--bg-dark);
+}
+
+/* Micro-animations and Glow Effects */
+.shihab_hero_glow {
+    position: absolute;
+    pointer-events: none;
+    z-index: 0;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.15;
+}
+
+.shihab_glow_1 {
+    top: -10%;
+    left: -10%;
+    width: 250px;
+    height: 250px;
+    background: var(--primary-color);
+}
+
+.shihab_glow_2 {
+    bottom: -10%;
+    right: -10%;
+    width: 250px;
+    height: 250px;
+    background: #a855f7;
+}
+
+/* Terminal Log Animations */
+@keyframes shihab_blink {
+    50% { opacity: 0; }
+}
+
+.shihab_cursor_blink {
+    animation: shihab_blink 1s step-end infinite;
+}
+
+/* Paste Button Styling - Supports both Dark and Bright (Light) Mode */
+#mehedi_pasteBtn {
+    background-color: var(--bg-card);
+    color: var(--text-main);
+    border: 1px solid var(--border-color);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+#mehedi_pasteBtn:hover {
+    background-color: var(--bg-hover);
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+    transform: scale(1.06);
+}
+
+#mehedi_pasteBtn:active {
+    transform: scale(0.95);
+}
+
