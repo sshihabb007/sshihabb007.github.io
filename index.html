@@ -10,36 +10,42 @@
     />
     <meta
       name="keywords"
-      content="Mehedi Hasan Shihab, sshihabb007, Senior Software Engineer, Full-Stack Developer, AI Engineer, Gemini API, Vertex AI, React, Next.js, Node.js, WordPress, Cybersecurity, Dhaka, Bangladesh"
+      content="Mehedi Hasan Shihab, sshihabb007, Senior Software Engineer, Full-Stack Developer, AI Engineer, Gemini API, Vertex AI, React, Next.js, Node.js, Tailwind CSS, JavaScript, WordPress, Cybersecurity, Dhaka, Bangladesh"
     />
     <meta name="author" content="Mehedi Hasan Shihab" />
-    <link rel="icon" type="image/png" href="/asset/fav.png" />
-    <link rel="apple-touch-icon" href="/asset/fav.png" />
+    <link rel="icon" type="image/png" href="./asset/fav.png" />
+    <link rel="apple-touch-icon" href="./asset/fav.png" />
     <meta name="theme-color" content="#0f172a" />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Mehedi Hasan Shihab — Senior Software Engineer &amp; AI Developer" />
+    <meta
+      property="og:title"
+      content="Mehedi Hasan Shihab — Senior Software Engineer &amp; AI Developer"
+    />
     <meta
       property="og:description"
       content="Scalable Full-Stack Web Applications, Gemini &amp; Agentic AI Platforms, Enterprise CRM Architectures, Cybersecurity Recovery &amp; 11 Interactive Web Tools."
     />
-    <meta property="og:image" content="/asset/Shihab.jpg" />
+    <meta property="og:image" content="./asset/Shihab.jpg" />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Mehedi Hasan Shihab — Senior Software Engineer &amp; AI Developer" />
+    <meta
+      name="twitter:title"
+      content="Mehedi Hasan Shihab — Senior Software Engineer &amp; AI Developer"
+    />
     <meta
       name="twitter:description"
       content="Full-Stack Web Developer, AI &amp; Gemini Engineer, and Senior Software Engineer based in Dhaka, Bangladesh."
     />
-    <meta name="twitter:image" content="/asset/Shihab.jpg" />
+    <meta name="twitter:image" content="./asset/Shihab.jpg" />
 
-    <!-- Google Fonts: Syne, DM Sans, Plus Jakarta Sans & JetBrains Mono -->
+    <!-- Google Fonts: Syne, DM Sans, Plus Jakarta Sans, JetBrains Mono & Kalam -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&family=Syne:wght@400;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@600;700;800&family=Kalam:wght@400;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=Syne:wght@400;600;700;800&display=swap"
       rel="stylesheet"
     />
 
@@ -53,7 +59,7 @@
         "email": "mailto:sshihabb007@gmail.com",
         "telephone": "+8801521213853",
         "url": "https://sshihabb007.github.io/",
-        "image": "/asset/Shihab.jpg",
+        "image": "./asset/Shihab.jpg",
         "alumniOf": {
           "@type": "CollegeOrUniversity",
           "name": "American International University-Bangladesh (AIUB)"
@@ -80,7 +86,18 @@
     <!-- Zero-FOUC Theme & Animation Mode Initialization -->
     <script>
       (function () {
-        var validModes = ['galaxy', 'neural', 'code', 'waves', 'warp', 'tunnel', 'pulse', 'thunder', 'wildfire', 'sketch'];
+        var validModes = [
+          'galaxy',
+          'neural',
+          'code',
+          'waves',
+          'warp',
+          'tunnel',
+          'pulse',
+          'thunder',
+          'wildfire',
+          'sketch',
+        ];
         try {
           var saved = localStorage.getItem('theme');
           if (saved === 'light') {
@@ -88,18 +105,100 @@
           } else {
             document.documentElement.classList.add('dark');
           }
-          var mode = localStorage.getItem('portfolio-animation-mode') || localStorage.getItem('portfolio-default-animation');
-          document.documentElement.dataset.animationMode = validModes.indexOf(mode) !== -1 ? mode : 'galaxy';
+          var mode =
+            localStorage.getItem('portfolio-animation-mode') ||
+            localStorage.getItem('portfolio-default-animation');
+          document.documentElement.dataset.animationMode =
+            validModes.indexOf(mode) !== -1 ? mode : 'galaxy';
         } catch (e) {
           document.documentElement.classList.add('dark');
           document.documentElement.dataset.animationMode = 'galaxy';
         }
       })();
     </script>
+
+    <!-- Tailwind CSS Configuration & Play CDN -->
+    <script src="./tailwind.config.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      if (typeof tailwind !== 'undefined' && window.TAILWIND_PORTFOLIO_CONFIG) {
+        tailwind.config = window.TAILWIND_PORTFOLIO_CONFIG;
+      }
+    </script>
+
+    <!-- Portfolio Design Tokens, 10-Mode Theme Overrides & Component Animations -->
+    <link rel="stylesheet" href="./css/portfolio-base.css" />
+    <link rel="stylesheet" href="./css/portfolio-bridge.css" />
   </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+  <body class="antialiased selection:bg-blue-500/30">
+    <!-- Persistent 3D WebGL Background / Sketch Backdrop / 2D Constellation Fallback -->
+    <div id="bg-root" aria-hidden="true"></div>
+
+    <!-- Cyber Crosshair Cursor (Code Animation Mode) -->
+    <div id="cyber-cursor-root" aria-hidden="true"></div>
+
+    <!-- Fixed Glassmorphic Navbar with Scroll-Spy Indicator & Mobile Drawer -->
+    <nav
+      id="site-navbar"
+      class="site-header fixed top-0 left-0 right-0 z-[100] px-5 py-3.5 transition-all duration-300 backdrop-blur-md"
+    ></nav>
+
+    <!-- Main Portfolio Sections -->
+    <main id="main-content" class="relative z-[1]">
+      <!-- 1. Hero Section -->
+      <section
+        id="home"
+        class="hero-live min-h-screen flex items-center relative overflow-hidden px-6 pt-[104px] pb-[120px]"
+        style="background: var(--hero-grad)"
+      ></section>
+
+      <!-- 2. Education Section -->
+      <section id="education" class="py-[100px] px-6"></section>
+
+      <!-- 3. Technical Skills Section -->
+      <section id="skills" class="py-24 px-6"></section>
+
+      <!-- 4. Services Section -->
+      <section id="services" class="svc-section"></section>
+
+      <!-- 5. Experience Section -->
+      <section id="experience" class="py-24 px-6"></section>
+
+      <!-- 6. Projects Section -->
+      <section id="projects" class="py-24 px-6"></section>
+
+      <!-- 7. Live Web Tools Section (with 3D DNA Double-Helix Scene) -->
+      <section id="tools" class="pub-section py-24 px-6 relative overflow-hidden"></section>
+
+      <!-- 8. Verified Google Certifications Section -->
+      <section id="certifications" class="cert-section py-24 px-6"></section>
+
+      <!-- 9. Contact & Academic References Section -->
+      <section id="contact" class="ct-section pt-[72px] pb-20 px-6"></section>
+    </main>
+
+    <!-- Footer -->
+    <footer
+      id="site-footer"
+      class="py-7 px-6 border-t"
+      style="background: var(--bg); border-color: var(--border)"
+    ></footer>
+
+    <!-- Circular Clip-Path Project Details Modal -->
+    <div id="project-modal-root"></div>
+
+    <!-- Interactive Live Web Tool Sandbox Modal -->
+    <div id="tool-modal-root"></div>
+
+    <!-- Floating Scroll-To-Top Button -->
+    <button id="scroll-top-btn" type="button" class="scroll-btn" aria-label="Scroll to top"></button>
+
+    <!-- Vanilla JavaScript Runtime (Works over XAMPP, localhost HTTP, GitHub Pages, or direct file://) -->
+    <script defer src="./js/vendor/three.min.js"></script>
+    <script defer src="./js/portfolio-data.js"></script>
+    <script defer src="./js/portfolio-icons.js"></script>
+    <script defer src="./js/portfolio-three.js"></script>
+    <script defer src="./js/portfolio-app.js"></script>
   </body>
 </html>
 
