@@ -1,254 +1,249 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import React, { useLayoutEffect, useRef, useState } from 'react';
 import { PORTFOLIO_DATA, type SkillCategory } from '../data/portfolioData';
 import { SectionHeader, useReveal } from './SectionHeader';
 
-const SKILL_TABS: { key: 'all' | SkillCategory; label: string }[] = [
+const SKILL_TABS: { key: 'all' | SkillCategory; label: string; color?: string }[] = [
   { key: 'all', label: 'All' },
-  { key: 'programming', label: 'Programming' },
-  { key: 'web', label: 'Web & Full-Stack' },
-  { key: 'ai', label: 'AI & Agents' },
-  { key: 'database', label: 'Databases & CRM' },
-  { key: 'design', label: 'Design & Media' },
-  { key: 'tools', label: 'Tools & Security' },
+  { key: 'programming', label: 'Programming', color: '#3b82f6' },
+  { key: 'web', label: 'Web & Full-Stack', color: '#14b8a6' },
+  { key: 'ai', label: 'AI & Agents', color: '#a855f7' },
+  { key: 'database', label: 'Databases & CRM', color: '#f59e0b' },
+  { key: 'design', label: 'Design & Media', color: '#38bdf8' },
+  { key: 'tools', label: 'Tools & Security', color: '#ec4899' },
 ];
+
+const CAT_COLORS: Record<SkillCategory, string> = {
+  programming: '#3b82f6',
+  web: '#14b8a6',
+  ai: '#a855f7',
+  database: '#f59e0b',
+  design: '#38bdf8',
+  tools: '#ec4899',
+};
 
 export function Skills() {
   const [cat, setCat] = useState<'all' | SkillCategory>('all');
-  const [pill, setPill] = useState({ x: 0, w: 0, ready: false });
-  const [sweepKey, setSweepKey] = useState(0);
+  const [pill, setPill] = useState<{ x: number; y: number; w: number; h: number } | null>(null);
   const [brokenIcons, setBrokenIcons] = useState<Record<string, boolean>>({});
 
-  const revealRef = useReveal();
+  const liveRevealRef = useReveal<HTMLDivElement>();
+  const insightsRevealRef = useReveal<HTMLDivElement>();
   const barRef = useRef<HTMLDivElement | null>(null);
-  const tabRefs = useRef<Record<string, HTMLButtonElement | null>>({});
-  const stageRef = useRef<HTMLDivElement | null>(null);
   const gridRef = useRef<HTMLDivElement | null>(null);
+  const spotRef = useRef<HTMLSpanElement | null>(null);
   const prevRectsRef = useRef<Map<string, DOMRect>>(new Map());
-  const firstRenderRef = useRef(true);
 
-  const filtered =
-    cat === 'all' ? PORTFOLIO_DATA.skills : PORTFOLIO_DATA.skills.filter((s) => s.cat === cat);
+  const skills = PORTFOLIO_DATA.skills;
+  const filtered = cat === 'all' ? skills : skills.filter((s) => s.cat === cat);
 
-  useEffect(() => {
-    const syncPill = () => {
-      const bar = barRef.current;
-      const btn = tabRefs.current[cat];
-      if (!bar || !btn) return;
-      const br = bar.getBoundingClientRect();
-      const tr = btn.getBoundingClientRect();
-      if (tr.width === 0) return;
-      setPill({ x: tr.left - br.left, w: tr.width, ready: true });
+  useLayoutEffect(() => {
+    const bar = barRef.current;
+    if (!bar) return;
+    const sync = () => {
+      const activeBtn = bar.querySelector<HTMLElement>('.filter-tab.active');
+      if (activeBtn) {
+        setPill({
+          x: activeBtn.offsetLeft,
+          y: activeBtn.offsetTop,
+          w: activeBtn.offsetWidth,
+          h: activeBtn.offsetHeight,
+        });
+      }
     };
-    syncPill();
-    document.fonts?.ready?.then(syncPill);
-    window.addEventListener('resize', syncPill);
-    return () => window.removeEventListener('resize', syncPill);
-  }, [cat]);
+    sync();
+    if (typeof ResizeObserver === 'undefined') return;
+    const ro = new ResizeObserver(sync);
+    ro.observe(bar);
+    bar.querySelectorAll('.filter-tab').forEach((el) => ro.observe(el));
+    return () => ro.disconnect();
+  }, [cat, skills.length]);
 
   useLayoutEffect(() => {
     const grid = gridRef.current;
     if (!grid) return;
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const tiles = Array.from(grid.querySelectorAll<HTMLElement>('.skill-tile'));
     const nextRects = new Map<string, DOMRect>();
-    tiles.forEach((el) => {
-      if (el.dataset.skill) nextRects.set(el.dataset.skill, el.getBoundingClientRect());
-    });
-
-    if (firstRenderRef.current || reduced) {
-      firstRenderRef.current = false;
-      prevRectsRef.current = nextRects;
-      return;
-    }
-
-    const prevRects = prevRectsRef.current;
-    let enteredIdx = 0;
-
-    tiles.forEach((el) => {
-      const key = el.dataset.skill || '';
-      const prev = prevRects.get(key);
-      const next = nextRects.get(key);
-      if (!next) return;
-      el.getAnimations?.().forEach((a) => a.cancel());
-
-      if (prev) {
-        const dx = prev.left - next.left;
-        const dy = prev.top - next.top;
-        if (Math.abs(dx) > 0.5 || Math.abs(dy) > 0.5) {
-          el.animate(
-            [
-              { transform: `translate(${dx}px, ${dy}px)` },
-              { transform: 'translate(0, 0)' },
-            ],
-            { duration: 460, easing: 'cubic-bezier(.22, 1, .36, 1)' }
-          );
-        }
-      } else {
-        const delay = Math.min(enteredIdx++, 16) * 24;
-        el.animate(
-          [
-            { opacity: 0, transform: 'scale(.72) translateY(14px)' },
-            { opacity: 1, transform: 'scale(1) translateY(0)' },
-          ],
-          { duration: 400, delay, easing: 'cubic-bezier(.2, 1.25, .3, 1)', fill: 'backwards' }
-        );
+    for (const tile of Array.from(grid.querySelectorAll<HTMLElement>('.skill-tile'))) {
+      const key = tile.dataset.k ?? '';
+      const rect = tile.getBoundingClientRect();
+      nextRects.set(key, rect);
+      const prev = prevRectsRef.current.get(key);
+      if (!prev) continue;
+      const dx = prev.left - rect.left;
+      const dy = prev.top - rect.top;
+      if (dx || dy) {
+        tile.animate([{ translate: `${dx}px ${dy}px` }, { translate: '0 0' }], {
+          duration: 480,
+          easing: 'cubic-bezier(.2,.8,.2,1)',
+        });
       }
-    });
-
+    }
     prevRectsRef.current = nextRects;
-  }, [cat]);
+  }, [cat, skills]);
 
   const onStageMove = (e: React.PointerEvent<HTMLDivElement>) => {
-    if (e.pointerType === 'touch') return;
-    const el = stageRef.current;
-    if (!el) return;
-    const r = el.getBoundingClientRect();
-    el.style.setProperty('--gx', `${e.clientX - r.left}px`);
-    el.style.setProperty('--gy', `${e.clientY - r.top}px`);
+    if (e.pointerType !== 'mouse') return;
+    const grid = gridRef.current;
+    const spot = spotRef.current;
+    if (!grid || !spot) return;
+    const r = grid.getBoundingClientRect();
+    spot.style.transform = `translate3d(${e.clientX - r.left - 170}px, ${e.clientY - r.top - 170}px, 0)`;
+    spot.style.opacity = '1';
+  };
+
+  const onStageLeave = () => {
+    if (spotRef.current) spotRef.current.style.opacity = '0';
   };
 
   const onTileMove = (e: React.PointerEvent<HTMLDivElement>) => {
-    if (e.pointerType === 'touch') return;
+    if (e.pointerType !== 'mouse') return;
     const el = e.currentTarget;
     const r = el.getBoundingClientRect();
-    const x = e.clientX - r.left;
-    const y = e.clientY - r.top;
-    el.style.setProperty('--tx', `${x}px`);
-    el.style.setProperty('--ty', `${y}px`);
-    el.style.setProperty('--rx', `${((y / r.height - 0.5) * -13).toFixed(2)}deg`);
-    el.style.setProperty('--ry', `${((x / r.width - 0.5) * 13).toFixed(2)}deg`);
+    const nx = (e.clientX - r.left) / r.width;
+    const ny = (e.clientY - r.top) / r.height;
+    el.style.setProperty('--mx', `${e.clientX - r.left}px`);
+    el.style.setProperty('--my', `${e.clientY - r.top}px`);
+    el.style.setProperty('--rx', `${((0.5 - ny) * 14).toFixed(2)}deg`);
+    el.style.setProperty('--ry', `${((nx - 0.5) * 16).toFixed(2)}deg`);
   };
 
   const onTileLeave = (e: React.PointerEvent<HTMLDivElement>) => {
-    const el = e.currentTarget;
-    el.style.setProperty('--rx', '0deg');
-    el.style.setProperty('--ry', '0deg');
+    e.currentTarget.style.setProperty('--rx', '0deg');
+    e.currentTarget.style.setProperty('--ry', '0deg');
   };
 
-  const selectTab = (key: 'all' | SkillCategory) => {
-    if (key !== cat) {
-      setCat(key);
-      setSweepKey((n) => n + 1);
-    }
-  };
+  const countFor = (k: 'all' | SkillCategory) =>
+    k === 'all' ? skills.length : skills.filter((s) => s.cat === k).length;
 
   return (
-    <section id="skills" ref={revealRef} style={{ padding: 'var(--section-py) 24px' }}>
-      <div style={{ maxWidth: 1100, margin: '0 auto' }}>
-        <SectionHeader
-          label="Technical Arsenal"
-          title="Skills & Technologies"
-          sub="Languages, frameworks, AI ecosystems, relational databases, and creative tools I engineer with daily"
-        />
+    <section id="skills" style={{ padding: '96px 24px' }}>
+      <div style={{ maxWidth: 1360, margin: '0 auto' }}>
+        <SectionHeader label="Technical Skills" title="My Tech Stack" />
 
-        <div className="reveal" style={{ display: 'flex', justifyContent: 'center', marginBottom: 40 }}>
-          <div ref={barRef} className="pf-bar" onScroll={() => setCat((c) => c)}>
-            <span
-              aria-hidden="true"
-              className="pf-pill"
-              style={{
-                transform: `translate3d(${pill.x}px, -50%, 0)`,
-                width: pill.w,
-                opacity: pill.ready ? 1 : 0,
-              }}
-            />
-            {SKILL_TABS.map((t) => {
-              const count =
-                t.key === 'all'
-                  ? PORTFOLIO_DATA.skills.length
-                  : PORTFOLIO_DATA.skills.filter((s) => s.cat === t.key).length;
-              return (
-                <button
-                  key={t.key}
-                  ref={(el) => {
-                    tabRefs.current[t.key] = el;
-                  }}
-                  onClick={() => selectTab(t.key)}
-                  className={`pf-tab${cat === t.key ? ' active' : ''}`}
-                >
-                  <span>{t.label}</span>
-                  <span className="pf-count">{count}</span>
-                </button>
-              );
-            })}
+        <div className="skills-filter">
+          <div ref={barRef} className="pf-bar">
+            {pill && (
+              <span
+                className="pf-pill"
+                aria-hidden="true"
+                style={{
+                  width: pill.w,
+                  height: pill.h,
+                  transform: `translate(${pill.x}px, ${pill.y}px)`,
+                }}
+              />
+            )}
+            {SKILL_TABS.map((t) => (
+              <button
+                key={t.key}
+                type="button"
+                className={`filter-tab${cat === t.key ? ' active' : ''}`}
+                onClick={() => setCat(t.key)}
+              >
+                {t.key !== 'all' && (
+                  <i
+                    className="skills-dot"
+                    style={{ background: t.color }}
+                    aria-hidden="true"
+                  />
+                )}
+                {t.label}
+                <span className="pf-count">{countFor(t.key)}</span>
+              </button>
+            ))}
           </div>
         </div>
 
         <div
-          ref={stageRef}
+          ref={liveRevealRef}
+          className="reveal skills-live"
           onPointerMove={onStageMove}
-          className="skills-stage reveal"
+          onPointerLeave={onStageLeave}
         >
-          <div className="skills-spot" aria-hidden="true" />
-          {sweepKey > 0 && <div key={sweepKey} className="skills-sweep" aria-hidden="true" />}
+          <div ref={gridRef} className="skills-grid">
+            <span className="skills-sweep" aria-hidden="true" />
+            <span ref={spotRef} className="skills-spot" aria-hidden="true" />
 
-          <div
-            ref={gridRef}
-            className="skills-grid"
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fill, minmax(118px, 1fr))',
-              gap: 14,
-              position: 'relative',
-              zIndex: 1,
-            }}
-          >
-            {filtered.map((sk) => (
-              <div
-                key={sk.id}
-                data-skill={sk.name}
-                onPointerMove={onTileMove}
-                onPointerLeave={onTileLeave}
-                style={{ '--sc': sk.c || 'var(--accent)' } as React.CSSProperties}
-                className="skill-tile card"
-              >
-                <div className="skill-icon-ring">
+            {filtered.map((sk, idx) => {
+              const catColor = CAT_COLORS[sk.cat] || sk.c || '#38bdf8';
+              return (
+                <div
+                  key={sk.id}
+                  data-k={sk.name}
+                  className="skill-card skill-tile"
+                  onPointerMove={onTileMove}
+                  onPointerLeave={onTileLeave}
+                  style={
+                    {
+                      '--i': idx,
+                      '--d': Math.min(idx, 30) * 38,
+                      '--cat': catColor,
+                    } as React.CSSProperties
+                  }
+                >
+                  <span
+                    className="skill-cat"
+                    aria-hidden="true"
+                    title={SKILL_TABS.find((t) => t.key === sk.cat)?.label || sk.cat}
+                  />
                   {sk.icon && !brokenIcons[sk.id] ? (
                     <img
                       src={sk.icon}
                       alt={sk.name}
-                      className="skill-img"
+                      width={40}
+                      height={40}
+                      className="skill-icon"
                       loading="lazy"
                       decoding="async"
-                      width={32}
-                      height={32}
-                      onError={() =>
-                        setBrokenIcons((prev) => ({ ...prev, [sk.id]: true }))
-                      }
-                      style={{ width: 32, height: 32, objectFit: 'contain' }}
+                      onError={() => setBrokenIcons((prev) => ({ ...prev, [sk.id]: true }))}
                     />
                   ) : (
                     <span
-                      className="syne"
+                      className="skill-icon syne"
                       style={{
+                        width: 40,
+                        height: 40,
+                        borderRadius: 12,
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
                         fontWeight: 800,
-                        fontSize: '.78rem',
+                        fontSize: '.82rem',
                         letterSpacing: '.03em',
-                        color: sk.c,
+                        color: sk.c || catColor,
+                        background: `color-mix(in srgb, ${sk.c || catColor} 14%, var(--surface2))`,
+                        border: `1px solid color-mix(in srgb, ${sk.c || catColor} 32%, transparent)`,
                       }}
                     >
                       {sk.badgeText || sk.name.slice(0, 2).toUpperCase()}
                     </span>
                   )}
+                  <span className="skill-label">{sk.name}</span>
                 </div>
-                <span className="skill-name">{sk.name}</span>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
 
-        {/* Git Language Distribution + Personal Strengths & Languages */}
+        {/* Git Language Distribution + Personal Strengths & Spoken Languages */}
         <div
+          ref={insightsRevealRef}
           className="reveal skills-insights-grid"
           style={{
-            marginTop: 28,
+            marginTop: 32,
             display: 'grid',
             gridTemplateColumns: '1fr 1.15fr',
-            gap: 20,
+            gap: 22,
           }}
         >
-          <div className="card" style={{ padding: '24px 26px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 14 }}>
+          <div className="card edu-card" style={{ padding: '24px 28px' }}>
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                marginBottom: 14,
+              }}
+            >
               <span
                 style={{
                   fontSize: '.76rem',
@@ -260,7 +255,7 @@ export function Skills() {
               >
                 Most Used Languages (Git)
               </span>
-              <span className="mono" style={{ fontSize: '.75rem', color: 'var(--text3)' }}>
+              <span className="mono" style={{ fontSize: '.75rem', color: 'var(--muted)' }}>
                 6 Languages
               </span>
             </div>
@@ -273,7 +268,7 @@ export function Skills() {
                 overflow: 'hidden',
                 gap: 2,
                 marginBottom: 18,
-                background: 'var(--bg3)',
+                background: 'var(--surface2)',
               }}
             >
               {PORTFOLIO_DATA.gitLanguages.map((lang) => (
@@ -299,9 +294,22 @@ export function Skills() {
               {PORTFOLIO_DATA.gitLanguages.map((lang) => (
                 <div
                   key={lang.name}
-                  style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '.84rem' }}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    fontSize: '.84rem',
+                  }}
                 >
-                  <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontWeight: 600, color: 'var(--text)' }}>
+                  <span
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: 8,
+                      fontWeight: 600,
+                      color: 'var(--text)',
+                    }}
+                  >
                     <span
                       style={{
                         width: 9,
@@ -313,7 +321,7 @@ export function Skills() {
                     />
                     {lang.name}
                   </span>
-                  <span className="mono" style={{ fontSize: '.78rem', color: 'var(--text3)' }}>
+                  <span className="mono" style={{ fontSize: '.78rem', color: 'var(--muted)' }}>
                     {lang.percent.toFixed(2)}%
                   </span>
                 </div>
@@ -321,7 +329,10 @@ export function Skills() {
             </div>
           </div>
 
-          <div className="card" style={{ padding: '24px 26px', display: 'flex', flexDirection: 'column', gap: 14 }}>
+          <div
+            className="card edu-card"
+            style={{ padding: '24px 28px', display: 'flex', flexDirection: 'column', gap: 14 }}
+          >
             <div>
               <div
                 style={{
@@ -336,22 +347,24 @@ export function Skills() {
                 Personal Summary & Research Interests
               </div>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 7 }}>
-                {[...PORTFOLIO_DATA.personalTraits, ...PORTFOLIO_DATA.interests.slice(0, 4)].map((item) => (
-                  <span
-                    key={item}
-                    style={{
-                      fontSize: '.74rem',
-                      fontWeight: 600,
-                      padding: '4px 11px',
-                      borderRadius: 999,
-                      background: 'color-mix(in srgb, var(--accent) 9%, var(--bg3))',
-                      border: '1px solid color-mix(in srgb, var(--accent) 22%, var(--border))',
-                      color: 'var(--text2)',
-                    }}
-                  >
-                    {item}
-                  </span>
-                ))}
+                {[...PORTFOLIO_DATA.personalTraits, ...PORTFOLIO_DATA.interests.slice(0, 4)].map(
+                  (item) => (
+                    <span
+                      key={item}
+                      style={{
+                        fontSize: '.74rem',
+                        fontWeight: 600,
+                        padding: '4px 11px',
+                        borderRadius: 999,
+                        background: 'color-mix(in srgb, var(--accent) 9%, var(--surface2))',
+                        border: '1px solid color-mix(in srgb, var(--accent) 22%, var(--border))',
+                        color: 'var(--text)',
+                      }}
+                    >
+                      {item}
+                    </span>
+                  )
+                )}
               </div>
             </div>
 
@@ -377,7 +390,7 @@ export function Skills() {
                       fontSize: '.76rem',
                       fontWeight: 600,
                       color: 'var(--accent)',
-                      background: 'rgba(37,99,235,.08)',
+                      background: 'color-mix(in srgb, var(--accent) 12%, transparent)',
                       padding: '4px 11px',
                       borderRadius: 999,
                     }}
@@ -392,114 +405,8 @@ export function Skills() {
       </div>
 
       <style>{`
-        .skills-stage {
-          position: relative;
-          border-radius: 22px;
-          padding: 18px;
-          margin: -18px;
-          overflow: hidden;
-        }
-        .skills-spot {
-          position: absolute;
-          inset: 0;
-          pointer-events: none;
-          opacity: 0;
-          transition: opacity .35s ease;
-          background: radial-gradient(
-            420px circle at var(--gx, 50%) var(--gy, 50%),
-            rgba(37, 99, 235, .10),
-            rgba(6, 182, 212, .05) 42%,
-            transparent 70%
-          );
-        }
-        .skills-stage:hover .skills-spot { opacity: 1; }
-        .skills-sweep {
-          position: absolute;
-          inset: -20% 0;
-          pointer-events: none;
-          z-index: 2;
-          background: linear-gradient(105deg, transparent 38%, rgba(37, 99, 235, .10) 48%, rgba(6, 182, 212, .12) 52%, transparent 62%);
-          animation: skillsSweep .65s cubic-bezier(.22, 1, .36, 1) forwards;
-        }
-        @keyframes skillsSweep {
-          from { transform: translateX(-100%); opacity: 1; }
-          to   { transform: translateX(100%);  opacity: 0; }
-        }
-        .skill-tile {
-          position: relative;
-          padding: 20px 12px 16px;
-          text-align: center;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 11px;
-          cursor: default;
-          overflow: hidden;
-          transform: perspective(700px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateY(var(--lift, 0px));
-          transition: transform .22s cubic-bezier(.2, .8, .2, 1), border-color .28s ease, box-shadow .28s ease;
-          will-change: transform;
-        }
-        .skill-tile::before {
-          content: '';
-          position: absolute;
-          inset: 0;
-          border-radius: inherit;
-          background: radial-gradient(150px circle at var(--tx, 50%) var(--ty, 30%),
-            color-mix(in srgb, var(--sc) 22%, transparent), transparent 72%);
-          opacity: 0;
-          transition: opacity .28s ease;
-          pointer-events: none;
-        }
-        .skill-tile::after {
-          content: '';
-          position: absolute;
-          left: 24%; right: 24%; bottom: 0;
-          height: 2.5px; border-radius: 3px 3px 0 0;
-          background: var(--sc);
-          transform: scaleX(0); opacity: 0;
-          transition: transform .32s cubic-bezier(.2, .8, .2, 1), opacity .28s ease, left .32s ease, right .32s ease;
-        }
-        .skill-tile:hover {
-          --lift: -5px;
-          border-color: color-mix(in srgb, var(--sc) 58%, var(--border));
-          box-shadow: 0 18px 34px -14px color-mix(in srgb, var(--sc) 38%, transparent);
-        }
-        .skill-tile:hover::before { opacity: 1; }
-        .skill-tile:hover::after { left: 14%; right: 14%; transform: scaleX(1); opacity: 1; }
-
-        .skill-icon-ring {
-          position: relative; z-index: 1;
-          width: 52px; height: 52px; border-radius: 15px;
-          display: flex; align-items: center; justify-content: center;
-          background: color-mix(in srgb, var(--sc) 11%, var(--bg3));
-          border: 1px solid color-mix(in srgb, var(--sc) 22%, transparent);
-          transition: transform .38s cubic-bezier(.2, 1.45, .3, 1), background .28s ease, border-color .28s ease, box-shadow .28s ease;
-        }
-        .skill-tile:hover .skill-icon-ring {
-          transform: translateY(-3px) scale(1.1) rotate(-4deg);
-          background: color-mix(in srgb, var(--sc) 18%, var(--bg3));
-          border-color: color-mix(in srgb, var(--sc) 48%, transparent);
-          box-shadow: 0 10px 20px -8px color-mix(in srgb, var(--sc) 55%, transparent);
-        }
-        .skill-img { transition: transform .38s cubic-bezier(.2, 1.4, .3, 1), filter .28s ease; }
-        .skill-tile:hover .skill-img {
-          transform: scale(1.08);
-          filter: drop-shadow(0 4px 8px color-mix(in srgb, var(--sc) 45%, transparent));
-        }
-        .skill-name {
-          position: relative; z-index: 1;
-          font-size: .8rem; font-weight: 600; color: var(--text2); line-height: 1.3;
-          transition: color .25s ease, transform .25s ease;
-        }
-        .skill-tile:hover .skill-name { color: var(--text); transform: translateY(-1px); }
-
         @media (max-width: 820px) {
           .skills-insights-grid { grid-template-columns: 1fr !important; }
-        }
-        @media (max-width: 520px) {
-          .skills-grid { grid-template-columns: repeat(auto-fill, minmax(98px, 1fr)) !important; gap: 10px !important; }
-          .skill-tile { padding: 15px 8px 13px; gap: 8px; }
-          .skill-icon-ring { width: 44px; height: 44px; border-radius: 12px; }
         }
       `}</style>
     </section>

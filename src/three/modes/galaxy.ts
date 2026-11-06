@@ -731,13 +731,74 @@ const COMETS = [
   { radii: [296, 268], tilt: [-1.1, 0.05], speed: 0.55, trail: 1.7, dir: 1, phase: 4.6 },
 ];
 
+function createPlanetGridGeo() {
+  const pts: number[] = [];
+  const addRing = (fn: (a: number) => [number, number, number]) => {
+    for (let i = 0; i < 40; i++) {
+      pts.push(
+        ...fn((i / 40) * Math.PI * 2),
+        ...fn(((i + 1) / 40) * Math.PI * 2)
+      );
+    }
+  };
+  for (const lat of [-1.05, -0.62, 0, 0.62, 1.05]) {
+    addRing((lon) => [Math.cos(lat) * Math.cos(lon), Math.sin(lat), Math.cos(lat) * Math.sin(lon)]);
+  }
+  for (let i = 0; i < 8; i++) {
+    const lon = (i / 8) * Math.PI * 2;
+    addRing((lat) => [Math.cos(lat) * Math.cos(lon), Math.sin(lat), Math.cos(lat) * Math.sin(lon)]);
+  }
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(pts), 3));
+  return geo;
+}
+
 export const hero = (ctx: SceneContext): SceneInstance => {
   const { scene, rig, size, compact } = ctx;
   const bag = new DisposableBag();
   const palette = new ThemePalette(HERO_COLORS, ctx.dark);
   let levels = HERO_LEVELS[ctx.dark ? 'dark' : 'light'];
+  let isDark = ctx.dark;
 
   const root = bag.mount(rig ?? scene, new THREE.Group());
+  const planetSphereGeo = bag.track(new THREE.SphereGeometry(1, 32, 22));
+  const planetGridGeo = bag.track(createPlanetGridGeo());
+  const planets = [
+    { kind: 'earth' as const, color: '#35d7ff', orbitX: 246, orbitY: 184, phase: 0.35, speed: 0.095, size: compact ? 13 : 19 },
+    { kind: 'mars' as const, color: '#ff668d', orbitX: 292, orbitY: 214, phase: 2.05, speed: -0.075, size: compact ? 9 : 13 },
+    { kind: 'jupiter' as const, color: '#ffd166', orbitX: 324, orbitY: 244, phase: 3.72, speed: 0.052, size: compact ? 17 : 25 },
+    { kind: 'neptune' as const, color: '#9b8cff', orbitX: 274, orbitY: 270, phase: 5.35, speed: -0.043, size: compact ? 14 : 21 },
+  ].map((spec, idx) => {
+    const material = bag.track(
+      new THREE.MeshBasicMaterial({
+        color: spec.color,
+        blending: blendForTheme(ctx.dark),
+        transparent: true,
+        opacity: 0,
+        depthWrite: false,
+      })
+    );
+    const gridMaterial = bag.track(
+      new THREE.LineBasicMaterial({
+        color: spec.color,
+        blending: blendForTheme(ctx.dark),
+        transparent: true,
+        opacity: 0,
+        depthWrite: false,
+      })
+    );
+    const mesh = new THREE.Mesh(planetSphereGeo, material);
+    mesh.scale.setScalar(spec.size);
+    mesh.renderOrder = 2;
+    const grid = new THREE.LineSegments(planetGridGeo, gridMaterial);
+    grid.scale.setScalar(spec.size * 1.015);
+    grid.rotation.set(0.25 + idx * 0.18, idx * 0.7, -0.2 + idx * 0.12);
+    grid.renderOrder = 3;
+    const group = bag.mount(root, new THREE.Group());
+    group.add(mesh, grid);
+    return { ...spec, group, grid, material, gridMaterial, angle: spec.phase };
+  });
+
   const discGeo = bag.track(createDiscGeo(compact ? 3000 : 7000));
   const discMat = bag.shader(
     {
@@ -882,6 +943,19 @@ export const hero = (ctx: SceneContext): SceneInstance => {
       discGroup.rotation.z = -0.32 + Math.cos(elapsed * 0.17) * 0.035 - sway.x * 0.08;
       discGroup.rotation.y = sway.x * 0.06;
 
+      const planetAlpha = easeOutCubic((elapsed - 0.65) / 1.8) * fade;
+      for (const pl of planets) {
+        pl.angle += dt * pl.speed * (1 + progress * 0.4);
+        pl.group.position.set(
+          Math.cos(pl.angle) * pl.orbitX,
+          Math.sin(pl.angle) * pl.orbitY + progress * 24,
+          Math.sin(pl.angle * 1.7) * 55 - 35
+        );
+        pl.grid.rotation.y += dt * (pl.kind === 'jupiter' ? 0.28 : 0.18);
+        pl.material.opacity = planetAlpha * (isDark ? 0.1 : 0.045);
+        pl.gridMaterial.opacity = planetAlpha * (isDark ? 0.88 : 0.62);
+      }
+
       const cometReveal = easeOutCubic((elapsed - 1.3) / 1.6);
       for (const c of comets) {
         c.phase += dt * c.spec.speed * c.spec.dir;
@@ -918,9 +992,13 @@ export const hero = (ctx: SceneContext): SceneInstance => {
       placePolys();
     },
     setTheme(nextDark) {
+      isDark = nextDark;
       levels = HERO_LEVELS[nextDark ? 'dark' : 'light'];
       palette.setTheme(nextDark);
-      bag.setBlending(nextDark, [wireLineMat]);
+      bag.setBlending(nextDark, [
+        wireLineMat,
+        ...planets.flatMap((pl) => [pl.material, pl.gridMaterial]),
+      ]);
     },
     dispose() {
       bag.dispose();

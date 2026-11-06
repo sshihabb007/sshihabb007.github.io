@@ -186,6 +186,12 @@ export class ThemePalette<K extends string> {
       this.cur[k].lerp(this.tgt[k], alpha);
     }
   }
+
+  snap(): void {
+    for (const k of Object.keys(this.cur) as K[]) {
+      this.cur[k].copy(this.tgt[k]);
+    }
+  }
 }
 
 export function scaleUniforms(ctx: SceneContext) {

@@ -21,16 +21,16 @@ const PALETTE = {
     cool: '#4f86ff',
   },
   light: {
-    rain: '#3b5a99',
-    bolt: '#3730a3',
-    glow: '#6366f1',
-    cloud: '#475569',
-    flash: '#7c8cff',
-    spark: '#4338ca',
-    cool: '#6366f1',
+    rain: '#334b6b',
+    bolt: '#fffef7',
+    glow: '#3156c8',
+    cloud: '#53647b',
+    flash: '#eaf4ff',
+    spark: '#f4f8ff',
+    cool: '#3568d4',
   },
 };
-const OPACITY = { dark: 1, light: 0.9 };
+const OPACITY = { dark: 1, light: 0.96 };
 const MAX_BOLT_PTS = 4200;
 const BOLT_POOL = 3;
 
@@ -333,12 +333,21 @@ function createThunderScene(
       uColor: color,
     });
 
+    const isLight = !dark;
     const glowMat = bag.shader(
-      { vertexShader: BOLT_VERT, fragmentShader: BOLT_FRAG, uniforms: makeUniforms({ value: palette.cur.glow }, 22, 0.5) },
+      {
+        vertexShader: BOLT_VERT,
+        fragmentShader: BOLT_FRAG,
+        uniforms: makeUniforms({ value: palette.cur.glow }, isLight ? 28 : 22, isLight ? 0.78 : 0.5),
+      },
       dark
     );
     const coreMat = bag.shader(
-      { vertexShader: BOLT_VERT, fragmentShader: BOLT_FRAG, uniforms: makeUniforms({ value: palette.cur.bolt }, 6.5, 1) },
+      {
+        vertexShader: BOLT_VERT,
+        fragmentShader: BOLT_FRAG,
+        uniforms: makeUniforms({ value: palette.cur.bolt }, isLight ? 8 : 6.5, isLight ? 1.15 : 1),
+      },
       dark
     );
     for (const m of [glowMat, coreMat]) {
@@ -377,7 +386,7 @@ function createThunderScene(
   let flashX = 0.5;
   let shake = 0;
   let stormSurge = 0;
-  let nextAutoBolt = 1.6;
+  let nextAutoBolt = opts.hero ? 1.6 : 4.2;
   let nextSheet = 2.5;
   let lastElapsed = 0;
   const delayedStrikes: Array<{ at: number; x: number; y: number; power: number }> = [];
@@ -398,14 +407,14 @@ function createThunderScene(
     (b.geo.getAttribute('position') as THREE.BufferAttribute).set(boltData.pos);
     (b.geo.getAttribute('aB') as THREE.BufferAttribute).set(boltData.info);
     b.geo.getAttribute('position').needsUpdate = true;
-    b.geo.getAttribute('aB').needsUpdate = true;
+    b.geo.getAttribute('aB')!.needsUpdate = true;
     b.geo.setDrawRange(0, boltData.count);
     b.age = 0;
 
-    sp.fire(x, y);
+    if (opts.hero || power >= 0.7) sp.fire(x, y);
     strikeAge = 0;
     flashX = Math.min(1, Math.max(0, x / size.width + 0.5));
-    shake = Math.max(shake, 0.55 + 0.45 * power);
+    shake = Math.max(shake, (opts.hero ? 0.55 : 0.12) + (opts.hero ? 0.45 : 0.12) * power);
     stormSurge = Math.max(stormSurge, power);
   };
 
@@ -422,13 +431,14 @@ function createThunderScene(
         }
       }
 
-      if (opts.hero && elapsed > nextAutoBolt) {
+      if (elapsed > nextAutoBolt) {
+        const power = opts.hero ? 0.6 : 0.42;
         strike(
-          (Math.random() - 0.5) * size.width * 0.85,
+          (Math.random() - 0.5) * size.width * (opts.hero ? 0.85 : 0.7),
           -size.height * (0.02 + Math.random() * 0.4),
-          0.6
+          power
         );
-        nextAutoBolt = elapsed + 2.6 + Math.random() * 3.2;
+        nextAutoBolt = elapsed + (opts.hero ? 2.6 + Math.random() * 3.2 : 5.5 + Math.random() * 4.5);
       }
 
       if (elapsed > nextSheet) {
@@ -454,12 +464,12 @@ function createThunderScene(
       rainMat.uniforms.uW.value = size.width;
       rainMat.uniforms.uH.value = size.height;
       rainMat.uniforms.uWind.value = wind;
-      rainMat.uniforms.uDensity.value = Math.min(1, (opts.hero ? 0.62 : 0.38) + stormSurge * 0.4);
+      rainMat.uniforms.uDensity.value = Math.min(1, (opts.hero ? 0.74 : 0.5) + stormSurge * 0.35);
       rainMat.uniforms.uAlpha.value = 1 + flash * 0.5;
 
       cloudMat.uniforms.uTime.value = elapsed;
       cloudMat.uniforms.uAspect.value = size.width / size.height;
-      cloudMat.uniforms.uFlash.value = flash * (dark ? 1 : 0.7);
+      cloudMat.uniforms.uFlash.value = flash * (dark ? 1 : 0.95);
       cloudMat.uniforms.uFlashAt.value.set(flashX, 0.82);
       cloudQuad.fit(size);
 
@@ -490,6 +500,12 @@ function createThunderScene(
       opacity = OPACITY[nextDark ? 'dark' : 'light'];
       palette.setTheme(nextDark);
       bag.setBlending(nextDark);
+      for (const b of bolts) {
+        b.glowMat.uniforms.uSize.value = nextDark ? 22 : 28;
+        b.glowMat.uniforms.uAlpha.value = nextDark ? 0.5 : 0.78;
+        b.coreMat.uniforms.uSize.value = nextDark ? 6.5 : 8;
+        b.coreMat.uniforms.uAlpha.value = nextDark ? 1 : 1.15;
+      }
     },
     pointerDown(x, y) {
       strike(x, y, 1);
@@ -508,11 +524,10 @@ function createThunderScene(
 }
 
 export const hero = (ctx: SceneContext): SceneInstance =>
-  createThunderScene(ctx, { drops: ctx.compact ? 700 : 1500, hero: true });
+  createThunderScene(ctx, { drops: ctx.compact ? 950 : 2100, hero: true });
 
 export const background = (ctx: SceneContext): SceneInstance =>
-  createThunderScene(ctx, { drops: ctx.compact ? 320 : 700, hero: false });
+  createThunderScene(ctx, { drops: ctx.compact ? 480 : 1000, hero: false });
 
 export const heroDpr = 1.25;
 export const backgroundDpr = 1;
-

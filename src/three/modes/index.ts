@@ -15,14 +15,13 @@ export async function loadMode(mode: AnimationModeId): Promise<ModeModule> {
       return import('./warp');
     case 'tunnel':
       return import('./tunnel');
-    case 'vortex':
-      return import('./vortex');
     case 'pulse':
       return import('./pulse');
     case 'thunder':
       return import('./thunder');
     case 'wildfire':
       return import('./wildfire');
+    case 'sketch':
+      return import('./sketch');
   }
 }
-

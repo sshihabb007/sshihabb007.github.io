@@ -161,13 +161,121 @@ function CanvasConstellationFallback() {
   );
 }
 
+function SketchBackdrop() {
+  return (
+    <div className="sketch-backdrop" aria-hidden="true">
+      <svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
+        <g className="sketch-doodle sketch-doodle--blue" transform="translate(88 160) rotate(-7)">
+          <path d="M4 22 49 4l43 18v54L49 94 4 76z" />
+          <path d="m4 22 45 19 43-19M49 41v53" />
+          <path d="m22 35 8 4-8 4m15 4h14" />
+        </g>
+        <g className="sketch-doodle sketch-doodle--pink" transform="translate(1210 195) rotate(5)">
+          <rect x="4" y="8" width="126" height="82" rx="7" />
+          <path d="M4 28h126M18 18h2m11 0h2" />
+          <path d="m53 47-12 9 12 9m25-18 12 9-12 9m-9-14-8 20" />
+        </g>
+        <g className="sketch-doodle sketch-doodle--green" transform="translate(135 610) rotate(4)">
+          <ellipse cx="58" cy="20" rx="48" ry="15" />
+          <path d="M10 20v52c0 9 22 16 48 16s48-7 48-16V20M10 46c0 9 22 16 48 16s48-7 48-16" />
+          <path d="m43 37 12 11-12 11m28-22L59 59" />
+        </g>
+        <g className="sketch-doodle sketch-doodle--orange" transform="translate(1190 620) rotate(-6)">
+          <path d="M8 82V34L66 5l58 29v48H8zM0 35 66 0l66 35M51 82V53h30v29M24 49h13m60 0h13" />
+          <path d="M100 15h17v18" />
+        </g>
+        <g className="sketch-doodle sketch-doodle--purple" transform="translate(670 110) rotate(3)">
+          <path d="M9 9h52v52H9zM22 23h25M22 34h25M22 45h16" />
+          <path d="m80 42 28-28 15 15-28 28-19 5zM108 14l15 15" />
+        </g>
+        <g className="sketch-doodle sketch-doodle--pink" transform="translate(605 730) rotate(-3)">
+          <path d="M10 28c0-12 10-20 22-20 9 0 16 5 20 13 5-8 12-13 21-13 12 0 22 8 22 20 0 19-43 49-43 49S10 47 10 28z" />
+        </g>
+        <g className="sketch-doodle sketch-doodle--purple" transform="translate(360 75) rotate(-8)">
+          <path d="M10 10h24v24H10zM16 17h12M16 23h10M16 29h8" />
+        </g>
+        <g className="sketch-doodle sketch-doodle--orange" transform="translate(985 85) rotate(9)">
+          <path d="m8 28 24-24 12 12-24 24-16 4zM27 9l12 12M4 44l8-2" />
+        </g>
+        <g className="sketch-doodle sketch-doodle--blue" transform="translate(520 425) rotate(5)">
+          <path d="m8 18 14-14 14 14-14 14zM22 4v28M8 18h28" />
+        </g>
+        <g className="sketch-doodle sketch-doodle--pink" transform="translate(1040 470) rotate(-6)">
+          <path d="M7 5h28v28H7zM13 12h16M13 19h12M13 26h9" />
+        </g>
+        <g className="sketch-doodle sketch-doodle--green" transform="translate(300 805) rotate(-5)">
+          <path d="M8 20h34M25 4v32M12 8l26 25M38 8 12 33" />
+        </g>
+        <g className="sketch-doodle sketch-doodle--blue" transform="translate(890 790) rotate(8)">
+          <path d="M8 28 27 5l19 23zM27 5v23M8 28h38" />
+        </g>
+        <g className="sketch-doodle sketch-doodle--orange" transform="translate(65 405) rotate(8)">
+          <path d="M7 6h36v28H7zM14 14l7 6-7 6m14-2h8" />
+        </g>
+        <g className="sketch-doodle sketch-doodle--purple" transform="translate(1330 405) rotate(-8)">
+          <circle cx="22" cy="22" r="18" />
+          <path d="m15 21 5 5 10-11" />
+        </g>
+        <g className="sketch-doodle sketch-doodle--blue" transform="translate(280 280) rotate(-6)">
+          <path d="m8 20 14-14 14 14-14 14zM8 20h28M22 6v28" />
+          <circle cx="22" cy="20" r="5" />
+        </g>
+        <g className="sketch-doodle sketch-doodle--green" transform="translate(1120 300) rotate(7)">
+          <rect x="6" y="7" width="72" height="54" rx="4" />
+          <path d="M6 22h72M17 15h2m9 0h2m9 0h2M18 34h48M18 44h36M18 54h42" />
+        </g>
+        <g className="sketch-doodle sketch-doodle--pink" transform="translate(760 285) rotate(-5)">
+          <path d="M10 14c0-6 7-10 15-7 7-6 18-2 17 6 8 0 12 8 7 14-3 4-10 6-18 5-10 5-22 0-22-8-7-2-7-8 1-10z" />
+          <path d="M22 23c8-9 15 8 24-3" />
+        </g>
+        <g className="sketch-doodle sketch-doodle--orange" transform="translate(470 185) rotate(8)">
+          <path d="M26 3 32 18 48 11 41 27 56 33 40 38 46 54 31 46 23 61 20 44 3 47 14 34 3 22 20 23z" />
+        </g>
+        <g className="sketch-doodle sketch-doodle--purple" transform="translate(1010 520) rotate(5)">
+          <path d="M6 12h62v42H6zM18 12V5h38v7M18 26h38M18 36h38M18 46h25" />
+        </g>
+        <g className="sketch-doodle sketch-doodle--blue" transform="translate(185 455) rotate(8)">
+          <path d="M8 10h46v34H8zM19 51h24M31 44v7M18 20h8m5 0h15M18 29h25" />
+        </g>
+        <g className="sketch-doodle sketch-doodle--green" transform="translate(725 585) rotate(-7)">
+          <circle cx="13" cy="28" r="7" />
+          <circle cx="54" cy="10" r="7" />
+          <circle cx="61" cy="51" r="7" />
+          <circle cx="100" cy="28" r="7" />
+          <path d="m20 25 27-12m9 4 3 27m7 7 27-20m-66 0 27 0" />
+        </g>
+        <g className="sketch-doodle sketch-doodle--orange" transform="translate(1280 510) rotate(-8)">
+          <path d="M7 12h48v36H7zM19 12V5h24v7M18 22h26M18 31h26M18 40h17" />
+          <path d="m62 24 7 7 13-15" />
+        </g>
+        <g className="sketch-doodle sketch-doodle--pink" transform="translate(460 690) rotate(6)">
+          <path d="m24 3 6 17 18-7-8 17 18 7-18 5 7 18-17-9-9 17-4-19-19 4 13-14L0 25l19 1z" />
+        </g>
+        <g className="sketch-doodle sketch-doodle--purple" transform="translate(850 180) rotate(-5)">
+          <path d="M9 7h44v38H9zM20 19l-8 7 8 7m19-14 8 7-8 7m-5-17-7 20" />
+        </g>
+        <g className="sketch-doodle sketch-doodle--blue" transform="translate(75 745) rotate(5)">
+          <path d="M10 22c0-8 8-13 17-9 5-8 18-7 21 2 9-2 15 5 12 12-2 7-11 9-18 6-7 7-21 5-24-2-6 0-8-4-8-9z" />
+        </g>
+      </svg>
+    </div>
+  );
+}
+
 export function NetworkBackground() {
   const hostRef = useRef<HTMLDivElement | null>(null);
   const [fallback, setFallback] = useState(() => !hasWebGL());
+  const mode = useSyncExternalStore(
+    subscribeAnimationMode,
+    getAnimationMode,
+    () => DEFAULT_ANIMATION_MODE
+  );
+
+  const isSketch = mode === 'sketch';
 
   useEffect(() => {
     const el = hostRef.current;
-    if (fallback || !el) return;
+    if (fallback || isSketch || !el) return;
 
     let cancelled = false;
     let disposeScene: (() => void) | undefined;
@@ -181,15 +289,16 @@ export function NetworkBackground() {
         console.warn('[NetworkBackground] falling back to 2D canvas:', err);
         if (!cancelled) setFallback(true);
       }
-    }, 600);
+    }, 1000);
 
     return () => {
       cancelled = true;
       cancelIdle();
       disposeScene?.();
     };
-  }, [fallback]);
+  }, [fallback, isSketch]);
 
+  if (isSketch) return <SketchBackdrop />;
   if (fallback) return <CanvasConstellationFallback />;
 
   return (

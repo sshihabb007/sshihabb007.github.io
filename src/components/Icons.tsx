@@ -1,91 +1,92 @@
 import React from 'react';
 import type { AnimationModeId } from '../three/animationStore';
 
-export function AnimationIcon({ mode, size = 16 }: { mode: AnimationModeId; size?: number }) {
+export function AnimationIcon({ mode, size = 20 }: { mode: AnimationModeId; size?: number }) {
   const common = {
     width: size,
     height: size,
     viewBox: '0 0 24 24',
     fill: 'none',
     stroke: 'currentColor',
-    strokeWidth: 1.9,
+    strokeWidth: 1.8,
     strokeLinecap: 'round' as const,
     strokeLinejoin: 'round' as const,
+    'aria-hidden': true,
   };
 
   switch (mode) {
     case 'galaxy':
       return (
         <svg {...common}>
-          <circle cx="12" cy="12" r="2.2" fill="currentColor" stroke="none" />
-          <path d="M12 4c4.8 0 8 2.6 8 5.8 0 2.7-2.6 4.7-6.2 4.7-2.8 0-4.8-1.3-4.8-3.1 0-1.4 1.2-2.4 2.9-2.4" />
-          <path d="M12 20c-4.8 0-8-2.6-8-5.8 0-2.7 2.6-4.7 6.2-4.7 2.8 0 4.8 1.3 4.8 3.1 0 1.4-1.2 2.4-2.9 2.4" />
+          <ellipse cx="12" cy="12" rx="9.2" ry="3.9" transform="rotate(-28 12 12)" />
+          <circle cx="12" cy="12" r="2.6" fill="currentColor" stroke="none" />
         </svg>
       );
     case 'neural':
       return (
         <svg {...common}>
-          <circle cx="5" cy="7" r="2" />
-          <circle cx="5" cy="17" r="2" />
-          <circle cx="12" cy="12" r="2.2" />
-          <circle cx="19" cy="7" r="2" />
-          <circle cx="19" cy="17" r="2" />
-          <path d="M6.8 8l3.4 2.8M6.8 16l3.4-2.8M13.8 10.8L17.2 8M13.8 13.2L17.2 16" />
+          <circle cx="6" cy="7" r="2" />
+          <circle cx="18" cy="7" r="2" />
+          <circle cx="12" cy="18" r="2" />
+          <path d="M8 7h8M7.2 8.8l3.8 7.4M16.8 8.8l-3.8 7.4" />
         </svg>
       );
     case 'code':
       return (
         <svg {...common}>
-          <polyline points="8 7 3 12 8 17" />
-          <polyline points="16 7 21 12 16 17" />
-          <line x1="13.5" y1="5" x2="10.5" y2="19" />
+          <path d="M8 8l-4 4 4 4M16 8l4 4-4 4M13.6 6l-3.2 12" />
         </svg>
       );
     case 'waves':
       return (
         <svg {...common}>
-          <path d="M2 9c2.5-2.5 5-2.5 7.5 0s5 2.5 7.5 0 3.5-2 5 0" />
-          <path d="M2 15c2.5-2.5 5-2.5 7.5 0s5 2.5 7.5 0 3.5-2 5 0" />
+          <path d="M2.5 10c2.4-3.6 4.8-3.6 7.2 0s4.8 3.6 7.2 0 3-2.4 4.6-2" />
+          <path d="M2.5 16c2.4-3.6 4.8-3.6 7.2 0s4.8 3.6 7.2 0 3-2.4 4.6-2" />
         </svg>
       );
     case 'warp':
       return (
         <svg {...common}>
-          <circle cx="12" cy="12" r="1.6" fill="currentColor" stroke="none" />
-          <path d="M12 2v4M12 18v4M2 12h4M18 12h4M4.9 4.9l2.9 2.9M16.2 16.2l2.9 2.9M19.1 4.9l-2.9 2.9M7.8 16.2l-2.9 2.9" />
+          <path d="M8.6 8.6L4 4M15.4 8.6L20 4M8.6 15.4L4 20M15.4 15.4L20 20" />
+          <circle cx="12" cy="12" r="1.8" fill="currentColor" stroke="none" />
         </svg>
       );
     case 'tunnel':
       return (
         <svg {...common}>
-          <circle cx="12" cy="12" r="9.5" />
-          <circle cx="12" cy="12" r="6" />
-          <circle cx="12" cy="12" r="2.6" />
-        </svg>
-      );
-    case 'vortex':
-      return (
-        <svg {...common}>
-          <path d="M12 12m-1.5 0a1.5 1.5 0 1 0 3 0 3.5 3.5 0 1 0-5.5 2.9 6 6 0 1 0 8.5-5.4 8.5 8.5 0 1 0-11.5 8" />
+          <rect x="3" y="3" width="18" height="18" rx="4" />
+          <rect x="7" y="7" width="10" height="10" rx="2.4" />
+          <rect x="10.4" y="10.4" width="3.2" height="3.2" rx="1" fill="currentColor" stroke="none" />
         </svg>
       );
     case 'pulse':
       return (
         <svg {...common}>
-          <polyline points="2 12 6.5 12 9 6 12.5 18 15 10 17.5 12 22 12" />
+          <circle cx="12" cy="12" r="2" fill="currentColor" stroke="none" />
+          <circle cx="12" cy="12" r="5.6" />
+          <circle cx="12" cy="12" r="9.2" strokeDasharray="2 3" />
         </svg>
       );
     case 'thunder':
       return (
         <svg {...common}>
-          <polygon points="13 2 4 14 11.5 14 10.5 22 20 10 12.5 10 13 2" />
+          <path d="M7 15.5A4.5 4.5 0 0 1 7.5 6.6 5.5 5.5 0 0 1 18 8.2a3.6 3.6 0 0 1-.5 7.3" />
+          <path d="M12.6 11.5 9.8 16h3.4l-1.6 4.5 4.2-6h-3.3z" fill="currentColor" stroke="none" />
         </svg>
       );
     case 'wildfire':
       return (
         <svg {...common}>
-          <path d="M12 2.5c1.2 3.2 4.8 5 4.8 9.2A5.8 5.8 0 0 1 11 17.5a5.8 5.8 0 0 1-4.8-5.7c0-2.4 1.3-4.2 2.6-5.5.2 1.7 1.1 2.6 2.1 2.9-.4-2.3.2-4.8 1.1-6.7Z" />
-          <path d="M10.2 18.8c.5.9 1.6 1.5 2.8 1.2 1.3-.3 2.2-1.5 2-2.9-.8.6-1.7.7-2.4.2-.5-.4-.7-1.1-.6-1.9-1.2.8-2.2 2.1-1.8 3.4Z" />
+          <path d="M12 3c.6 3.3 4.8 5.3 4.8 10a4.8 4.8 0 0 1-9.6 0c0-1.9.9-3.1 1.9-4.2.2 1.4.9 2.2 1.7 2.7C10.4 8.2 10.8 5.6 12 3z" />
+          <path d="M12 21a2.3 2.3 0 0 1-2.3-2.3c0-1.3 1-2 2.3-3.2 1.3 1.2 2.3 1.9 2.3 3.2A2.3 2.3 0 0 1 12 21z" fill="currentColor" stroke="none" />
+        </svg>
+      );
+    case 'sketch':
+      return (
+        <svg {...common}>
+          <path d="m4 17 9.8-9.8 3 3L7 20l-4 1z" />
+          <path d="m12.5 8.5 3 3M17.4 3.8l.8 1.7 1.8.3-1.3 1.3.3 1.8-1.6-.9-1.6.9.3-1.8-1.3-1.3 1.8-.3z" />
+          <path d="M5 4h4M3 8h3" />
         </svg>
       );
   }
@@ -142,46 +143,95 @@ export function SocialIcon({ platform, size = 20 }: { platform: string; size?: n
   }
 }
 
-export function ServiceIcon({ icon, size = 24 }: { icon: string; size?: number }) {
+function normalizeServiceIconKey(raw?: string): string {
+  if (!raw) return 'fullstack';
+  const t = raw.toLowerCase().trim();
+  if (t === 'database' || t === 'db' || t.includes('database') || t.includes('data manag') || t.includes('sql')) return 'database';
+  if (t === 'fullstack' || t.includes('full-stack') || t.includes('full stack')) return 'fullstack';
+  if (t === 'code' || t.includes('coding') || t.includes('software')) return 'code';
+  if (t === 'frontend' || t.includes('front-end') || t.includes('ui/ux')) return 'frontend';
+  if (t === 'backend' || t.includes('back-end') || t.includes('server')) return 'backend';
+  if (t === 'ai' || t === 'ml' || t.includes('ai') || t.includes('machine learning') || t.includes('brain')) return 'ai';
+  if (t === 'api' || t.includes('api') || t.includes('rest') || t.includes('microservices')) return 'api';
+  if (t === 'cloud' || t.includes('cloud') || t.includes('gcp') || t.includes('aws')) return 'cloud';
+  if (t === 'devops' || t.includes('devops') || t.includes('ci/cd') || t.includes('deployment')) return 'devops';
+  if (t === 'performance' || t.includes('perform') || t.includes('optimiz') || t.includes('speed')) return 'performance';
+  if (t === 'seo' || t.includes('seo') || t.includes('ranking')) return 'seo';
+  if (t === 'security' || t.includes('security') || t.includes('auth')) return 'security';
+  if (t === 'mobile' || t.includes('mobile') || t.includes('responsive') || t.includes('app')) return 'mobile';
+  if (t === 'architecture' || t.includes('system design') || t.includes('architecture')) return 'architecture';
+  if (t === 'testing' || t.includes('testing') || t.includes('qa')) return 'testing';
+  if (t === 'ecommerce' || t.includes('e-commerce') || t.includes('ecommerce') || t.includes('shop')) return 'ecommerce';
+  if (t === 'tools' || t.includes('tool') || t.includes('maint') || t.includes('debug')) return 'tools';
+  return 'fullstack';
+}
+
+export function ServiceIcon({
+  icon = 'fullstack',
+  size = 28,
+  color = 'currentColor',
+  className = '',
+  style,
+}: {
+  icon?: string;
+  size?: number;
+  color?: string;
+  className?: string;
+  style?: React.CSSProperties;
+}) {
+  const key = normalizeServiceIconKey(icon);
+  const stroke = color || 'currentColor';
   const props = {
     width: size,
     height: size,
     viewBox: '0 0 24 24',
     fill: 'none',
-    stroke: 'currentColor',
+    stroke,
     strokeWidth: 2,
     strokeLinecap: 'round' as const,
     strokeLinejoin: 'round' as const,
+    className: className || undefined,
+    style,
   };
-  switch (icon) {
+
+  switch (key) {
     case 'fullstack':
       return (
         <svg {...props}>
-          <polygon points="12 2 2 7 12 12 22 7 12 2" />
-          <polyline points="2 17 12 22 22 17" />
-          <polyline points="2 12 12 17 22 12" />
+          <polyline points="16 18 22 12 16 6" />
+          <polyline points="8 6 2 12 8 18" />
+          <line x1="14" y1="4" x2="10" y2="20" />
         </svg>
       );
-    case 'ai':
+    case 'code':
       return (
         <svg {...props}>
-          <rect x="4" y="4" width="16" height="16" rx="2" ry="2" />
-          <rect x="9" y="9" width="6" height="6" />
-          <line x1="9" y1="1" x2="9" y2="4" />
-          <line x1="15" y1="1" x2="15" y2="4" />
-          <line x1="9" y1="20" x2="9" y2="23" />
-          <line x1="15" y1="20" x2="15" y2="23" />
-          <line x1="20" y1="9" x2="23" y2="9" />
-          <line x1="20" y1="14" x2="23" y2="14" />
-          <line x1="1" y1="9" x2="4" y2="9" />
-          <line x1="1" y1="14" x2="4" y2="14" />
+          <polyline points="16 18 22 12 16 6" />
+          <polyline points="8 6 2 12 8 18" />
+          <rect x="2" y="4" width="20" height="16" rx="2" opacity="0.4" />
         </svg>
       );
-    case 'security':
+    case 'frontend':
       return (
         <svg {...props}>
-          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-          <path d="m9 12 2 2 4-4" />
+          <rect x="2" y="3" width="20" height="14" rx="2" />
+          <line x1="8" y1="21" x2="16" y2="21" />
+          <line x1="12" y1="17" x2="12" y2="21" />
+          <line x1="2" y1="8" x2="22" y2="8" />
+          <line x1="6" y1="5.5" x2="6.01" y2="5.5" strokeWidth="2.5" />
+          <line x1="9" y1="5.5" x2="9.01" y2="5.5" strokeWidth="2.5" />
+          <line x1="12" y1="5.5" x2="12.01" y2="5.5" strokeWidth="2.5" />
+        </svg>
+      );
+    case 'backend':
+      return (
+        <svg {...props}>
+          <rect x="2" y="2" width="20" height="8" rx="2" ry="2" />
+          <rect x="2" y="14" width="20" height="8" rx="2" ry="2" />
+          <line x1="6" y1="6" x2="6.01" y2="6" strokeWidth="2.5" />
+          <line x1="6" y1="18" x2="6.01" y2="18" strokeWidth="2.5" />
+          <line x1="10" y1="6" x2="14" y2="6" />
+          <line x1="10" y1="18" x2="14" y2="18" />
         </svg>
       );
     case 'database':
@@ -190,21 +240,105 @@ export function ServiceIcon({ icon, size = 24 }: { icon: string; size?: number }
           <ellipse cx="12" cy="5" rx="9" ry="3" />
           <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3" />
           <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" />
+          <path d="M21 5v7" />
+        </svg>
+      );
+    case 'ai':
+      return (
+        <svg {...props}>
+          <path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 4.44-2.04z" />
+          <path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-4.44-2.04z" />
+          <line x1="6" y1="12" x2="8" y2="12" />
+          <line x1="16" y1="12" x2="18" y2="12" />
+          <line x1="7" y1="8" x2="9" y2="8" />
+          <line x1="15" y1="8" x2="17" y2="8" />
+        </svg>
+      );
+    case 'api':
+      return (
+        <svg {...props}>
+          <rect x="2" y="2" width="8" height="8" rx="2" />
+          <rect x="14" y="2" width="8" height="8" rx="2" />
+          <rect x="8" y="14" width="8" height="8" rx="2" />
+          <line x1="6" y1="10" x2="6" y2="12" />
+          <line x1="18" y1="10" x2="18" y2="12" />
+          <line x1="6" y1="12" x2="18" y2="12" />
+          <line x1="12" y1="12" x2="12" y2="14" />
+        </svg>
+      );
+    case 'cloud':
+      return (
+        <svg {...props}>
+          <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z" />
+          <polyline points="12 13 12 9 10 11" opacity="0.6" />
+        </svg>
+      );
+    case 'devops':
+      return (
+        <svg {...props}>
+          <path d="M4 17l6-6-6-6" />
+          <line x1="12" y1="19" x2="20" y2="19" />
+          <path d="M16 8l4 4-4 4" opacity="0.6" />
+        </svg>
+      );
+    case 'performance':
+      return (
+        <svg {...props}>
+          <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
         </svg>
       );
     case 'seo':
       return (
         <svg {...props}>
-          <line x1="18" y1="20" x2="18" y2="10" />
-          <line x1="12" y1="20" x2="12" y2="4" />
-          <line x1="6" y1="20" x2="6" y2="14" />
+          <circle cx="11" cy="11" r="8" />
+          <line x1="21" y1="21" x2="16.65" y2="16.65" />
+          <polyline points="8 13 11 9 14 11" strokeWidth="1.75" />
+        </svg>
+      );
+    case 'security':
+      return (
+        <svg {...props}>
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+          <polyline points="9 12 11 14 15 10" />
+        </svg>
+      );
+    case 'mobile':
+      return (
+        <svg {...props}>
+          <rect x="5" y="2" width="14" height="20" rx="2" ry="2" />
+          <line x1="12" y1="18" x2="12.01" y2="18" strokeWidth="2.5" />
+        </svg>
+      );
+    case 'architecture':
+      return (
+        <svg {...props}>
+          <polygon points="12 2 2 7 12 12 22 7 12 2" />
+          <polyline points="2 17 12 22 22 17" />
+          <polyline points="2 12 12 17 22 12" />
+        </svg>
+      );
+    case 'testing':
+      return (
+        <svg {...props}>
+          <path d="M10 2v7.31M14 2v7.31" />
+          <path d="M8.5 2h7" />
+          <path d="M14 9.3a6.5 6.5 0 1 1-4 0" />
+          <circle cx="11" cy="15" r="1" fill={stroke} />
+          <circle cx="13" cy="18" r="1" fill={stroke} />
+        </svg>
+      );
+    case 'ecommerce':
+      return (
+        <svg {...props}>
+          <circle cx="9" cy="21" r="1" />
+          <circle cx="20" cy="21" r="1" />
+          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
         </svg>
       );
     default:
       return (
         <svg {...props}>
-          <polyline points="16 18 22 12 16 6" />
-          <polyline points="8 6 2 12 8 18" />
+          <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
         </svg>
       );
   }

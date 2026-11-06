@@ -77,9 +77,10 @@
       }
     </script>
 
-    <!-- Zero-FOUC Theme Initialization -->
+    <!-- Zero-FOUC Theme & Animation Mode Initialization -->
     <script>
       (function () {
+        var validModes = ['galaxy', 'neural', 'code', 'waves', 'warp', 'tunnel', 'pulse', 'thunder', 'wildfire', 'sketch'];
         try {
           var saved = localStorage.getItem('theme');
           if (saved === 'light') {
@@ -87,8 +88,11 @@
           } else {
             document.documentElement.classList.add('dark');
           }
+          var mode = localStorage.getItem('portfolio-animation-mode') || localStorage.getItem('portfolio-default-animation');
+          document.documentElement.dataset.animationMode = validModes.indexOf(mode) !== -1 ? mode : 'galaxy';
         } catch (e) {
           document.documentElement.classList.add('dark');
+          document.documentElement.dataset.animationMode = 'galaxy';
         }
       })();
     </script>

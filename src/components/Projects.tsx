@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { PORTFOLIO_DATA, type ProjectCategory, type ProjectItem } from '../data/portfolioData';
 import {
   ChevronLeftIcon,
@@ -29,268 +29,337 @@ const CATEGORY_LABELS: Record<ProjectCategory, string> = {
   tools: 'Web Tools & Analytics',
 };
 
+function EyePeekIcon() {
+  return (
+    <svg
+      width={18}
+      height={18}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2.2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z" />
+      <circle cx="12" cy="12" r="3" />
+    </svg>
+  );
+}
+
+function InfoDocIcon() {
+  return (
+    <svg
+      width={15}
+      height={15}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2.2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <circle cx="12" cy="12" r="10" />
+      <line x1="12" y1="16" x2="12" y2="12" />
+      <line x1="12" y1="8" x2="12.01" y2="8" />
+    </svg>
+  );
+}
+
+const pad2 = (n: number) => String(n).padStart(2, '0');
+const CLOSE_MS = 460;
+
 export function Projects() {
   const [cat, setCat] = useState<'all' | ProjectCategory>('all');
   const [selected, setSelected] = useState<ProjectItem | null>(null);
   const [closing, setClosing] = useState(false);
-  const [origin, setOrigin] = useState({ x: '50vw', y: '50vh' });
-  const [slideDir, setSlideDir] = useState<'next' | 'prev' | null>(null);
-  const [pill, setPill] = useState({ x: 0, w: 0, ready: false });
+  const [origin, setOrigin] = useState({ x: '50%', y: '50%' });
+  const [slideDir, setSlideDir] = useState<'none' | 'next' | 'prev'>('none');
+  const [pill, setPill] = useState<{ x: number; y: number; w: number; h: number } | null>(null);
 
-  const revealRef = useReveal();
+  const closingRef = useRef(false);
+  const closeTimerRef = useRef(0);
+  const panelRef = useRef<HTMLDivElement | null>(null);
+  const progressRef = useRef<HTMLSpanElement | null>(null);
   const barRef = useRef<HTMLDivElement | null>(null);
-  const tabRefs = useRef<Record<string, HTMLButtonElement | null>>({});
 
-  const filtered =
-    cat === 'all' ? PORTFOLIO_DATA.projects : PORTFOLIO_DATA.projects.filter((p) => p.cat === cat);
+  const filterRevealRef = useReveal<HTMLDivElement>();
+  const gridRevealRef = useReveal<HTMLDivElement>();
 
-  useEffect(() => {
-    const syncPill = () => {
-      const bar = barRef.current;
-      const btn = tabRefs.current[cat];
-      if (!bar || !btn) return;
-      const br = bar.getBoundingClientRect();
-      const tr = btn.getBoundingClientRect();
-      if (tr.width === 0) return;
-      setPill({ x: tr.left - br.left, w: tr.width, ready: true });
+  const projects = PORTFOLIO_DATA.projects;
+  const filtered = cat === 'all' ? projects : projects.filter((p) => p.cat === cat);
+  const modalPool =
+    selected && filtered.some((p) => p.id === selected.id) ? filtered : projects;
+  const selectedIndex = selected ? modalPool.findIndex((p) => p.id === selected.id) : -1;
+
+  useLayoutEffect(() => {
+    const bar = barRef.current;
+    if (!bar) return;
+    const sync = () => {
+      const activeBtn = bar.querySelector<HTMLElement>('.filter-tab.active');
+      if (activeBtn) {
+        setPill({
+          x: activeBtn.offsetLeft,
+          y: activeBtn.offsetTop,
+          w: activeBtn.offsetWidth,
+          h: activeBtn.offsetHeight,
+        });
+      }
     };
-    syncPill();
-    document.fonts?.ready?.then(syncPill);
-    window.addEventListener('resize', syncPill);
-    return () => window.removeEventListener('resize', syncPill);
-  }, [cat]);
+    sync();
+    if (typeof ResizeObserver === 'undefined') return;
+    const ro = new ResizeObserver(sync);
+    ro.observe(bar);
+    bar.querySelectorAll('.filter-tab').forEach((el) => ro.observe(el));
+    return () => ro.disconnect();
+  }, [cat, projects.length]);
 
   const openModal = (proj: ProjectItem, e?: React.MouseEvent<HTMLElement>) => {
-    if (e?.currentTarget) {
-      const r = e.currentTarget.getBoundingClientRect();
-      setOrigin({ x: `${Math.round(r.left + r.width / 2)}px`, y: `${Math.round(r.top + r.height / 2)}px` });
-    } else {
-      setOrigin({ x: '50vw', y: '50vh' });
-    }
-    setSlideDir(null);
+    window.clearTimeout(closeTimerRef.current);
+    closingRef.current = false;
     setClosing(false);
+    setSlideDir('none');
+    if (e && (e.clientX || e.clientY)) {
+      setOrigin({ x: `${e.clientX}px`, y: `${e.clientY}px` });
+    } else {
+      setOrigin({ x: '50%', y: '50%' });
+    }
     setSelected(proj);
   };
 
   const closeModal = useCallback(() => {
-    if (closing) return;
+    if (closingRef.current) return;
+    closingRef.current = true;
     setClosing(true);
-    window.setTimeout(() => {
+    closeTimerRef.current = window.setTimeout(() => {
       setSelected(null);
       setClosing(false);
-      setSlideDir(null);
-    }, 280);
-  }, [closing]);
+      closingRef.current = false;
+    }, CLOSE_MS);
+  }, []);
 
   const stepProject = useCallback(
     (delta: number) => {
-      if (!selected || filtered.length < 2) return;
-      const curIdx = filtered.findIndex((x) => x.id === selected.id);
+      if (!selected || modalPool.length < 2) return;
+      const curIdx = modalPool.findIndex((x) => x.id === selected.id);
       if (curIdx === -1) return;
-      const nextIdx = (curIdx + delta + filtered.length) % filtered.length;
-      setSlideDir(delta > 0 ? 'next' : 'prev');
-      setSelected(filtered[nextIdx]);
+      const nextProj = modalPool[(curIdx + delta + modalPool.length) % modalPool.length];
+      setSlideDir(delta === 1 ? 'next' : 'prev');
+      setSelected(nextProj);
+      panelRef.current?.scrollTo({ top: 0 });
     },
-    [selected, filtered]
+    [selected, modalPool]
   );
 
   useEffect(() => {
     if (!selected) return;
-    const prevOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') closeModal();
       else if (e.key === 'ArrowRight') stepProject(1);
       else if (e.key === 'ArrowLeft') stepProject(-1);
     };
     window.addEventListener('keydown', onKey);
-    return () => {
-      document.body.style.overflow = prevOverflow;
-      window.removeEventListener('keydown', onKey);
-    };
+    return () => window.removeEventListener('keydown', onKey);
   }, [selected, closeModal, stepProject]);
+
+  useEffect(() => {
+    document.body.style.overflow = selected ? 'hidden' : '';
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [selected]);
+
+  useEffect(() => () => window.clearTimeout(closeTimerRef.current), []);
+
+  const onPanelScroll = () => {
+    const panel = panelRef.current;
+    const bar = progressRef.current;
+    if (!panel || !bar) return;
+    const max = panel.scrollHeight - panel.clientHeight;
+    bar.style.transform = `scaleX(${max > 0 ? Math.min(1, panel.scrollTop / max) : 0})`;
+  };
+
+  const onCardMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (e.pointerType !== 'mouse') return;
+    const el = e.currentTarget;
+    const r = el.getBoundingClientRect();
+    const nx = (e.clientX - r.left) / r.width;
+    const ny = (e.clientY - r.top) / r.height;
+    el.style.setProperty('--mx', `${e.clientX - r.left}px`);
+    el.style.setProperty('--my', `${e.clientY - r.top}px`);
+    el.style.setProperty('--rx', `${((0.5 - ny) * 6).toFixed(2)}deg`);
+    el.style.setProperty('--ry', `${((nx - 0.5) * 8).toFixed(2)}deg`);
+  };
+
+  const onCardLeave = (e: React.PointerEvent<HTMLDivElement>) => {
+    e.currentTarget.style.setProperty('--rx', '0deg');
+    e.currentTarget.style.setProperty('--ry', '0deg');
+  };
 
   const triggerRipple = (e: React.PointerEvent<HTMLElement>) => {
     const btn = e.currentTarget;
+    const rip = btn.querySelector<HTMLElement>(':scope > .rip');
+    if (!rip) return;
     const r = btn.getBoundingClientRect();
-    const span = document.createElement('span');
-    span.className = 'pm-ripple';
-    const d = Math.max(r.width, r.height) * 2.1;
-    span.style.width = span.style.height = `${d}px`;
-    span.style.left = `${e.clientX - r.left - d / 2}px`;
-    span.style.top = `${e.clientY - r.top - d / 2}px`;
-    btn.appendChild(span);
-    span.addEventListener('animationend', () => span.remove());
+    const d = Math.max(r.width, r.height) * 2.2;
+    const wave = document.createElement('span');
+    wave.className = 'rip-wave';
+    wave.style.cssText = `width:${d}px;height:${d}px;left:${e.clientX - r.left - d / 2}px;top:${e.clientY - r.top - d / 2}px`;
+    rip.appendChild(wave);
+    wave.addEventListener('animationend', () => wave.remove());
   };
 
-  const selectedIndex = selected ? filtered.findIndex((p) => p.id === selected.id) : -1;
+  const countFor = (k: 'all' | ProjectCategory) =>
+    k === 'all' ? projects.length : projects.filter((p) => p.cat === k).length;
 
   return (
-    <section id="projects" ref={revealRef} style={{ padding: 'var(--section-py) 24px' }}>
-      <div style={{ maxWidth: 1100, margin: '0 auto' }}>
-        <SectionHeader
-          label="Portfolio"
-          title="Featured Projects"
-          sub="28 production platforms, autonomous AI systems, enterprise CRMs, cybersecurity recoveries, and open-source solutions"
-        />
+    <section id="projects" style={{ padding: '96px 24px' }}>
+      <div style={{ maxWidth: 1360, margin: '0 auto' }}>
+        <SectionHeader label="Portfolio" title="Projects" />
 
-        <div className="reveal" style={{ display: 'flex', justifyContent: 'center', marginBottom: 40 }}>
-          <div ref={barRef} className="pf-bar" onScroll={() => setCat((c) => c)}>
-            <span
-              aria-hidden="true"
-              className="pf-pill"
-              style={{
-                transform: `translate3d(${pill.x}px, -50%, 0)`,
-                width: pill.w,
-                opacity: pill.ready ? 1 : 0,
-              }}
-            />
-            {PROJECT_TABS.map((t) => {
-              const count =
-                t.key === 'all'
-                  ? PORTFOLIO_DATA.projects.length
-                  : PORTFOLIO_DATA.projects.filter((p) => p.cat === t.key).length;
-              return (
-                <button
-                  key={t.key}
-                  ref={(el) => {
-                    tabRefs.current[t.key] = el;
-                  }}
-                  onClick={() => setCat(t.key)}
-                  className={`pf-tab${cat === t.key ? ' active' : ''}`}
-                >
-                  <span>{t.label}</span>
-                  <span className="pf-count">{count}</span>
-                </button>
-              );
-            })}
+        <div
+          ref={filterRevealRef}
+          className="reveal project-filter-wrap"
+          style={{ display: 'flex', justifyContent: 'center', marginBottom: 36 }}
+        >
+          <div ref={barRef} className="pf-bar">
+            {pill && (
+              <span
+                className="pf-pill"
+                aria-hidden="true"
+                style={{
+                  width: pill.w,
+                  height: pill.h,
+                  transform: `translate(${pill.x}px, ${pill.y}px)`,
+                }}
+              />
+            )}
+            {PROJECT_TABS.map((t) => (
+              <button
+                key={t.key}
+                type="button"
+                className={`filter-tab${cat === t.key ? ' active' : ''}`}
+                onClick={() => setCat(t.key)}
+              >
+                {t.label}
+                <span className="pf-count">{countFor(t.key)}</span>
+              </button>
+            ))}
           </div>
         </div>
 
         <div
-          key={cat}
-          className="pf-grid"
+          ref={gridRevealRef}
+          className="reveal project-grid"
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
-            gap: 24,
+            gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 360px), 1fr))',
+            gap: 28,
+            alignItems: 'stretch',
           }}
         >
           {filtered.map((proj, idx) => (
             <div
-              key={proj.id}
-              style={{
-                overflow: 'hidden',
-                display: 'flex',
-                flexDirection: 'column',
-                animationDelay: `${Math.min(idx, 9) * 45}ms`,
-              }}
-              className="card pf-card project-card"
+              key={`${cat}-${proj.id}`}
+              className="project-card"
+              onPointerMove={onCardMove}
+              onPointerLeave={onCardLeave}
+              style={{ display: 'flex', flexDirection: 'column', '--i': idx } as React.CSSProperties}
             >
-              {/* Banner Visual */}
               <div
+                className="proj-media"
                 onClick={(e) => openModal(proj, e)}
                 style={{
-                  height: 192,
-                  background: `linear-gradient(135deg, ${proj.c}1c 0%, ${proj.c}08 55%, var(--bg3) 100%)`,
+                  height: 215,
+                  background: `linear-gradient(135deg, ${proj.c}26 0%, ${proj.c}0d 55%, var(--surface2) 100%)`,
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  borderBottom: '1px solid var(--border)',
-                  position: 'relative',
+                  color: '#1e293b',
                   overflow: 'hidden',
+                  position: 'relative',
                   cursor: 'pointer',
                 }}
               >
-                {/* Decorative Grid Mesh */}
-                <div
-                  aria-hidden="true"
-                  style={{
-                    position: 'absolute',
-                    inset: 0,
-                    backgroundImage: `radial-gradient(${proj.c}2e 1px, transparent 1px)`,
-                    backgroundSize: '18px 18px',
-                    opacity: 0.55,
-                  }}
-                />
-                {/* Category pill top-left */}
-                <span
-                  style={{
-                    position: 'absolute',
-                    top: 12,
-                    left: 14,
-                    fontSize: '.68rem',
-                    fontWeight: 700,
-                    letterSpacing: '.08em',
-                    textTransform: 'uppercase',
-                    padding: '4px 10px',
-                    borderRadius: 999,
-                    background: 'color-mix(in srgb, var(--bg2) 86%, transparent)',
-                    border: `1px solid ${proj.c}44`,
-                    color: proj.c,
-                    backdropFilter: 'blur(8px)',
-                  }}
-                >
-                  {CATEGORY_LABELS[proj.cat]}
-                </span>
-                {/* Index watermark top-right */}
-                <span
-                  className="syne"
-                  style={{
-                    position: 'absolute',
-                    top: 10,
-                    right: 14,
-                    fontSize: '1.35rem',
-                    fontWeight: 800,
-                    color: proj.c,
-                    opacity: 0.28,
-                  }}
-                >
-                  {String(idx + 1).padStart(2, '0')}
-                </span>
+                {proj.img ? (
+                  <img
+                    className="proj-img"
+                    src={proj.img}
+                    alt={proj.title}
+                    width={400}
+                    height={215}
+                    loading="lazy"
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  />
+                ) : (
+                  <>
+                    <div
+                      aria-hidden="true"
+                      style={{
+                        position: 'absolute',
+                        inset: 0,
+                        backgroundImage: `radial-gradient(${proj.c}33 1px, transparent 1px)`,
+                        backgroundSize: '18px 18px',
+                        opacity: 0.55,
+                      }}
+                    />
+                    <div
+                      style={{
+                        width: 88,
+                        height: 88,
+                        borderRadius: 24,
+                        background: 'color-mix(in srgb, var(--surface) 90%, transparent)',
+                        border: `1.5px solid ${proj.c}4d`,
+                        boxShadow: `0 16px 38px -10px ${proj.c}59`,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        position: 'relative',
+                        zIndex: 1,
+                      }}
+                    >
+                      <ProjectIllustration iconKey={proj.iconKey} accent={proj.c} size={46} />
+                    </div>
+                  </>
+                )}
 
-                {/* Glowing emblem */}
-                <div
-                  className="proj-banner-emblem"
-                  style={{
-                    width: 84,
-                    height: 84,
-                    borderRadius: 24,
-                    background: 'color-mix(in srgb, var(--bg2) 88%, transparent)',
-                    border: `1.5px solid ${proj.c}48`,
-                    boxShadow: `0 16px 38px -10px ${proj.c}55`,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    position: 'relative',
-                    zIndex: 1,
-                    transition: 'transform .4s cubic-bezier(.2, 1.4, .3, 1)',
-                  }}
-                >
-                  <ProjectIllustration iconKey={proj.iconKey} accent={proj.c} size={42} />
-                </div>
+                <span className="proj-cat">{CATEGORY_LABELS[proj.cat]}</span>
+                <span className="proj-overlay" aria-hidden="true">
+                  <span className="proj-peek">
+                    <EyePeekIcon /> View details
+                  </span>
+                </span>
               </div>
 
-              <div style={{ padding: '22px 24px 24px', flex: 1, display: 'flex', flexDirection: 'column' }}>
+              <div
+                style={{
+                  padding: '24px 26px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  flex: 1,
+                }}
+              >
                 <h3
-                  className="syne"
+                  className="proj-title"
                   style={{
+                    fontFamily: "'Syne',sans-serif",
                     fontWeight: 700,
-                    fontSize: '1.05rem',
-                    marginBottom: 8,
+                    fontSize: '1.16rem',
+                    marginBottom: 10,
                     lineHeight: 1.35,
+                    letterSpacing: '0.01em',
                   }}
                 >
-                  {proj.title}
+                  <span>{proj.title}</span>
                 </h3>
 
                 <p
                   style={{
-                    color: 'var(--text2)',
+                    color: 'var(--muted)',
                     fontSize: '.86rem',
-                    lineHeight: 1.68,
-                    flex: 1,
+                    lineHeight: 1.65,
                     marginBottom: 16,
                     display: '-webkit-box',
                     WebkitLineClamp: 3,
@@ -301,82 +370,109 @@ export function Projects() {
                   {proj.desc}
                 </p>
 
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 18 }}>
-                  {proj.tech.slice(0, 4).map((t) => (
-                    <span key={t} className="tag">
+                <div
+                  style={{
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    gap: 6,
+                    marginBottom: 18,
+                  }}
+                >
+                  {proj.tech.slice(0, 6).map((t, bi) => (
+                    <span
+                      key={t}
+                      className="tech-badge"
+                      style={
+                        {
+                          '--b': bi,
+                          padding: proj.tech.length > 4 ? '4px 9px' : undefined,
+                          fontSize: proj.tech.length > 4 ? '.69rem' : undefined,
+                        } as React.CSSProperties
+                      }
+                    >
                       {t}
                     </span>
                   ))}
-                  {proj.tech.length > 4 && <span className="tag">+{proj.tech.length - 4}</span>}
+                  {proj.tech.length > 6 && (
+                    <span
+                      className="tech-badge"
+                      style={{ '--b': 6, padding: '4px 9px', fontSize: '.69rem' } as React.CSSProperties}
+                    >
+                      +{proj.tech.length - 6}
+                    </span>
+                  )}
                 </div>
 
-                <div style={{ display: 'flex', gap: 9, flexWrap: 'wrap', alignItems: 'center' }}>
-                  <button
-                    onPointerDown={triggerRipple}
-                    onClick={(e) => openModal(proj, e)}
-                    className="pm-trigger"
-                    style={{
-                      '--pc': proj.c,
-                      background: `${proj.c}14`,
-                      color: proj.c,
-                      border: `1px solid ${proj.c}33`,
-                      borderRadius: 50,
-                      padding: '7px 16px',
-                      fontSize: '.8rem',
-                      fontWeight: 700,
-                      cursor: 'pointer',
-                    } as React.CSSProperties}
-                  >
-                    <span className="pm-trigger-label">View Details</span>
-                    <span className="pm-trigger-arrow" aria-hidden="true">
-                      ↗
-                    </span>
-                  </button>
+                <div
+                  className="proj-actions"
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: 9,
+                    marginTop: 'auto',
+                    width: '100%',
+                  }}
+                >
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: 9, width: '100%' }}>
+                    {proj.github && (
+                      <a
+                        href={proj.github}
+                        target="_blank"
+                        rel="noreferrer"
+                        onPointerDown={triggerRipple}
+                        className="btn-outline proj-gh"
+                        style={{
+                          position: 'relative',
+                          fontSize: '.84rem',
+                          padding: '8px 14px',
+                          flex: '1 1 0',
+                          justifyContent: 'center',
+                        }}
+                      >
+                        <SocialIcon platform="github" size={15} /> GitHub
+                        <span className="rip" aria-hidden="true" />
+                      </a>
+                    )}
 
-                  {proj.live && (
-                    <a
-                      href={proj.live}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="proj-ext-btn"
+                    <button
+                      type="button"
+                      onPointerDown={triggerRipple}
+                      onClick={(e) => openModal(proj, e)}
+                      className="btn-primary proj-details"
                       style={{
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        gap: 5,
-                        padding: '7px 14px',
-                        borderRadius: 50,
-                        fontSize: '.8rem',
-                        fontWeight: 600,
-                        background: 'var(--accent)',
-                        color: '#fff',
+                        position: 'relative',
+                        fontSize: '.84rem',
+                        padding: '8px 14px',
+                        flex: '1 1 0',
+                        justifyContent: 'center',
                       }}
                     >
-                      <ExternalLinkIcon size={13} /> Live Site
-                    </a>
-                  )}
+                      <InfoDocIcon /> Details
+                      <span className="rip" aria-hidden="true" />
+                    </button>
 
-                  {proj.github && (
-                    <a
-                      href={proj.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="proj-ext-btn"
-                      style={{
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        gap: 5,
-                        padding: '7px 14px',
-                        borderRadius: 50,
-                        fontSize: '.8rem',
-                        fontWeight: 600,
-                        border: '1px solid var(--border)',
-                        color: 'var(--text2)',
-                        background: 'var(--bg3)',
-                      }}
-                    >
-                      <SocialIcon platform="github" size={14} /> GitHub
-                    </a>
-                  )}
+                    {proj.live && (
+                      <a
+                        href={proj.live}
+                        target="_blank"
+                        rel="noreferrer"
+                        onPointerDown={triggerRipple}
+                        className="btn-primary proj-live"
+                        style={{
+                          position: 'relative',
+                          fontSize: '.84rem',
+                          padding: '8px 14px',
+                          flex: '1 1 0',
+                          justifyContent: 'center',
+                          background: '#10b981',
+                          borderColor: '#10b981',
+                        }}
+                      >
+                        <ExternalLinkIcon size={15} /> Live
+                        <span className="rip" aria-hidden="true" />
+                      </a>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
@@ -384,364 +480,259 @@ export function Projects() {
         </div>
       </div>
 
-      {/* Circular Clip-Path Reveal Project Modal */}
       {selected && (
         <div
-          onClick={closeModal}
           className={`modal-bg${closing ? ' closing' : ''}`}
-          style={
-            {
-              '--ox': origin.x,
-              '--oy': origin.y,
-              '--mc': selected.c,
-            } as React.CSSProperties
-          }
+          onClick={closeModal}
+          onWheel={(e) => panelRef.current?.scrollBy({ top: e.deltaY, behavior: 'auto' })}
+          style={{ '--ox': origin.x, '--oy': origin.y } as React.CSSProperties}
         >
           <div
+            ref={panelRef}
             onClick={(e) => e.stopPropagation()}
+            onScroll={onPanelScroll}
             role="dialog"
             aria-modal="true"
             aria-label={selected.title}
-            className={`pm-panel${closing ? ' closing' : ''}`}
+            className={`card hide-scrollbar pm-panel${closing ? ' closing' : ''}`}
+            style={{
+              maxWidth: 920,
+              width: '96%',
+              maxHeight: '92vh',
+              overflowY: 'auto',
+              overscrollBehavior: 'contain',
+              borderRadius: 24,
+              display: 'flex',
+              flexDirection: 'column',
+            }}
           >
-            <div className="pm-bar">
-              <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                <span className="pm-dot" style={{ background: selected.c }} />
-                {selectedIndex >= 0 && (
-                  <span className="mono pm-counter">
-                    {String(selectedIndex + 1).padStart(2, '0')} /{' '}
-                    {String(filtered.length).padStart(2, '0')}
-                  </span>
-                )}
-              </div>
+            <div className="pm-progress" aria-hidden="true">
+              <span ref={progressRef} />
+            </div>
 
-              <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                {filtered.length > 1 && (
-                  <>
-                    <button
-                      onClick={() => stepProject(-1)}
-                      aria-label="Previous project"
-                      title="Previous (←)"
-                      className="pm-icon-btn"
-                    >
-                      <ChevronLeftIcon size={16} />
-                    </button>
-                    <button
-                      onClick={() => stepProject(1)}
-                      aria-label="Next project"
-                      title="Next (→)"
-                      className="pm-icon-btn"
-                    >
-                      <ChevronRightIcon size={16} />
-                    </button>
-                  </>
-                )}
-                <button
-                  onClick={closeModal}
-                  aria-label="Close modal"
-                  title="Close (Esc)"
-                  className="pm-icon-btn pm-close"
-                >
-                  <CloseIcon size={16} />
-                </button>
+            <div className="pm-toolbar">
+              <div className="pm-toolbar-in">
+                <span className="pm-counter">
+                  {pad2(selectedIndex + 1)} <i>/</i> {pad2(modalPool.length)}
+                </span>
+
+                <div className="pm-toolbar-btns">
+                  {modalPool.length > 1 && (
+                    <>
+                      <button
+                        type="button"
+                        className="pm-iconbtn"
+                        onClick={() => stepProject(-1)}
+                        aria-label="Previous project"
+                        title="Previous project (←)"
+                      >
+                        <ChevronLeftIcon size={18} />
+                      </button>
+                      <button
+                        type="button"
+                        className="pm-iconbtn"
+                        onClick={() => stepProject(1)}
+                        aria-label="Next project"
+                        title="Next project (→)"
+                      >
+                        <ChevronRightIcon size={18} />
+                      </button>
+                    </>
+                  )}
+                  <button
+                    type="button"
+                    className="pm-iconbtn pm-close"
+                    onClick={closeModal}
+                    aria-label="Close project details"
+                    title="Close (Esc)"
+                  >
+                    <CloseIcon size={18} />
+                  </button>
+                </div>
               </div>
             </div>
 
-            <div
-              key={selected.id}
-              className={`pm-body${slideDir ? ` slide-${slideDir}` : ''}`}
-            >
+            <div key={selected.id} className={`pm-content pm-dir-${slideDir}`}>
               <div
-                className="pm-hero"
-                style={{
-                  background: `linear-gradient(135deg, ${selected.c}22, ${selected.c}08)`,
-                  padding: '28px 24px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  gap: 20,
-                  flexWrap: 'wrap',
-                }}
+                className="pm-banner"
+                style={
+                  selected.img
+                    ? undefined
+                    : {
+                        background: `linear-gradient(135deg, ${selected.c}33, ${selected.c}12, var(--surface2))`,
+                      }
+                }
               >
-                <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-                  <div
-                    style={{
-                      width: 68,
-                      height: 68,
-                      borderRadius: 18,
-                      background: 'var(--bg2)',
-                      border: `1.5px solid ${selected.c}55`,
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      flexShrink: 0,
-                    }}
-                  >
-                    <ProjectIllustration iconKey={selected.iconKey} accent={selected.c} size={36} />
-                  </div>
-                  <div>
-                    <span
+                {selected.img ? (
+                  <img className="pm-banner-img" src={selected.img} alt={selected.title} />
+                ) : (
+                  <div className="pm-banner-icon">
+                    <div
                       style={{
-                        fontSize: '.72rem',
-                        fontWeight: 700,
-                        letterSpacing: '.1em',
-                        textTransform: 'uppercase',
-                        color: selected.c,
+                        width: 96,
+                        height: 96,
+                        borderRadius: 26,
+                        background: 'color-mix(in srgb, var(--surface) 92%, transparent)',
+                        border: `1.5px solid ${selected.c}55`,
+                        boxShadow: `0 18px 40px -12px ${selected.c}66`,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
                       }}
                     >
-                      {CATEGORY_LABELS[selected.cat]}
-                    </span>
-                    <h3
-                      className="syne"
-                      style={{
-                        fontWeight: 800,
-                        fontSize: '1.35rem',
-                        marginTop: 4,
-                        color: 'var(--text)',
-                      }}
-                    >
-                      {selected.title}
-                    </h3>
+                      <ProjectIllustration iconKey={selected.iconKey} accent={selected.c} size={52} />
+                    </div>
                   </div>
-                </div>
+                )}
+                <div className="pm-banner-fade" />
+                <span className="pm-banner-cat">{CATEGORY_LABELS[selected.cat]}</span>
               </div>
 
-              <p
-                className="pm-stagger pm-s2"
+              <div
+                className="pm-head"
                 style={{
-                  color: 'var(--text2)',
-                  lineHeight: 1.8,
-                  marginBottom: 20,
-                  fontSize: '.94rem',
+                  padding: '8px 28px 28px',
+                  position: 'relative',
                 }}
               >
-                {selected.desc}
-              </p>
+                <h2
+                  style={{
+                    fontSize: '1.75rem',
+                    fontWeight: 700,
+                    marginBottom: 14,
+                    lineHeight: 1.25,
+                    letterSpacing: '0.02em',
+                    color: 'var(--text)',
+                  }}
+                >
+                  {selected.title}
+                </h2>
 
-              {selected.highlights.length > 0 && (
-                <div className="pm-stagger pm-s3" style={{ marginBottom: 22 }}>
-                  <div
-                    style={{
-                      fontSize: '.76rem',
-                      fontWeight: 700,
-                      letterSpacing: '.1em',
-                      textTransform: 'uppercase',
-                      color: 'var(--text3)',
-                      marginBottom: 10,
-                    }}
-                  >
-                    Key Features & Engineering Highlights
-                  </div>
-                  <ul
-                    style={{
-                      listStyle: 'none',
-                      padding: 0,
-                      margin: 0,
-                      display: 'flex',
-                      flexDirection: 'column',
-                      gap: 9,
-                    }}
-                  >
-                    {selected.highlights.map((hl, hi) => (
-                      <li
-                        key={hi}
-                        style={{
-                          position: 'relative',
-                          paddingLeft: 18,
-                          fontSize: '.88rem',
-                          lineHeight: 1.65,
-                          color: 'var(--text2)',
-                        }}
-                      >
-                        <span
-                          aria-hidden="true"
-                          style={{
-                            position: 'absolute',
-                            left: 2,
-                            top: '.58em',
-                            width: 6,
-                            height: 6,
-                            borderRadius: '50%',
-                            background: selected.c,
-                          }}
-                        />
-                        {hl}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-
-              <div
-                className="pm-stagger pm-s3"
-                style={{ display: 'flex', flexWrap: 'wrap', gap: 7, marginBottom: 26 }}
-              >
-                {selected.tech.map((t, ti) => (
-                  <span
-                    key={t}
-                    className="tag pm-chip"
-                    style={{ animationDelay: `${160 + ti * 32}ms` }}
-                  >
-                    {t}
+                <div className="pm-meta">
+                  <span>
+                    Stack: <b>{selected.tech.length} technologies</b>
                   </span>
-                ))}
-              </div>
+                  {selected.live && (
+                    <span className="pm-meta-live">
+                      <i aria-hidden="true" /> Live Production
+                    </span>
+                  )}
+                </div>
 
-              <div className="pm-stagger pm-s4" style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
-                {selected.live && (
-                  <a
-                    href={selected.live}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn-primary"
-                  >
-                    <ExternalLinkIcon size={15} /> Visit Live Platform
-                  </a>
+                <p
+                  style={{
+                    color: 'var(--text)',
+                    opacity: 0.9,
+                    lineHeight: 1.8,
+                    marginBottom: 22,
+                    fontSize: '.96rem',
+                  }}
+                >
+                  {selected.desc}
+                </p>
+
+                {selected.highlights.length > 0 && (
+                  <div style={{ marginBottom: 24 }}>
+                    <div
+                      style={{
+                        fontSize: '.76rem',
+                        fontWeight: 700,
+                        letterSpacing: '.12em',
+                        textTransform: 'uppercase',
+                        color: 'var(--accent)',
+                        marginBottom: 12,
+                      }}
+                    >
+                      Key Features & Engineering Highlights
+                    </div>
+                    <ul
+                      style={{
+                        listStyle: 'none',
+                        padding: 0,
+                        margin: 0,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: 10,
+                      }}
+                    >
+                      {selected.highlights.map((hl, hi) => (
+                        <li
+                          key={hi}
+                          style={{
+                            position: 'relative',
+                            paddingLeft: 18,
+                            fontSize: '.9rem',
+                            lineHeight: 1.65,
+                            color: 'var(--text)',
+                            opacity: 0.88,
+                          }}
+                        >
+                          <span
+                            aria-hidden="true"
+                            style={{
+                              position: 'absolute',
+                              left: 2,
+                              top: '.58em',
+                              width: 6,
+                              height: 6,
+                              borderRadius: '50%',
+                              background: selected.c,
+                            }}
+                          />
+                          {hl}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 )}
-                {selected.github && (
-                  <a
-                    href={selected.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn-outline"
-                  >
-                    <SocialIcon platform="github" size={16} /> Source Code
-                  </a>
-                )}
-                {selected.extraLinks?.map((xl) => (
-                  <a
-                    key={xl.url}
-                    href={xl.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn-outline"
-                  >
-                    <ExternalLinkIcon size={14} /> {xl.label}
-                  </a>
-                ))}
+
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 7, marginBottom: 26 }}>
+                  {selected.tech.map((t) => (
+                    <span key={t} className="tech-badge">
+                      {t}
+                    </span>
+                  ))}
+                </div>
+
+                <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+                  {selected.live && (
+                    <a
+                      href={selected.live}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn-primary"
+                      style={{ background: '#10b981', borderColor: '#10b981' }}
+                    >
+                      <ExternalLinkIcon size={15} /> Visit Live Platform
+                    </a>
+                  )}
+                  {selected.github && (
+                    <a
+                      href={selected.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn-outline"
+                    >
+                      <SocialIcon platform="github" size={16} /> Source Code
+                    </a>
+                  )}
+                  {selected.extraLinks?.map((xl) => (
+                    <a
+                      key={xl.url}
+                      href={xl.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn-primary proj-download"
+                    >
+                      <ExternalLinkIcon size={14} /> {xl.label}
+                    </a>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
         </div>
       )}
-
-      <style>{`
-        .project-card:hover .proj-banner-emblem {
-          transform: scale(1.08) translateY(-3px);
-        }
-        .proj-ext-btn {
-          transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
-        }
-        .proj-ext-btn:hover {
-          transform: translateY(-2px);
-        }
-        .pm-trigger {
-          position: relative; overflow: hidden;
-          display: inline-flex; align-items: center; gap: 6px;
-          transition: transform .25s cubic-bezier(.2, 1.3, .3, 1), box-shadow .25s ease, background .25s ease, border-color .25s ease;
-        }
-        .pm-trigger:hover {
-          transform: translateY(-2px);
-          background: color-mix(in srgb, var(--pc) 20%, transparent) !important;
-          border-color: color-mix(in srgb, var(--pc) 55%, transparent) !important;
-          box-shadow: 0 8px 20px -6px color-mix(in srgb, var(--pc) 45%, transparent);
-        }
-        .pm-trigger:active { transform: translateY(0) scale(.96); }
-        .pm-trigger-arrow {
-          font-size: .82em;
-          transition: transform .28s cubic-bezier(.2, 1.4, .3, 1);
-        }
-        .pm-trigger:hover .pm-trigger-arrow { transform: translate(2px, -2px); }
-        .pm-ripple {
-          position: absolute; border-radius: 50%; pointer-events: none;
-          background: color-mix(in srgb, var(--pc, var(--accent)) 32%, transparent);
-          transform: scale(0);
-          animation: pmRipple .55s cubic-bezier(.2, .7, .2, 1) forwards;
-        }
-        @keyframes pmRipple { to { transform: scale(1); opacity: 0; } }
-
-        .modal-bg {
-          background: rgba(8, 12, 24, .66);
-          backdrop-filter: blur(10px) saturate(140%);
-          -webkit-backdrop-filter: blur(10px) saturate(140%);
-          animation: pmBgIn .32s ease forwards;
-        }
-        .modal-bg.closing { animation: pmBgOut .26s ease forwards; }
-        @keyframes pmBgIn  { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes pmBgOut { from { opacity: 1; } to { opacity: 0; } }
-
-        .pm-panel {
-          position: relative;
-          background: var(--bg2);
-          border: 1px solid color-mix(in srgb, var(--mc, var(--accent)) 32%, var(--border));
-          border-radius: 22px;
-          padding: 20px 30px 30px;
-          max-width: 680px; width: 100%; max-height: 88vh; overflow-y: auto;
-          box-shadow:
-            0 30px 80px -20px rgba(0, 0, 0, .55),
-            0 0 0 1px rgba(255, 255, 255, .04) inset,
-            0 20px 60px -30px color-mix(in srgb, var(--mc, var(--accent)) 45%, transparent);
-          transform-origin: calc(var(--ox, 50vw) - 50vw + 50%) calc(var(--oy, 50vh) - 50vh + 50%);
-          animation: pmPanelIn .44s cubic-bezier(.22, 1, .36, 1) forwards;
-        }
-        .pm-panel.closing { animation: pmPanelOut .26s cubic-bezier(.4, 0, .6, 1) forwards; }
-        @keyframes pmPanelIn {
-          0%   { opacity: 0; transform: scale(.72) translateY(18px); clip-path: circle(8% at 50% 50%); }
-          60%  { opacity: 1; }
-          100% { opacity: 1; transform: scale(1) translateY(0); clip-path: circle(150% at 50% 50%); }
-        }
-        @keyframes pmPanelOut {
-          from { opacity: 1; transform: scale(1) translateY(0); }
-          to   { opacity: 0; transform: scale(.88) translateY(12px); }
-        }
-
-        .pm-bar {
-          display: flex; align-items: center; justify-content: space-between;
-          padding-bottom: 14px; margin-bottom: 18px;
-          border-bottom: 1px solid var(--border);
-        }
-        .pm-dot {
-          width: 10px; height: 10px; border-radius: 50%;
-          box-shadow: 0 0 12px var(--mc, var(--accent));
-        }
-        .pm-counter { font-size: .76rem; color: var(--text3); letter-spacing: .08em; }
-        .pm-icon-btn {
-          width: 34px; height: 34px; border-radius: 50%;
-          border: 1px solid var(--border); background: var(--bg3); color: var(--text2);
-          display: inline-flex; align-items: center; justify-content: center; cursor: pointer;
-          transition: transform .22s cubic-bezier(.2, 1.4, .3, 1), color .2s ease, border-color .2s ease, background .2s ease;
-        }
-        .pm-icon-btn:hover { color: var(--text); border-color: var(--accent); transform: scale(1.08); }
-        .pm-close:hover { color: #ef4444; border-color: rgba(239, 68, 68, .5); transform: rotate(90deg) scale(1.08); }
-
-        .pm-hero {
-          position: relative; border-radius: 16px; overflow: hidden;
-          margin-bottom: 20px; border: 1px solid var(--border);
-          animation: pmItemIn .42s cubic-bezier(.22, 1, .36, 1) 40ms backwards;
-        }
-        .pm-stagger { animation: pmItemIn .42s cubic-bezier(.22, 1, .36, 1) backwards; }
-        .pm-s2 { animation-delay: 130ms; }
-        .pm-s3 { animation-delay: 170ms; }
-        .pm-s4 { animation-delay: 230ms; }
-        @keyframes pmItemIn {
-          from { opacity: 0; transform: translateY(12px); }
-          to   { opacity: 1; transform: translateY(0); }
-        }
-        .pm-chip { animation: pmChipIn .36s cubic-bezier(.2, 1.4, .3, 1) backwards; }
-        @keyframes pmChipIn {
-          from { opacity: 0; transform: scale(.8) translateY(6px); }
-          to   { opacity: 1; transform: scale(1) translateY(0); }
-        }
-        .pm-body.slide-next { animation: pmSlideNext .32s cubic-bezier(.22, 1, .36, 1); }
-        .pm-body.slide-prev { animation: pmSlidePrev .32s cubic-bezier(.22, 1, .36, 1); }
-        @keyframes pmSlideNext { from { opacity: 0; transform: translateX(22px); } to { opacity: 1; transform: translateX(0); } }
-        @keyframes pmSlidePrev { from { opacity: 0; transform: translateX(-22px); } to { opacity: 1; transform: translateX(0); } }
-
-        @media (max-width: 600px) {
-          .pm-panel { padding: 16px 18px 22px; border-radius: 18px; }
-        }
-      `}</style>
     </section>
   );
 }
-

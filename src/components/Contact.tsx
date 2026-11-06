@@ -3,133 +3,199 @@ import { PORTFOLIO_DATA } from '../data/portfolioData';
 import { MapPinIcon, SendIcon, SocialIcon } from './Icons';
 import { SectionHeader, useReveal } from './SectionHeader';
 
-const CONFETTI_COLORS = ['#2563eb', '#06b6d4', '#10b981', '#8b5cf6', '#f59e0b'];
+const CONFETTI_COLORS = ['#38bdf8', '#3b82f6', '#a78bfa', '#2dd4bf', '#fbbf24', '#f472b6'];
+
+function pseudoRand(seed: number): number {
+  const x = Math.sin(seed * 12.9898 + 78.233) * 43758.5453;
+  return x - Math.floor(x);
+}
+
+function CheckTickSvg() {
+  return (
+    <svg
+      width="12"
+      height="12"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="3.4"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <polyline points="5 12 10 17 19 7" />
+    </svg>
+  );
+}
 
 interface ContactCardItem {
-  id: string;
+  key: string;
   label: string;
-  val: string;
+  value: string;
   href: string | null;
-  color: string;
+  clr: string;
+  bg: string;
+  ic: string;
   icon: React.ReactNode;
 }
 
 export function Contact() {
   const { contact } = PORTFOLIO_DATA;
-  const [form, setForm] = useState({ name: '', email: '', subject: '', msg: '' });
-  const [status, setStatus] = useState<'idle' | 'sending' | 'sent'>('idle');
+  const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' });
+  const [websiteHoney, setWebsiteHoney] = useState('');
+  const [triedSubmit, setTriedSubmit] = useState(false);
+  const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'validation_error' | 'email_error'>('idle');
   const [burstKey, setBurstKey] = useState(0);
-  const revealRef = useReveal();
+
+  const leftRevealRef = useReveal<HTMLDivElement>();
+  const rightRevealRef = useReveal<HTMLDivElement>();
+  const refsRevealRef = useReveal<HTMLDivElement>();
 
   const validName = form.name.trim().length >= 2;
   const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim());
-  const validMsg = form.msg.trim().length >= 6;
+  const validMsg = form.message.trim().length >= 10;
   const readyCount = [validName, validEmail, validMsg].filter(Boolean).length;
+
+  const invalidName = triedSubmit && !validName;
+  const invalidEmail = triedSubmit && !validEmail;
+  const invalidMsg = triedSubmit && !validMsg;
+  const isSending = status === 'sending';
 
   const cards: ContactCardItem[] = [
     {
-      id: 'ct-email',
+      key: 'ct-email',
       label: 'Email',
-      val: contact.email,
+      value: contact.email,
       href: `mailto:${contact.email}`,
-      color: 'var(--accent)',
+      clr: 'var(--mail-color)',
+      bg: 'color-mix(in srgb, var(--mail-color) 14%, var(--surface2))',
+      ic: 'var(--mail-color)',
       icon: <SocialIcon platform="email" size={20} />,
     },
     {
-      id: 'ct-phone',
+      key: 'ct-phone',
       label: 'Phone',
-      val: contact.phone,
+      value: contact.phone,
       href: `tel:${contact.phone.replace(/[^+\d]/g, '')}`,
-      color: '#16a34a',
+      clr: 'var(--phone-color)',
+      bg: 'color-mix(in srgb, var(--phone-color) 14%, var(--surface2))',
+      ic: 'var(--phone-color)',
       icon: <SocialIcon platform="phone" size={20} />,
     },
     {
-      id: 'ct-wa',
+      key: 'ct-wa',
       label: 'WhatsApp',
-      val: contact.whatsapp,
+      value: contact.whatsapp,
       href: `https://wa.me/${contact.whatsapp.replace(/[^\d]/g, '')}`,
-      color: '#25D366',
+      clr: 'var(--wa-color)',
+      bg: 'color-mix(in srgb, var(--wa-color) 14%, var(--surface2))',
+      ic: 'var(--wa-color)',
       icon: <SocialIcon platform="whatsapp" size={20} />,
     },
     {
-      id: 'ct-loc',
+      key: 'ct-loc',
       label: 'Location',
-      val: contact.location,
+      value: contact.location,
       href: null,
-      color: 'var(--accent3)',
+      clr: 'var(--pin-color)',
+      bg: 'color-mix(in srgb, var(--pin-color) 14%, var(--surface2))',
+      ic: 'var(--pin-color)',
       icon: <MapPinIcon size={20} />,
     },
     {
-      id: 'ct-li',
+      key: 'ct-li',
       label: 'LinkedIn',
-      val: 'linkedin.com/in/mehedi-hasan-shihab',
+      value: 'linkedin.com/in/mehedi-hasan-shihab',
       href: contact.linkedinUrl,
-      color: '#0A66C2',
+      clr: '#0A66C2',
+      bg: 'color-mix(in srgb, #0A66C2 14%, var(--surface2))',
+      ic: '#0A66C2',
       icon: <SocialIcon platform="linkedin" size={20} />,
     },
     {
-      id: 'ct-gh',
+      key: 'ct-gh',
       label: 'GitHub',
-      val: 'github.com/sshihabb007',
+      value: 'github.com/sshihabb007',
       href: contact.githubUrl,
-      color: '#8b5cf6',
+      clr: '#8b5cf6',
+      bg: 'color-mix(in srgb, #8b5cf6 14%, var(--surface2))',
+      ic: '#8b5cf6',
       icon: <SocialIcon platform="github" size={20} />,
     },
   ];
 
-  const onMove = (e: React.PointerEvent<HTMLElement>) => {
-    if (e.pointerType === 'touch') return;
+  const onCardPointerMove = (e: React.PointerEvent<HTMLElement>) => {
+    if (e.pointerType !== 'mouse') return;
     const el = e.currentTarget;
-    const r = el.getBoundingClientRect();
-    const x = e.clientX - r.left;
-    const y = e.clientY - r.top;
-    el.style.setProperty('--mx', `${x}px`);
-    el.style.setProperty('--my', `${y}px`);
-    el.style.setProperty('--rx', `${((y / r.height - 0.5) * -6).toFixed(2)}deg`);
-    el.style.setProperty('--ry', `${((x / r.width - 0.5) * 6).toFixed(2)}deg`);
+    const rect = el.getBoundingClientRect();
+    const rxRatio = (e.clientX - rect.left) / rect.width;
+    const ryRatio = (e.clientY - rect.top) / rect.height;
+    el.style.setProperty('--mx', `${e.clientX - rect.left}px`);
+    el.style.setProperty('--my', `${e.clientY - rect.top}px`);
+    el.style.setProperty('--rx', `${((0.5 - ryRatio) * 6).toFixed(2)}deg`);
+    el.style.setProperty('--ry', `${((rxRatio - 0.5) * 7).toFixed(2)}deg`);
   };
 
-  const onLeave = (e: React.PointerEvent<HTMLElement>) => {
-    const el = e.currentTarget;
-    el.style.setProperty('--rx', '0deg');
-    el.style.setProperty('--ry', '0deg');
+  const onCardPointerLeave = (e: React.PointerEvent<HTMLElement>) => {
+    e.currentTarget.style.setProperty('--rx', '0deg');
+    e.currentTarget.style.setProperty('--ry', '0deg');
+  };
+
+  const onFormCardPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (e.pointerType !== 'mouse') return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    e.currentTarget.style.setProperty('--mx', `${e.clientX - rect.left}px`);
+    e.currentTarget.style.setProperty('--my', `${e.clientY - rect.top}px`);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!validName || !validEmail || !validMsg || status === 'sending') return;
+    if (websiteHoney.trim().length > 0 || isSending) return;
+    setTriedSubmit(true);
+
+    if (!form.name.trim() || !form.email.trim() || !form.message.trim()) {
+      setStatus('validation_error');
+      return;
+    }
+    if (!validEmail) {
+      setStatus('email_error');
+      return;
+    }
+    if (!validName || !validMsg) {
+      setStatus('validation_error');
+      return;
+    }
 
     setStatus('sending');
     const subjectLine = encodeURIComponent(
       form.subject.trim() || `Portfolio Inquiry from ${form.name.trim()}`
     );
     const bodyText = encodeURIComponent(
-      `Name: ${form.name.trim()}\nEmail: ${form.email.trim()}\n\nMessage:\n${form.msg.trim()}`
+      `Name: ${form.name.trim()}\nEmail: ${form.email.trim()}\n\nMessage:\n${form.message.trim()}`
     );
 
     window.setTimeout(() => {
       window.location.href = `mailto:${contact.email}?subject=${subjectLine}&body=${bodyText}`;
       setStatus('sent');
+      setTriedSubmit(false);
       setBurstKey((n) => n + 1);
-      setForm({ name: '', email: '', subject: '', msg: '' });
-      window.setTimeout(() => setStatus('idle'), 5000);
-    }, 380);
+      setForm({ name: '', email: '', subject: '', message: '' });
+      window.setTimeout(() => setStatus('idle'), 5500);
+    }, 420);
   };
 
   return (
     <section
       id="contact"
-      ref={revealRef}
-      style={{
-        padding: 'var(--section-py) 24px',
-        position: 'relative',
-        overflow: 'hidden',
-      }}
+      className="ct-section"
+      style={{ padding: '72px 24px 80px' }}
     >
-      <div className="svc-aurora ct-aurora-1" aria-hidden="true" />
-      <div className="svc-aurora ct-aurora-2" aria-hidden="true" />
+      <div className="svc-aurora" aria-hidden="true">
+        <span className="svc-blob svc-blob--a" />
+        <span className="svc-blob svc-blob--b" />
+        <span className="svc-blob svc-blob--c" />
+      </div>
 
-      <div style={{ maxWidth: 1020, margin: '0 auto', position: 'relative', zIndex: 1 }}>
+      <div className="svc-wrap" style={{ maxWidth: 1180, margin: '0 auto' }}>
         <SectionHeader
           label="Get In Touch"
           title="Contact Me"
@@ -137,83 +203,147 @@ export function Contact() {
         />
 
         <div
+          className="contact-grid"
           style={{
             display: 'grid',
-            gridTemplateColumns: '1fr 1.35fr',
-            gap: 40,
+            gridTemplateColumns: '1fr 1.1fr',
+            gap: 36,
             alignItems: 'start',
           }}
-          className="contact-grid"
         >
           {/* Left column */}
-          <div className="reveal">
-            <h3 className="syne ct-title">Let&apos;s Connect</h3>
+          <div ref={leftRevealRef} className="reveal contact-left">
+            <h3
+              className="ct-title"
+              style={{
+                fontSize: '1.35rem',
+                fontWeight: 700,
+                marginBottom: 12,
+              }}
+            >
+              Let&apos;s Connect
+            </h3>
             <p
               style={{
-                color: 'var(--text2)',
-                lineHeight: 1.78,
-                fontSize: '.92rem',
-                marginBottom: 24,
+                color: 'var(--text)',
+                opacity: 0.85,
+                fontSize: '.95rem',
+                fontWeight: 500,
+                lineHeight: 1.7,
+                marginBottom: 22,
               }}
             >
               Open to Senior Software Engineering roles, remote Web &amp; AI development contracts,
               enterprise WordPress &amp; CRM consulting, and emergency cybersecurity recovery.
             </p>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 11 }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
               {cards.map((item, idx) => {
                 const inner = (
-                  <>
-                    <span className="ct-glow" aria-hidden="true" />
-                    <div className="ct-icon">{item.icon}</div>
-                    <div style={{ minWidth: 0, flex: 1, position: 'relative', zIndex: 1 }}>
+                  <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
+                    <div
+                      className="cc-icon"
+                      style={{
+                        width: 42,
+                        height: 42,
+                        borderRadius: 12,
+                        background: item.bg,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        color: item.ic,
+                        flexShrink: 0,
+                      }}
+                    >
+                      {item.icon}
+                    </div>
+                    <div style={{ overflow: 'hidden', minWidth: 0, flex: 1 }}>
                       <div
                         style={{
                           fontSize: '.7rem',
-                          color: 'var(--text3)',
-                          fontWeight: 700,
+                          fontFamily: `'DM Sans', sans-serif`,
+                          fontWeight: 400,
                           textTransform: 'uppercase',
-                          letterSpacing: '.08em',
+                          letterSpacing: '.12em',
+                          color: 'var(--contact-label-color)',
+                          marginBottom: 2,
                         }}
                       >
                         {item.label}
                       </div>
-                      <div className="ct-val">{item.val}</div>
+                      <div
+                        style={{
+                          fontFamily: `'DM Sans', sans-serif`,
+                          fontWeight: 500,
+                          color: item.clr,
+                          fontSize: '.95rem',
+                          letterSpacing: '0.01em',
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis',
+                          whiteSpace: 'nowrap',
+                        }}
+                      >
+                        {item.value}
+                      </div>
                     </div>
                     {item.href && (
-                      <span className="ct-arrow" aria-hidden="true">
-                        ↗
-                      </span>
+                      <svg
+                        className="cc-go"
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2.2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        aria-hidden="true"
+                      >
+                        <path d="M5 12h14" />
+                        <path d="m13 6 6 6-6 6" />
+                      </svg>
                     )}
-                  </>
+                  </div>
                 );
-
-                const styleProps = {
-                  '--cc': item.color,
-                  animationDelay: `${idx * 55}ms`,
-                } as React.CSSProperties;
 
                 return item.href ? (
                   <a
-                    key={item.id}
+                    key={item.key}
                     href={item.href}
                     target={item.href.startsWith('http') ? '_blank' : undefined}
                     rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                    onPointerMove={onMove}
-                    onPointerLeave={onLeave}
-                    style={styleProps}
-                    className="card ct-card ct-link"
+                    className="card edu-card contact-card"
+                    onPointerMove={onCardPointerMove}
+                    onPointerLeave={onCardPointerLeave}
+                    style={
+                      {
+                        padding: '14px 20px',
+                        textDecoration: 'none',
+                        color: 'inherit',
+                        display: 'block',
+                        '--i': idx,
+                        '--cc': item.clr,
+                      } as React.CSSProperties
+                    }
                   >
+                    <span className="cc-ring" aria-hidden="true" />
                     {inner}
                   </a>
                 ) : (
                   <div
-                    key={item.id}
-                    onPointerMove={onMove}
-                    onPointerLeave={onLeave}
-                    style={styleProps}
-                    className="card ct-card"
+                    key={item.key}
+                    className="card edu-card contact-card"
+                    onPointerMove={onCardPointerMove}
+                    onPointerLeave={onCardPointerLeave}
+                    style={
+                      {
+                        padding: '14px 20px',
+                        '--i': idx,
+                        '--cc': item.clr,
+                      } as React.CSSProperties
+                    }
                   >
+                    <span className="cc-ring" aria-hidden="true" />
                     {inner}
                   </div>
                 );
@@ -222,177 +352,312 @@ export function Contact() {
           </div>
 
           {/* Right column: Send a Message */}
-          <div
-            onPointerMove={(e) => {
-              if (e.pointerType === 'touch') return;
-              const r = e.currentTarget.getBoundingClientRect();
-              e.currentTarget.style.setProperty('--mx', `${e.clientX - r.left}px`);
-              e.currentTarget.style.setProperty('--my', `${e.clientY - r.top}px`);
-            }}
-            className="card cf-card reveal d2"
-          >
-            <span className="cf-glow" aria-hidden="true" />
-
-            <div className="cf-head">
-              <h3 className="syne" style={{ fontWeight: 700, fontSize: '1.12rem' }}>
-                Send a Message
-              </h3>
-              <span className="mono cf-prog-label">{readyCount} / 3 ready</span>
-            </div>
-
-            <div className="cf-prog" aria-hidden="true">
-              <span
-                className="cf-prog-fill"
-                style={{ transform: `scaleX(${(readyCount / 3).toFixed(3)})` }}
-              />
-            </div>
-
-            <form
-              onSubmit={handleSubmit}
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: 16,
-                position: 'relative',
-                zIndex: 1,
-              }}
+          <div ref={rightRevealRef} className="reveal contact-right">
+            <div
+              className="card edu-card contact-form-card"
+              onPointerMove={onFormCardPointerMove}
+              style={{ padding: '28px 32px 30px' }}
             >
               <div
-                style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}
-                className="form-row"
+                className="cf-progress"
+                style={{ '--p': readyCount / 3 } as React.CSSProperties}
               >
-                <div className={`cf-field${validName ? ' is-valid' : ''}`}>
-                  <label className="cf-label">
-                    <span>Name *</span>
+                <span />
+              </div>
+
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'baseline',
+                  justifyContent: 'space-between',
+                  gap: 12,
+                  marginBottom: 18,
+                }}
+              >
+                <h3 style={{ fontSize: '1.3rem', fontWeight: 700, margin: 0 }}>
+                  Send a Message
+                </h3>
+                <span className="cf-progress-note">
+                  <b>{readyCount}</b> / 3 ready
+                </span>
+              </div>
+
+              <form
+                onSubmit={handleSubmit}
+                noValidate
+                style={{ display: 'flex', flexDirection: 'column', gap: 16 }}
+              >
+                <input
+                  type="text"
+                  name="website"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  aria-hidden="true"
+                  value={websiteHoney}
+                  onChange={(e) => setWebsiteHoney(e.target.value)}
+                  style={{
+                    position: 'absolute',
+                    left: '-9999px',
+                    width: 1,
+                    height: 1,
+                    opacity: 0,
+                    pointerEvents: 'none',
+                  }}
+                />
+
+                <div
+                  className={`cf-field${invalidName ? ' cf-invalid' : ''}${validName ? ' cf-ok' : ''}`}
+                  style={{ '--f': 0 } as React.CSSProperties}
+                >
+                  <div className="cf-label-row">
+                    <label
+                      style={{
+                        display: 'block',
+                        fontSize: '.85rem',
+                        fontFamily: `'DM Sans', sans-serif`,
+                        fontWeight: 400,
+                        marginBottom: 6,
+                        letterSpacing: '0.04em',
+                        color: 'var(--text)',
+                      }}
+                    >
+                      Full Name
+                    </label>
                     <span className="cf-tick" aria-hidden="true">
-                      ✓
+                      <CheckTickSvg />
                     </span>
-                  </label>
+                  </div>
                   <input
-                    required
+                    className="input-field"
                     value={form.name}
                     onChange={(e) => setForm({ ...form, name: e.target.value })}
                     placeholder="Your name"
-                    className="cf-input"
+                    disabled={isSending}
                   />
                 </div>
 
-                <div className={`cf-field${validEmail ? ' is-valid' : ''}`}>
-                  <label className="cf-label">
-                    <span>Email *</span>
+                <div
+                  className={`cf-field${invalidEmail ? ' cf-invalid' : ''}${validEmail ? ' cf-ok' : ''}`}
+                  style={{ '--f': 1 } as React.CSSProperties}
+                >
+                  <div className="cf-label-row">
+                    <label
+                      style={{
+                        display: 'block',
+                        fontSize: '.85rem',
+                        fontFamily: `'DM Sans', sans-serif`,
+                        fontWeight: 400,
+                        marginBottom: 6,
+                        letterSpacing: '0.04em',
+                        color: 'var(--text)',
+                      }}
+                    >
+                      Email Address
+                    </label>
                     <span className="cf-tick" aria-hidden="true">
-                      ✓
+                      <CheckTickSvg />
                     </span>
-                  </label>
+                  </div>
                   <input
-                    required
                     type="email"
+                    className="input-field"
                     value={form.email}
                     onChange={(e) => setForm({ ...form, email: e.target.value })}
                     placeholder="your@email.com"
-                    className="cf-input"
+                    disabled={isSending}
                   />
                 </div>
-              </div>
 
-              <div className={`cf-field${form.subject.trim().length > 0 ? ' is-valid' : ''}`}>
-                <label className="cf-label">
-                  <span>Subject</span>
-                  <span className="cf-opt">optional</span>
-                </label>
-                <input
-                  value={form.subject}
-                  onChange={(e) => setForm({ ...form, subject: e.target.value })}
-                  placeholder="Project inquiry / Hiring / Collaboration"
-                  className="cf-input"
-                />
-              </div>
-
-              <div className={`cf-field${validMsg ? ' is-valid' : ''}`}>
-                <label className="cf-label">
-                  <span>Message *</span>
-                  <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
-                    <span className="mono cf-count">{form.msg.length} chars</span>
+                <div
+                  className={`cf-field${form.subject.trim().length > 0 ? ' cf-ok' : ''}`}
+                  style={{ '--f': 1.5 } as React.CSSProperties}
+                >
+                  <div className="cf-label-row">
+                    <label
+                      style={{
+                        display: 'block',
+                        fontSize: '.85rem',
+                        fontFamily: `'DM Sans', sans-serif`,
+                        fontWeight: 400,
+                        marginBottom: 6,
+                        letterSpacing: '0.04em',
+                        color: 'var(--text)',
+                      }}
+                    >
+                      Subject <span style={{ opacity: 0.55, fontSize: '.76rem' }}>(optional)</span>
+                    </label>
                     <span className="cf-tick" aria-hidden="true">
-                      ✓
+                      <CheckTickSvg />
                     </span>
-                  </span>
-                </label>
-                <textarea
-                  required
-                  rows={5}
-                  value={form.msg}
-                  onChange={(e) => setForm({ ...form, msg: e.target.value })}
-                  placeholder="Tell me about your project, timeline, or question..."
-                  style={{ resize: 'vertical' }}
-                  className="cf-input"
-                />
-              </div>
+                  </div>
+                  <input
+                    className="input-field"
+                    value={form.subject}
+                    onChange={(e) => setForm({ ...form, subject: e.target.value })}
+                    placeholder="Project inquiry / Hiring / Collaboration"
+                    disabled={isSending}
+                  />
+                </div>
 
-              {status === 'sent' && (
-                <div className="cf-alert cf-alert-ok">
-                  <span className="cf-alert-icon">✓</span>
-                  <span>
-                    Email draft opened for <strong>{contact.email}</strong>! Looking forward to
-                    speaking with you.
+                <div
+                  className={`cf-field${invalidMsg ? ' cf-invalid' : ''}${validMsg ? ' cf-ok' : ''}`}
+                  style={{ '--f': 2 } as React.CSSProperties}
+                >
+                  <div className="cf-label-row">
+                    <label
+                      style={{
+                        display: 'block',
+                        fontSize: '.85rem',
+                        fontFamily: `'DM Sans', sans-serif`,
+                        fontWeight: 400,
+                        marginBottom: 6,
+                        letterSpacing: '0.04em',
+                        color: 'var(--text)',
+                      }}
+                    >
+                      Message
+                    </label>
+                    <span className="cf-tick" aria-hidden="true">
+                      <CheckTickSvg />
+                    </span>
+                  </div>
+                  <textarea
+                    className="input-field"
+                    rows={4}
+                    value={form.message}
+                    onChange={(e) => setForm({ ...form, message: e.target.value })}
+                    placeholder="Tell me about your project…"
+                    style={{ resize: 'vertical' }}
+                    disabled={isSending}
+                  />
+                  <span className={`cf-count${validMsg ? ' cf-count--ok' : ''}`}>
+                    {form.message.trim().length} chars
+                    {validMsg ? '' : ' · add a few more words'}
                   </span>
                 </div>
-              )}
 
-              <div style={{ position: 'relative' }}>
-                {burstKey > 0 && (
-                  <div key={burstKey} className="cf-burst" aria-hidden="true">
-                    {Array.from({ length: 18 }).map((_, i) => {
-                      const angle = (i / 18) * Math.PI * 2;
-                      const dist = 58 + (i % 3) * 22;
-                      return (
-                        <span
-                          key={i}
-                          style={
-                            {
-                              '--dx': `${Math.cos(angle) * dist}px`,
-                              '--dy': `${Math.sin(angle) * dist - 14}px`,
-                              '--rot': `${i * 47}deg`,
-                              background: CONFETTI_COLORS[i % CONFETTI_COLORS.length],
-                            } as React.CSSProperties
-                          }
-                        />
-                      );
-                    })}
+                <div className="cf-send-wrap">
+                  <button
+                    type="submit"
+                    className={`btn-primary contact-send${isSending ? ' is-sending' : ''}${status === 'sent' ? ' is-sent' : ''}`}
+                    style={
+                      {
+                        justifyContent: 'center',
+                        opacity: isSending ? 0.85 : 1,
+                        '--f': 3,
+                      } as React.CSSProperties
+                    }
+                    disabled={isSending}
+                  >
+                    {isSending ? (
+                      <span className="cf-spinner" aria-hidden="true" />
+                    ) : (
+                      <SendIcon size={16} />
+                    )}
+                    {isSending
+                      ? 'Sending…'
+                      : status === 'sent'
+                        ? 'Message Sent!'
+                        : 'Send Message'}
+                  </button>
+
+                  {burstKey > 0 && (
+                    <span key={burstKey} className="cf-burst" aria-hidden="true">
+                      {Array.from({ length: 18 }, (_, i) => {
+                        const angle = (i / 18) * Math.PI * 2 + pseudoRand(i) * 0.3;
+                        const dist = 70 + pseudoRand(i + 40) * 90;
+                        return (
+                          <i
+                            key={i}
+                            style={
+                              {
+                                '--x': `${Math.cos(angle) * dist}px`,
+                                '--y': `${Math.sin(angle) * dist - 30}px`,
+                                '--r': `${Math.round(pseudoRand(i + 80) * 540 - 270)}deg`,
+                                '--c': CONFETTI_COLORS[i % CONFETTI_COLORS.length],
+                              } as React.CSSProperties
+                            }
+                          />
+                        );
+                      })}
+                    </span>
+                  )}
+                </div>
+
+                {status === 'validation_error' && (
+                  <div className="alert-box alert-warning">
+                    <svg
+                      width="22"
+                      height="22"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      style={{ flexShrink: 0 }}
+                    >
+                      <circle cx="12" cy="12" r="10" />
+                      <line x1="12" y1="8" x2="12" y2="12" />
+                      <line x1="12" y1="16" x2="12.01" y2="16" />
+                    </svg>
+                    <span style={{ color: 'var(--text)', opacity: 0.9 }}>
+                      Please complete your name, valid email, and a short message (10+ characters) before sending.
+                    </span>
                   </div>
                 )}
 
-                <button
-                  type="submit"
-                  disabled={status === 'sending'}
-                  className={`btn-primary cf-submit ${status}`}
-                >
-                  {status === 'sending' ? (
-                    <>
-                      <span className="cf-spinner" aria-hidden="true" />
-                      <span>Preparing Message…</span>
-                    </>
-                  ) : status === 'sent' ? (
-                    <>
-                      <span>✓</span>
-                      <span>Message Ready</span>
-                    </>
-                  ) : (
-                    <>
-                      <span className="cf-plane">
-                        <SendIcon size={16} />
-                      </span>
-                      <span>Send Message</span>
-                    </>
-                  )}
-                </button>
-              </div>
-            </form>
+                {status === 'email_error' && (
+                  <div className="alert-box alert-warning">
+                    <svg
+                      width="22"
+                      height="22"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      style={{ flexShrink: 0 }}
+                    >
+                      <circle cx="12" cy="12" r="10" />
+                      <line x1="12" y1="8" x2="12" y2="12" />
+                      <line x1="12" y1="16" x2="12.01" y2="16" />
+                    </svg>
+                    <span style={{ color: 'var(--text)', opacity: 0.9 }}>
+                      Please enter a valid email address so I can reply to you.
+                    </span>
+                  </div>
+                )}
+
+                {status === 'sent' && (
+                  <div className="alert-box alert-success">
+                    <svg
+                      width="22"
+                      height="22"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      style={{ flexShrink: 0 }}
+                    >
+                      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                      <polyline points="22 4 12 14.01 9 11.01" />
+                    </svg>
+                    <span style={{ color: 'var(--text)', opacity: 0.95 }}>
+                      Email draft opened for <strong>{contact.email}</strong>! Looking forward to speaking with you.
+                    </span>
+                  </div>
+                )}
+              </form>
+            </div>
           </div>
         </div>
 
         {/* Academic References Row */}
-        <div className="reveal" style={{ marginTop: 42 }}>
+        <div ref={refsRevealRef} className="reveal" style={{ marginTop: 48 }}>
           <div
             style={{
               fontSize: '.76rem',
@@ -400,7 +665,7 @@ export function Contact() {
               letterSpacing: '.14em',
               textTransform: 'uppercase',
               color: 'var(--accent)',
-              marginBottom: 14,
+              marginBottom: 16,
               textAlign: 'center',
             }}
           >
@@ -417,7 +682,7 @@ export function Contact() {
             {contact.references.map((ref) => (
               <div
                 key={ref.id}
-                className="card"
+                className="card edu-card"
                 style={{
                   padding: '22px 24px',
                   display: 'flex',
@@ -431,7 +696,7 @@ export function Contact() {
                 <div style={{ fontSize: '.85rem', fontWeight: 600, color: 'var(--accent)' }}>
                   {ref.role}
                 </div>
-                <div style={{ fontSize: '.82rem', color: 'var(--text2)' }}>
+                <div style={{ fontSize: '.83rem', color: 'var(--muted)' }}>
                   {ref.dept} · {ref.institution}
                 </div>
                 <a
@@ -443,6 +708,7 @@ export function Contact() {
                     fontWeight: 600,
                     color: 'var(--accent2)',
                     width: 'fit-content',
+                    textDecoration: 'none',
                   }}
                 >
                   ✉ {ref.email}
@@ -452,204 +718,6 @@ export function Contact() {
           </div>
         </div>
       </div>
-
-      <style>{`
-        .svc-aurora {
-          position: absolute; width: 460px; height: 460px; border-radius: 50%;
-          filter: blur(120px); opacity: .10; pointer-events: none; z-index: 0;
-        }
-        .ct-aurora-1 {
-          top: -120px; right: -140px;
-          background: radial-gradient(circle, var(--accent), transparent 68%);
-          animation: ctDrift 17s ease-in-out infinite alternate;
-        }
-        .ct-aurora-2 {
-          bottom: -160px; left: -140px;
-          background: radial-gradient(circle, var(--accent2), transparent 68%);
-          animation: ctDrift 21s ease-in-out infinite alternate-reverse;
-        }
-        @keyframes ctDrift { to { transform: translate(-70px, 60px) scale(1.15); } }
-
-        .ct-title {
-          font-weight: 800; font-size: 1.35rem; margin-bottom: 12px;
-          background: linear-gradient(120deg, var(--text) 20%, var(--accent) 55%, var(--accent2) 85%);
-          background-size: 200% auto;
-          -webkit-background-clip: text; background-clip: text;
-          -webkit-text-fill-color: transparent;
-          animation: ctShine 7s ease-in-out infinite alternate;
-        }
-        @keyframes ctShine { to { background-position: 100% 50%; } }
-
-        .ct-card {
-          position: relative; padding: 13px 16px;
-          display: flex; align-items: center; gap: 14px; overflow: hidden;
-          transform: perspective(800px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateX(var(--shift, 0px));
-          transition: transform .25s cubic-bezier(.2, .8, .2, 1), border-color .28s ease, box-shadow .3s ease;
-          will-change: transform;
-        }
-        .ct-card::after {
-          content: ''; position: absolute; left: 0; top: 22%; bottom: 22%;
-          width: 3px; border-radius: 0 3px 3px 0; background: var(--cc);
-          transform: scaleY(.35); opacity: .55;
-          transition: transform .32s cubic-bezier(.2, .8, .2, 1), opacity .28s ease, top .32s ease, bottom .32s ease;
-        }
-        .ct-card:hover {
-          --shift: 4px;
-          border-color: color-mix(in srgb, var(--cc) 55%, var(--border));
-          box-shadow: 0 16px 34px -16px color-mix(in srgb, var(--cc) 42%, transparent);
-        }
-        .ct-card:hover::after { top: 12%; bottom: 12%; transform: scaleY(1); opacity: 1; }
-
-        .ct-glow {
-          position: absolute; inset: 0; border-radius: inherit;
-          background: radial-gradient(240px circle at var(--mx, 30%) var(--my, 50%),
-            color-mix(in srgb, var(--cc) 16%, transparent), transparent 70%);
-          opacity: 0; pointer-events: none; transition: opacity .28s ease;
-        }
-        .ct-card:hover .ct-glow { opacity: 1; }
-
-        .ct-icon {
-          position: relative; z-index: 1;
-          width: 40px; height: 40px; border-radius: 12px;
-          background: color-mix(in srgb, var(--cc) 12%, var(--bg3));
-          border: 1px solid color-mix(in srgb, var(--cc) 26%, transparent);
-          display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--cc);
-          transition: transform .38s cubic-bezier(.2, 1.45, .3, 1), background .28s ease, box-shadow .28s ease;
-        }
-        .ct-card:hover .ct-icon {
-          transform: scale(1.1) rotate(-5deg);
-          background: color-mix(in srgb, var(--cc) 20%, var(--bg3));
-          box-shadow: 0 10px 20px -8px color-mix(in srgb, var(--cc) 55%, transparent);
-        }
-        .ct-val {
-          font-weight: 600; font-size: .86rem; color: var(--text);
-          overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-          transition: color .25s ease;
-        }
-        .ct-link:hover .ct-val { color: var(--cc); }
-        .ct-arrow {
-          position: relative; z-index: 1; font-size: .92rem; font-weight: 700; color: var(--text3);
-          opacity: .55; transition: transform .3s cubic-bezier(.2, 1.4, .3, 1), color .25s ease, opacity .25s ease;
-        }
-        .ct-link:hover .ct-arrow { opacity: 1; color: var(--cc); transform: translate(3px, -3px); }
-
-        .cf-card { position: relative; padding: 32px 30px 30px; overflow: hidden; }
-        .cf-glow {
-          position: absolute; inset: 0; border-radius: inherit;
-          background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 20%),
-            color-mix(in srgb, var(--accent) 11%, transparent), transparent 70%);
-          opacity: 0; pointer-events: none; transition: opacity .35s ease;
-        }
-        .cf-card:hover .cf-glow { opacity: 1; }
-        .cf-head {
-          position: relative; z-index: 1;
-          display: flex; align-items: center; justify-content: space-between;
-          gap: 12px; margin-bottom: 12px;
-        }
-        .cf-prog-label { font-size: .74rem; color: var(--text3); letter-spacing: .04em; }
-        .cf-prog {
-          position: relative; z-index: 1; height: 3px; border-radius: 3px;
-          background: var(--bg3); overflow: hidden; margin-bottom: 22px;
-        }
-        .cf-prog-fill {
-          display: block; width: 100%; height: 100%;
-          background: linear-gradient(90deg, var(--accent), var(--accent2), #10b981);
-          transform-origin: left;
-          transition: transform .45s cubic-bezier(.22, 1, .36, 1);
-        }
-
-        .cf-field { position: relative; }
-        .cf-label {
-          display: flex; align-items: center; justify-content: space-between;
-          font-size: .78rem; font-weight: 600; color: var(--text2);
-          margin-bottom: 6px; transition: color .25s ease;
-        }
-        .cf-field:focus-within .cf-label { color: var(--accent); }
-        .cf-opt, .cf-count { font-size: .7rem; font-weight: 500; color: var(--text3); }
-        .cf-tick {
-          display: inline-flex; align-items: center; justify-content: center;
-          width: 16px; height: 16px; border-radius: 50%;
-          font-size: .66rem; font-weight: 800;
-          color: #fff; background: #10b981;
-          opacity: 0; transform: scale(.4);
-          transition: opacity .25s ease, transform .32s cubic-bezier(.2, 1.5, .3, 1);
-        }
-        .cf-field.is-valid .cf-tick { opacity: 1; transform: scale(1); }
-
-        .cf-input {
-          width: 100%; padding: 11px 14px; border-radius: 11px;
-          border: 1.5px solid var(--border); background: var(--bg3);
-          color: var(--text); font-family: inherit; font-size: .9rem; outline: none;
-          transition: border-color .25s ease, background .25s ease, box-shadow .28s ease, transform .2s ease;
-        }
-        .cf-input:hover { border-color: color-mix(in srgb, var(--accent) 35%, var(--border)); }
-        .cf-input:focus {
-          border-color: var(--accent);
-          background: var(--bg2);
-          box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 14%, transparent);
-        }
-        .cf-field.is-valid .cf-input:not(:focus) {
-          border-color: color-mix(in srgb, #10b981 45%, var(--border));
-        }
-
-        .cf-alert {
-          display: flex; align-items: center; gap: 10px;
-          padding: 12px 15px; border-radius: 11px;
-          font-size: .86rem; font-weight: 600;
-          animation: cfAlertIn .36s cubic-bezier(.2, 1.3, .3, 1);
-        }
-        @keyframes cfAlertIn {
-          from { opacity: 0; transform: translateY(-6px) scale(.97); }
-          to   { opacity: 1; transform: translateY(0) scale(1); }
-        }
-        .cf-alert-ok {
-          background: rgba(16, 185, 129, .11);
-          border: 1px solid rgba(16, 185, 129, .32);
-          color: #10b981;
-        }
-        .cf-alert-icon {
-          width: 20px; height: 20px; border-radius: 50%;
-          display: inline-flex; align-items: center; justify-content: center;
-          font-size: .72rem; font-weight: 800; flex-shrink: 0;
-          background: currentColor; color: #fff;
-        }
-
-        .cf-submit {
-          width: 100%; justify-content: center; position: relative; overflow: hidden;
-          transition: transform .25s cubic-bezier(.2, 1.3, .3, 1), box-shadow .3s ease, background .3s ease, opacity .25s ease;
-        }
-        .cf-submit.sending { opacity: .82; cursor: wait; }
-        .cf-submit.sent {
-          background: linear-gradient(135deg, #10b981, #059669) !important;
-          box-shadow: 0 10px 26px -8px rgba(16, 185, 129, .6) !important;
-        }
-        .cf-plane { display: inline-flex; transition: transform .35s cubic-bezier(.2, 1.4, .3, 1); }
-        .cf-submit:hover:not(:disabled) .cf-plane { transform: translate(3px, -3px) rotate(-8deg); }
-        .cf-spinner {
-          width: 15px; height: 15px; border-radius: 50%;
-          border: 2px solid rgba(255, 255, 255, .35); border-top-color: #fff;
-          animation: cfSpin .7s linear infinite;
-        }
-        @keyframes cfSpin { to { transform: rotate(360deg); } }
-
-        .cf-burst { position: absolute; left: 50%; top: 50%; width: 0; height: 0; pointer-events: none; z-index: 3; }
-        .cf-burst span {
-          position: absolute; left: -4px; top: -4px; width: 8px; height: 8px; border-radius: 2px;
-          animation: cfPop .85s cubic-bezier(.16, .84, .3, 1) forwards;
-        }
-        @keyframes cfPop {
-          0%   { opacity: 1; transform: translate(0, 0) scale(.6) rotate(0deg); }
-          80%  { opacity: 1; }
-          100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(1) rotate(var(--rot)); }
-        }
-
-        @media (max-width: 780px) {
-          .contact-grid { grid-template-columns: 1fr !important; }
-          .form-row { grid-template-columns: 1fr !important; }
-          .cf-card { padding: 24px 20px !important; }
-        }
-      `}</style>
     </section>
   );
 }
-

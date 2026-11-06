@@ -1,49 +1,86 @@
 import React from 'react';
 import { PORTFOLIO_DATA } from '../data/portfolioData';
-import { AwardSealIcon, CertBrandIcon, ExternalLinkIcon } from './Icons';
+import { CertBrandIcon, ExternalLinkIcon } from './Icons';
 import { SectionHeader, useReveal } from './SectionHeader';
 
-export function Certifications() {
-  const revealRef = useReveal();
+function CertArrowUpRight() {
+  return (
+    <svg
+      width="15"
+      height="15"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.4"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <line x1="7" y1="17" x2="17" y2="7" />
+      <polyline points="7 7 17 7 17 17" />
+    </svg>
+  );
+}
 
-  const onMove = (e: React.PointerEvent<HTMLAnchorElement>) => {
-    if (e.pointerType === 'touch') return;
+function CertSealSvg() {
+  return (
+    <svg
+      width="22"
+      height="22"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path
+        d="M12 2l2.4 1.7 2.9-.2 1.2 2.7 2.5 1.5-.6 2.9 1.1 2.7-1.9 2.2-.2 2.9-2.8.9-1.8 2.3-2.8-1.1-2.8 1.1-1.8-2.3-2.8-.9-.2-2.9L2.3 14.3l1.1-2.7-.6-2.9 2.5-1.5 1.2-2.7 2.9.2z"
+        opacity=".35"
+      />
+      <polyline points="8.5 12.2 11 14.7 15.7 9.7" />
+    </svg>
+  );
+}
+
+export function Certifications() {
+  const bannerRevealRef = useReveal<HTMLDivElement>();
+  const gridRevealRef = useReveal<HTMLDivElement>();
+
+  const onMove = (e: React.PointerEvent<HTMLElement>) => {
+    if (e.pointerType !== 'mouse') return;
     const el = e.currentTarget;
-    const r = el.getBoundingClientRect();
-    const x = e.clientX - r.left;
-    const y = e.clientY - r.top;
-    el.style.setProperty('--mx', `${x}px`);
-    el.style.setProperty('--my', `${y}px`);
-    el.style.setProperty('--rx', `${((y / r.height - 0.5) * -7).toFixed(2)}deg`);
-    el.style.setProperty('--ry', `${((x / r.width - 0.5) * 7).toFixed(2)}deg`);
+    const rect = el.getBoundingClientRect();
+    const rxRatio = (e.clientX - rect.left) / rect.width;
+    const ryRatio = (e.clientY - rect.top) / rect.height;
+    el.style.setProperty('--mx', `${e.clientX - rect.left}px`);
+    el.style.setProperty('--my', `${e.clientY - rect.top}px`);
+    el.style.setProperty('--rx', `${((0.5 - ryRatio) * 8).toFixed(2)}deg`);
+    el.style.setProperty('--ry', `${((rxRatio - 0.5) * 10).toFixed(2)}deg`);
   };
 
-  const onLeave = (e: React.PointerEvent<HTMLAnchorElement>) => {
-    const el = e.currentTarget;
-    el.style.setProperty('--rx', '0deg');
-    el.style.setProperty('--ry', '0deg');
+  const onLeave = (e: React.PointerEvent<HTMLElement>) => {
+    e.currentTarget.style.setProperty('--rx', '0deg');
+    e.currentTarget.style.setProperty('--ry', '0deg');
   };
 
   return (
     <section
       id="certifications"
-      ref={revealRef}
-      style={{
-        padding: 'var(--section-py) 24px',
-        background: 'transparent',
-        position: 'relative',
-        overflow: 'hidden',
-      }}
+      className="cert-section"
+      style={{ padding: '96px 24px' }}
     >
-      <div style={{ maxWidth: 1100, margin: '0 auto' }}>
+      <div style={{ maxWidth: 1360, margin: '0 auto' }}>
         <SectionHeader
-          label="Credentials"
-          title="Google & Gemini Certifications"
+          label="Achievements"
+          title="Certifications"
           sub="5 officially verified Google for Education & Generative AI credentials authenticated via Accredible Wallet"
         />
 
         {/* Verified Accredible Wallet Banner */}
         <div
+          ref={bannerRevealRef}
           className="reveal card"
           style={{
             marginBottom: 28,
@@ -53,8 +90,9 @@ export function Certifications() {
             alignItems: 'center',
             justifyContent: 'space-between',
             gap: 16,
-            background: 'linear-gradient(135deg, rgba(66,133,244,.08), rgba(139,92,246,.08))',
-            borderColor: 'color-mix(in srgb, var(--accent) 30%, var(--border))',
+            background:
+              'linear-gradient(135deg, color-mix(in srgb, var(--accent) 10%, var(--surface)), color-mix(in srgb, var(--accent2) 8%, var(--surface)))',
+            borderColor: 'color-mix(in srgb, var(--accent) 32%, var(--border))',
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
@@ -64,7 +102,7 @@ export function Certifications() {
                 width: 46,
                 height: 46,
                 borderRadius: 14,
-                background: 'linear-gradient(135deg, #4285F4, #8b5cf6)',
+                background: 'linear-gradient(135deg, var(--accent), var(--accent2))',
                 color: '#fff',
                 fontWeight: 800,
                 fontSize: '.95rem',
@@ -95,8 +133,8 @@ export function Certifications() {
                   ✓ 5 VERIFIED CREDENTIALS
                 </span>
               </div>
-              <div style={{ fontSize: '.83rem', color: 'var(--text2)', marginTop: 2 }}>
-                Inspect official digital badges and blockchain/issuer verification directly on Google Accredible.
+              <div style={{ fontSize: '.84rem', color: 'var(--muted)', marginTop: 2 }}>
+                Inspect official digital badges and issuer verification directly on Google Accredible.
               </div>
             </div>
           </div>
@@ -112,52 +150,45 @@ export function Certifications() {
           </a>
         </div>
 
-        <div
-          className="cert-grid"
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
-            gap: 22,
-          }}
-        >
+        <div ref={gridRevealRef} className="cert-grid">
           {PORTFOLIO_DATA.certifications.map((cert, idx) => (
             <a
               key={cert.id}
+              title="View Certificate"
               href={cert.verifyUrl}
               target="_blank"
               rel="noopener noreferrer"
+              className="cert-card cert-card--link"
               onPointerMove={onMove}
               onPointerLeave={onLeave}
-              style={{ '--cc': cert.c, textDecoration: 'none', color: 'inherit' } as React.CSSProperties}
-              className={`card cert-card reveal d${Math.min((idx % 5) + 1, 5)}`}
+              style={{ '--i': idx } as React.CSSProperties}
             >
-              <span className="cert-glow" aria-hidden="true" />
+              <span className="cert-ring" aria-hidden="true" />
               <span className="cert-seal" aria-hidden="true">
-                <AwardSealIcon size={18} />
-              </span>
-              <span className="syne cert-year-bg" aria-hidden="true">
-                0{idx + 1}
+                <CertSealSvg />
               </span>
 
-              <div style={{ display: 'flex', gap: 16, alignItems: 'flex-start', width: '100%' }}>
-                <div className="cert-icon" style={{ color: cert.c }}>
+              <div className="cert-icon" style={{ color: cert.c }}>
+                <span className="cert-icon-pulse" aria-hidden="true" />
+                <div style={{ width: 36, height: 36, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <CertBrandIcon type={cert.iconType} />
                 </div>
+              </div>
 
-                <div style={{ minWidth: 0, flex: 1, position: 'relative', zIndex: 1 }}>
-                  <h3 className="syne cert-title">{cert.title}</h3>
-                  <div className="cert-org">{cert.org}</div>
-                  <div className="cert-date">{cert.date}</div>
-                </div>
+              <h3 className="cert-title">{cert.title}</h3>
+
+              <div className="cert-meta">
+                <span className="cert-org">{cert.org}</span>
+                <span className="cert-dot" aria-hidden="true" />
+                <span className="cert-date">{cert.date}</span>
               </div>
 
               <p
                 style={{
                   fontSize: '.84rem',
-                  lineHeight: 1.65,
-                  color: 'var(--text2)',
-                  marginTop: 14,
-                  marginBottom: 14,
+                  lineHeight: 1.62,
+                  color: 'var(--muted)',
+                  margin: '2px 0 6px',
                   position: 'relative',
                   zIndex: 1,
                 }}
@@ -170,7 +201,7 @@ export function Certifications() {
                   display: 'flex',
                   flexWrap: 'wrap',
                   gap: 6,
-                  marginTop: 'auto',
+                  marginBottom: 4,
                   position: 'relative',
                   zIndex: 1,
                 }}
@@ -184,7 +215,7 @@ export function Certifications() {
                       letterSpacing: '.04em',
                       padding: '3px 9px',
                       borderRadius: 999,
-                      background: `color-mix(in srgb, ${cert.c} 12%, var(--bg3))`,
+                      background: `color-mix(in srgb, ${cert.c} 12%, var(--surface2))`,
                       color: cert.c,
                       border: `1px solid color-mix(in srgb, ${cert.c} 28%, transparent)`,
                     }}
@@ -193,97 +224,16 @@ export function Certifications() {
                   </span>
                 ))}
               </div>
+
+              <span className="cert-link">
+                View certificate <CertArrowUpRight />
+              </span>
+
+              <span className="cert-bar" aria-hidden="true" />
             </a>
           ))}
         </div>
       </div>
-
-      <style>{`
-        .cert-card {
-          position: relative;
-          padding: 24px;
-          display: flex;
-          flex-direction: column;
-          overflow: hidden;
-          transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateY(var(--lift, 0px));
-          transition: transform .25s cubic-bezier(.2, .8, .2, 1), border-color .3s ease, box-shadow .32s ease;
-          will-change: transform;
-        }
-        .cert-card::before {
-          content: '';
-          position: absolute; left: 0; right: 0; top: 0; height: 3px;
-          background: linear-gradient(90deg, var(--cc), color-mix(in srgb, var(--cc) 45%, var(--accent2)));
-          transform: scaleX(.28); transform-origin: left; opacity: .7;
-          transition: transform .4s cubic-bezier(.22, 1, .36, 1), opacity .3s ease;
-        }
-        .cert-card:hover {
-          --lift: -5px;
-          border-color: color-mix(in srgb, var(--cc) 55%, var(--border));
-          box-shadow: 0 22px 44px -18px color-mix(in srgb, var(--cc) 40%, transparent);
-        }
-        .cert-card:hover::before { transform: scaleX(1); opacity: 1; }
-
-        .cert-glow {
-          position: absolute; inset: 0; border-radius: inherit;
-          background: radial-gradient(300px circle at var(--mx, 50%) var(--my, 40%),
-            color-mix(in srgb, var(--cc) 15%, transparent), transparent 70%);
-          opacity: 0; pointer-events: none; transition: opacity .3s ease;
-        }
-        .cert-card:hover .cert-glow { opacity: 1; }
-
-        .cert-seal {
-          position: absolute; top: 14px; right: 14px;
-          width: 30px; height: 30px; border-radius: 50%;
-          display: flex; align-items: center; justify-content: center;
-          color: var(--cc);
-          background: color-mix(in srgb, var(--cc) 12%, transparent);
-          border: 1px dashed color-mix(in srgb, var(--cc) 40%, transparent);
-          opacity: .75;
-          transition: transform .6s cubic-bezier(.22, 1, .36, 1), opacity .3s ease, background .3s ease;
-        }
-        .cert-card:hover .cert-seal {
-          opacity: 1;
-          transform: rotate(360deg) scale(1.08);
-          background: color-mix(in srgb, var(--cc) 20%, transparent);
-        }
-
-        .cert-year-bg {
-          position: absolute; right: 16px; bottom: -12px;
-          font-size: 3.8rem; font-weight: 800; line-height: 1; letter-spacing: -.04em;
-          color: var(--cc); opacity: .055; pointer-events: none; user-select: none;
-          transition: opacity .35s ease, transform .45s cubic-bezier(.2, .8, .2, 1);
-        }
-        .cert-card:hover .cert-year-bg { opacity: .12; transform: translateY(-3px) scale(1.04); }
-
-        .cert-icon {
-          position: relative; z-index: 1;
-          width: 56px; height: 56px; border-radius: 15px;
-          background: #ffffff;
-          border: 1px solid var(--border);
-          box-shadow: 0 3px 10px rgba(0, 0, 0, .05);
-          padding: 9px;
-          display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-          transition: transform .42s cubic-bezier(.2, 1.45, .3, 1), box-shadow .3s ease, border-color .3s ease;
-        }
-        .cert-card:hover .cert-icon {
-          transform: translateY(-2px) scale(1.09) rotate(-4deg);
-          border-color: color-mix(in srgb, var(--cc) 55%, var(--border));
-          box-shadow: 0 12px 24px -10px color-mix(in srgb, var(--cc) 55%, transparent);
-        }
-        .cert-title {
-          font-weight: 700; font-size: .98rem; line-height: 1.35;
-          margin-bottom: 5px; padding-right: 26px; color: var(--text);
-          transition: color .25s ease;
-        }
-        .cert-card:hover .cert-title { color: var(--cc); }
-        .cert-org { color: var(--cc); font-weight: 700; font-size: .82rem; margin-bottom: 6px; }
-        .cert-date {
-          display: inline-block; font-size: .74rem; font-weight: 600; color: var(--text3);
-          padding: 2px 9px; border-radius: 999px;
-          background: var(--bg3); border: 1px solid var(--border);
-        }
-      `}</style>
     </section>
   );
 }
-
