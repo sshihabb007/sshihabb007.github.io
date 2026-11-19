@@ -1,0 +1,1332 @@
+/* tools/tools.css — Dedicated styles for the Tools & Software Suite showcase.
+   Strictly adheres to DESIGN.md CSS variables for Dark Mode, Light Mode (body.light-mode),
+   and all 7 accent palette options. All custom identifiers use shihab_/mehedi_/sshihabb007_ prefixes. */
+
+:root {
+  color-scheme: dark;
+  scroll-padding-top: 88px;
+}
+
+body {
+  --shihab-surface-elevated: color-mix(in srgb, var(--bg-card) 82%, var(--bg-hover) 18%);
+  --shihab-accent-soft: color-mix(in srgb, var(--primary-color) 12%, transparent);
+  --shihab-accent-border: color-mix(in srgb, var(--primary-color) 35%, var(--border-color));
+  --shihab-shadow-card: 0 10px 28px rgba(0, 0, 0, 0.24);
+  --shihab-shadow-modal: 0 24px 64px rgba(0, 0, 0, 0.55);
+  --shihab-green-fg: #34D399;
+  --shihab-orange-fg: #FBBF24;
+  --shihab-blue-fg: #60A5FA;
+  --shihab-purple-fg: #C084FC;
+  --shihab-pink-fg: #F472B6;
+  --shihab-error-fg: #F87171;
+  -webkit-tap-highlight-color: color-mix(in srgb, var(--primary-color) 20%, transparent);
+}
+
+body.light-mode {
+  color-scheme: light;
+  --shihab-surface-elevated: color-mix(in srgb, var(--bg-card) 70%, var(--bg-hover) 30%);
+  --shihab-accent-soft: color-mix(in srgb, var(--primary-color) 10%, transparent);
+  --shihab-accent-border: color-mix(in srgb, var(--primary-color) 40%, var(--border-color));
+  --shihab-shadow-card: 0 8px 24px rgba(54, 49, 43, 0.08);
+  --shihab-shadow-modal: 0 24px 64px rgba(54, 49, 43, 0.22);
+  --shihab-green-fg: #047857;
+  --shihab-orange-fg: #B45309;
+  --shihab-blue-fg: #1D4ED8;
+  --shihab-purple-fg: #7E22CE;
+  --shihab-pink-fg: #BE185D;
+  --shihab-error-fg: #B91C1C;
+}
+
+body:has(.shihab_detail_modal[open]) {
+  overflow: hidden;
+}
+
+/* Skip Link for Keyboard Navigation (compositor transform transition) */
+.shihab_skip_link {
+  position: absolute;
+  top: 12px;
+  left: 16px;
+  z-index: 10001;
+  background: var(--text-main);
+  color: var(--bg-dark);
+  padding: 10px 16px;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-decoration: none;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-200%);
+  transition: transform 0.18s ease, opacity 0.18s ease;
+}
+
+.shihab_skip_link:focus-visible {
+  position: fixed;
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+/* Hero Section */
+.shihab_tools_hero {
+  padding: 44px 20px 36px;
+}
+
+.shihab_hero_inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.shihab_eyebrow_badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--primary-color);
+  background: var(--shihab-accent-soft);
+  border: 1px solid var(--shihab-accent-border);
+  margin-bottom: 16px;
+}
+
+.shihab_tools_hero h1 {
+  font-size: clamp(2.1rem, 4.5vw, 3.25rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.12;
+  margin-bottom: 12px;
+  text-wrap: balance;
+  transform-origin: center;
+}
+
+.shihab_tools_hero h1:hover,
+.shihab_section_title:hover,
+.shihab_modal_title:hover {
+  transform: none !important;
+}
+
+/* Scoped to beat .page-header p specificity (0,1,1) in css/style.css */
+.shihab_tools_hero .shihab_dev_attribution {
+  font-size: 0.94rem;
+  color: var(--text-muted);
+  margin: 0 auto 14px;
+  max-width: 640px;
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+.shihab_tools_hero .shihab_dev_attribution a {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: 700;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s ease, opacity 0.2s ease;
+}
+
+.shihab_tools_hero .shihab_dev_attribution a:hover {
+  border-bottom-color: var(--primary-color);
+}
+
+.shihab_tools_hero .shihab_dev_attribution a:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+.shihab_tools_hero .shihab_hero_lead {
+  font-size: 1.05rem;
+  color: var(--text-muted);
+  max-width: 720px;
+  margin: 0 auto 24px;
+  line-height: 1.65;
+  text-wrap: pretty;
+}
+
+.shihab_hero_jump_links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.shihab_jump_btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  touch-action: manipulation;
+}
+
+.shihab_jump_btn:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 3px;
+}
+
+/* Stats Strip */
+.shihab_tools_stats {
+  margin: 0 auto;
+  padding: 0;
+  max-width: 960px;
+}
+
+.shihab_tools_stats .stat-box {
+  padding: 16px 14px;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.shihab_tools_stats .stat-box:hover {
+  border-color: var(--shihab-accent-border);
+  transform: translateY(-2px);
+}
+
+.shihab_tools_hero .shihab_tools_stats .stat-box p {
+  font-size: 0.75rem;
+  line-height: 1.4;
+  max-width: none;
+  margin: 0;
+}
+
+.shihab_stat_num {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--primary-color);
+  line-height: 1.2;
+  margin-bottom: 4px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Main Fluid Container (DESIGN.md: do not use .container 2fr 1fr split for tools) */
+.shihab_tools_main {
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 28px 20px 84px;
+  scroll-margin-top: 96px;
+}
+
+/* Controls Toolbar (Search + Filter Pills + Status) */
+.shihab_controls_shell {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 18px 20px;
+  margin-bottom: 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-shadow: var(--shihab-shadow-card);
+}
+
+.shihab_controls_top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.shihab_search_wrap {
+  position: relative;
+  flex: 1 1 320px;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  border-radius: 8px;
+}
+
+.shihab_search_wrap:focus-within .shihab_search_icon {
+  color: var(--primary-color);
+}
+
+.shihab_sr_only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.shihab_search_icon {
+  position: absolute;
+  left: 14px;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  pointer-events: none;
+  transition: color 0.15s ease;
+}
+
+.shihab_search_input {
+  width: 100%;
+  padding: 11px 46px 11px 40px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-dark);
+  color: var(--text-main);
+  font-size: 0.95rem;
+  line-height: 1.4;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.shihab_search_input::placeholder {
+  color: var(--text-muted);
+}
+
+.shihab_search_input:focus-visible {
+  outline: 2px solid transparent;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px var(--shihab-accent-soft);
+}
+
+.shihab_search_input::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.shihab_search_kbd {
+  position: absolute;
+  right: 12px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  padding: 2px 7px;
+  pointer-events: none;
+}
+
+.shihab_search_clear {
+  position: absolute;
+  right: 10px;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-card);
+  color: var(--text-muted);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
+  touch-action: manipulation;
+}
+
+.shihab_search_clear[hidden] {
+  display: none;
+}
+
+.shihab_search_clear:hover {
+  color: var(--text-main);
+  background: var(--bg-hover);
+  border-color: var(--primary-color);
+}
+
+.shihab_search_clear:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+.shihab_results_meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+  font-size: 0.86rem;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.shihab_results_meta strong {
+  color: var(--text-main);
+}
+
+.shihab_filter_bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.shihab_filter_btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--border-color);
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  font-weight: 600;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+  touch-action: manipulation;
+}
+
+.shihab_filter_btn:hover {
+  color: var(--text-main);
+  background: var(--bg-hover);
+  border-color: var(--shihab-accent-border);
+}
+
+/* High-contrast DESIGN.md token pairing (matches .btn-primary across Dark, Light, and all 7 accents) */
+.shihab_filter_btn[aria-pressed="true"] {
+  background: var(--text-main);
+  color: var(--bg-dark);
+  border-color: var(--text-main);
+}
+
+.shihab_filter_btn:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+.shihab_filter_count {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 1px 7px;
+  border-radius: 999px;
+  background: var(--bg-hover);
+  color: var(--text-main);
+  font-variant-numeric: tabular-nums;
+}
+
+.shihab_filter_btn[aria-pressed="true"] .shihab_filter_count {
+  background: color-mix(in srgb, var(--bg-dark) 18%, transparent);
+  color: var(--bg-dark);
+}
+
+/* Section Headers */
+.shihab_catalog_section {
+  margin-bottom: 52px;
+  scroll-margin-top: 96px;
+}
+
+.shihab_catalog_section:last-of-type {
+  margin-bottom: 0;
+}
+
+.shihab_catalog_section[hidden] {
+  display: none;
+}
+
+.shihab_section_header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 22px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.shihab_section_title_group {
+  min-width: 0;
+}
+
+.shihab_section_title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.45rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--text-main);
+  margin-bottom: 4px;
+  text-wrap: balance;
+}
+
+.shihab_section_title i {
+  color: var(--primary-color);
+  font-size: 1.15rem;
+}
+
+.shihab_section_subtitle {
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  max-width: 680px;
+}
+
+.shihab_section_count_pill {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* Flagship Software Grid (4 GitHub Projects) */
+.shihab_flagship_grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.shihab_flagship_card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shihab-shadow-card);
+  transition: border-color 0.22s ease, transform 0.22s ease;
+}
+
+.shihab_flagship_card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--primary-color), var(--tag-purple-text));
+  opacity: 0.85;
+}
+
+.shihab_flagship_card:hover {
+  border-color: var(--primary-color);
+  transform: translateY(-3px);
+}
+
+.shihab_flagship_card[hidden],
+.shihab_webtool_card[hidden] {
+  display: none;
+}
+
+/* Card Header Shared Structure */
+.shihab_card_head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.shihab_card_identity {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+
+.shihab_icon_badge {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  flex-shrink: 0;
+  border: 1px solid transparent;
+}
+
+.shihab_icon_blue {
+  background: var(--tag-blue-bg);
+  color: var(--shihab-blue-fg);
+  border-color: color-mix(in srgb, var(--tag-blue-text) 28%, transparent);
+}
+
+.shihab_icon_green {
+  background: var(--tag-green-bg);
+  color: var(--shihab-green-fg);
+  border-color: color-mix(in srgb, var(--tag-green-text) 28%, transparent);
+}
+
+.shihab_icon_purple {
+  background: var(--tag-purple-bg);
+  color: var(--shihab-purple-fg);
+  border-color: color-mix(in srgb, var(--tag-purple-text) 28%, transparent);
+}
+
+.shihab_icon_orange {
+  background: var(--tag-orange-bg);
+  color: var(--shihab-orange-fg);
+  border-color: color-mix(in srgb, var(--tag-orange-text) 28%, transparent);
+}
+
+.shihab_icon_pink {
+  background: var(--tag-pink-bg);
+  color: var(--shihab-pink-fg);
+  border-color: color-mix(in srgb, var(--tag-pink-text) 28%, transparent);
+}
+
+.shihab_card_titles {
+  min-width: 0;
+}
+
+.shihab_card_title {
+  font-size: 1.18rem;
+  font-weight: 700;
+  color: var(--text-main);
+  line-height: 1.25;
+  margin-bottom: 3px;
+  overflow-wrap: break-word;
+  text-wrap: balance;
+}
+
+.shihab_card_tagline {
+  font-size: 0.84rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.shihab_card_badges {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.shihab_version_pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 4px 9px;
+  border-radius: 999px;
+  background: var(--tag-blue-bg);
+  color: var(--shihab-blue-fg);
+  border: 1px solid color-mix(in srgb, var(--tag-blue-text) 28%, transparent);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.shihab_license_pill {
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: var(--tag-green-bg);
+  color: var(--shihab-green-fg);
+  border: 1px solid color-mix(in srgb, var(--tag-green-text) 25%, transparent);
+  white-space: nowrap;
+}
+
+.shihab_runtime_pill {
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 4px 9px;
+  border-radius: 999px;
+  background: var(--bg-hover);
+  color: var(--text-muted);
+  border: 1px solid var(--border-color);
+  white-space: nowrap;
+}
+
+/* Architecture & Platform Strip on Flagship Cards */
+.shihab_platform_strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.shihab_platform_chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: var(--text-main);
+  background: var(--bg-dark);
+  border: 1px solid var(--border-color);
+  padding: 5px 10px;
+  border-radius: 6px;
+}
+
+.shihab_platform_chip i {
+  color: var(--primary-color);
+  font-size: 0.8rem;
+}
+
+.shihab_card_desc {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.shihab_feature_list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px 14px;
+  border-radius: 8px;
+  background: var(--bg-dark);
+  border: 1px solid var(--border-color);
+}
+
+.shihab_feature_list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  font-size: 0.84rem;
+  color: var(--text-muted);
+  line-height: 1.48;
+}
+
+.shihab_feature_list li > span {
+  min-width: 0;
+  overflow-wrap: break-word;
+}
+
+.shihab_feature_list li i {
+  color: var(--shihab-green-fg);
+  font-size: 0.78rem;
+  margin-top: 4px;
+  flex-shrink: 0;
+}
+
+.shihab_feature_list strong {
+  color: var(--text-main);
+  font-weight: 600;
+}
+
+.shihab_card_tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.shihab_card_tags .tag {
+  font-size: 0.68rem;
+  letter-spacing: 0.03em;
+  border: 1px solid transparent;
+}
+
+body.light-mode .shihab_card_tags .tag-green {
+  color: var(--shihab-green-fg);
+}
+
+body.light-mode .shihab_card_tags .tag-orange {
+  color: var(--shihab-orange-fg);
+}
+
+body.light-mode .shihab_card_tags .tag-blue {
+  color: var(--shihab-blue-fg);
+}
+
+body.light-mode .shihab_card_tags .tag-purple {
+  color: var(--shihab-purple-fg);
+}
+
+body.light-mode .shihab_card_tags .tag-pink {
+  color: var(--shihab-pink-fg);
+}
+
+/* Card Footer Actions */
+.shihab_card_actions {
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.shihab_action_btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 9px 14px;
+  font-size: 0.84rem;
+  font-weight: 600;
+  border-radius: 6px;
+  text-decoration: none;
+  touch-action: manipulation;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, opacity 0.2s ease, transform 0.2s ease !important;
+}
+
+.shihab_action_btn:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+.shihab_action_grow {
+  flex: 1 1 auto;
+}
+
+/* Web Tools Grid (11 Online Utilities) */
+.shihab_webtools_grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.shihab_webtool_card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  box-shadow: var(--shihab-shadow-card);
+  transition: border-color 0.22s ease, transform 0.22s ease, background-color 0.22s ease;
+}
+
+.shihab_webtool_card:hover {
+  border-color: var(--primary-color);
+  transform: translateY(-2px);
+}
+
+/* 2-row web tool card header: Row 1 = icon + runtime badge, Row 2 = full-width title + tagline */
+.shihab_webtool_card .shihab_card_head {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-rows: auto auto;
+  gap: 12px;
+  align-items: center;
+}
+
+.shihab_webtool_card .shihab_card_identity {
+  display: contents;
+}
+
+.shihab_webtool_card .shihab_icon_badge {
+  grid-column: 1;
+  grid-row: 1;
+  width: 42px;
+  height: 42px;
+  font-size: 1.08rem;
+}
+
+.shihab_webtool_card .shihab_card_badges {
+  grid-column: 2;
+  grid-row: 1;
+  justify-content: flex-end;
+}
+
+.shihab_webtool_card .shihab_card_titles {
+  grid-column: 1 / -1;
+  grid-row: 2;
+}
+
+.shihab_webtool_card .shihab_card_title {
+  font-size: 1.08rem;
+}
+
+.shihab_webtool_card .shihab_feature_list {
+  padding: 10px 12px;
+  gap: 6px;
+}
+
+.shihab_webtool_card .shihab_feature_list li {
+  font-size: 0.81rem;
+}
+
+/* Empty State */
+.shihab_empty_state {
+  background: var(--bg-card);
+  border: 1px dashed var(--border-color);
+  border-radius: 12px;
+  padding: 48px 24px;
+  text-align: center;
+  max-width: 560px;
+  margin: 24px auto 0;
+}
+
+.shihab_empty_state[hidden] {
+  display: none;
+}
+
+.shihab_empty_icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  margin: 0 auto 16px;
+  background: var(--shihab-accent-soft);
+  color: var(--primary-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+}
+
+.shihab_empty_state h2 {
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+  color: var(--text-main);
+}
+
+.shihab_empty_state p {
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  margin-bottom: 20px;
+}
+
+/* Native <dialog> Specification Modal (Top Layer — restores native cursor above custom cursor) */
+.shihab_detail_modal {
+  width: min(820px, calc(100vw - 24px));
+  max-height: min(88vh, 860px);
+  max-height: min(88dvh, 860px);
+  margin: auto;
+  padding: 0;
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  background: var(--bg-card);
+  color: var(--text-main);
+  box-shadow: var(--shihab-shadow-modal);
+  overflow: hidden;
+  overscroll-behavior: contain;
+  cursor: auto !important;
+}
+
+.shihab_detail_modal::backdrop {
+  background: rgba(7, 11, 20, 0.74);
+  backdrop-filter: blur(5px);
+  cursor: auto !important;
+}
+
+.shihab_detail_modal a,
+.shihab_detail_modal button {
+  cursor: pointer !important;
+}
+
+body.light-mode .shihab_detail_modal::backdrop {
+  background: rgba(54, 49, 43, 0.45);
+}
+
+.shihab_modal_layout {
+  display: flex;
+  flex-direction: column;
+  max-height: min(88vh, 860px);
+  max-height: min(88dvh, 860px);
+}
+
+.shihab_modal_header {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  background: var(--shihab-surface-elevated);
+}
+
+.shihab_modal_head_left {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  min-width: 0;
+  flex: 1;
+}
+
+.shihab_modal_head_left > div:not(.shihab_icon_badge) {
+  min-width: 0;
+  flex: 1;
+}
+
+.shihab_modal_head_left .shihab_icon_badge {
+  flex: 0 0 auto;
+}
+
+.shihab_modal_title {
+  font-size: 1.35rem;
+  font-weight: 800;
+  line-height: 1.2;
+  color: var(--text-main);
+  margin-bottom: 4px;
+  text-wrap: balance;
+  overflow-wrap: break-word;
+}
+
+.shihab_modal_subtitle {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+  overflow-wrap: break-word;
+}
+
+.shihab_modal_badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.shihab_modal_badges .shihab_runtime_pill {
+  white-space: normal;
+  overflow-wrap: break-word;
+  text-align: left;
+  line-height: 1.35;
+  border-radius: 8px;
+}
+
+.shihab_modal_close {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-card);
+  color: var(--text-muted);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  flex-shrink: 0;
+  touch-action: manipulation;
+  transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.shihab_modal_close:hover {
+  color: var(--text-main);
+  background: var(--bg-hover);
+  border-color: var(--primary-color);
+}
+
+.shihab_modal_close:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+.shihab_modal_body {
+  padding: 22px 24px;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.shihab_modal_section_title {
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--primary-color);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.shihab_modal_overview {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+.shihab_spec_grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.shihab_spec_item {
+  background: var(--bg-dark);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 12px 14px;
+}
+
+.shihab_spec_label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+
+.shihab_spec_value {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-main);
+  line-height: 1.45;
+  overflow-wrap: break-word;
+}
+
+.shihab_modal_capabilities {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.shihab_modal_capabilities li {
+  background: var(--bg-dark);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 12px 14px;
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.55;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.shihab_modal_capabilities li > div {
+  min-width: 0;
+  overflow-wrap: break-word;
+}
+
+.shihab_modal_capabilities li i {
+  color: var(--shihab-green-fg);
+  margin-top: 4px;
+  flex-shrink: 0;
+}
+
+.shihab_modal_capabilities strong {
+  color: var(--text-main);
+}
+
+.shihab_modal_downloads {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.shihab_download_tile {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 11px 14px;
+  border-radius: 8px;
+  background: var(--bg-dark);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  text-decoration: none;
+  font-size: 0.84rem;
+  font-weight: 600;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.shihab_download_tile:hover {
+  border-color: var(--primary-color);
+  background: var(--bg-hover);
+}
+
+.shihab_download_tile:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+.shihab_download_tile span {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.shihab_download_tile small {
+  font-size: 0.74rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  overflow-wrap: anywhere;
+}
+
+.shihab_download_tile i {
+  color: var(--primary-color);
+  flex-shrink: 0;
+}
+
+.shihab_modal_code {
+  background: var(--bg-dark);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 12px 14px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.8rem;
+  color: var(--text-main);
+  overflow-x: auto;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.shihab_modal_footer {
+  padding: 16px 24px;
+  border-top: 1px solid var(--border-color);
+  background: var(--shihab-surface-elevated);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.shihab_modal_footer_links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.shihab_copy_status {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--shihab-green-fg);
+}
+
+.shihab_copy_status.shihab_copy_error {
+  color: var(--shihab-error-fg);
+}
+
+/* Responsive Breakpoints (DESIGN.md: 992px, 768px, 480px + 320px verification) */
+@media (max-width: 1120px) {
+  .shihab_webtools_grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 992px) {
+  .shihab_flagship_grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    scroll-padding-top: 116px;
+  }
+
+  .shihab_tools_main,
+  .shihab_catalog_section {
+    scroll-margin-top: 116px;
+  }
+
+  .shihab_tools_hero {
+    padding: 26px 16px 28px;
+  }
+
+  .shihab_tools_hero .shihab_hero_lead {
+    font-size: 0.96rem;
+    line-height: 1.55;
+    margin-bottom: 20px;
+  }
+
+  .shihab_tools_main {
+    padding: 20px 14px 72px;
+  }
+
+  .shihab_controls_shell {
+    padding: 14px;
+  }
+
+  .shihab_webtools_grid {
+    grid-template-columns: 1fr;
+  }
+
+  .shihab_flagship_card {
+    padding: 18px;
+  }
+
+  .shihab_flagship_card .shihab_card_head {
+    flex-direction: column;
+  }
+
+  .shihab_flagship_card .shihab_card_badges {
+    justify-content: flex-start;
+  }
+
+  .shihab_spec_grid,
+  .shihab_modal_downloads {
+    grid-template-columns: 1fr;
+  }
+
+  .shihab_modal_header,
+  .shihab_modal_body,
+  .shihab_modal_footer {
+    padding: 16px;
+  }
+
+  .shihab_search_kbd {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .shihab_hero_jump_links {
+    flex-direction: column;
+  }
+
+  .shihab_hero_jump_links .btn {
+    width: 100%;
+  }
+
+  .shihab_card_actions .btn,
+  .shihab_modal_footer .btn {
+    width: auto;
+    flex: 1 1 130px;
+  }
+
+  .shihab_filter_btn {
+    padding: 7px 11px;
+    font-size: 0.78rem;
+  }
+
+  .shihab_modal_header {
+    padding: 14px 16px;
+    gap: 10px;
+  }
+
+  .shihab_modal_head_left {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .shihab_modal_head_left .shihab_icon_badge {
+    width: 36px;
+    height: 36px;
+    font-size: 1rem;
+  }
+
+  .shihab_modal_title {
+    font-size: 1.12rem;
+  }
+
+  .shihab_modal_subtitle {
+    font-size: 0.82rem;
+  }
+
+  .shihab_modal_body {
+    padding: 14px 16px;
+    gap: 16px;
+  }
+
+  .shihab_modal_footer {
+    padding: 12px 16px;
+  }
+}
+
+/* Motion Preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

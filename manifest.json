@@ -32,6 +32,12 @@
   ],
   "shortcuts": [
     {
+      "name": "All Tools & Software",
+      "short_name": "Tools",
+      "url": "./tools/",
+      "description": "Browse all 15 open-source software suites and online web tools"
+    },
+    {
       "name": "QR Code Generator",
       "short_name": "QR Gen",
       "url": "./qr-generator/",

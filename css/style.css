@@ -131,14 +131,65 @@ body {
 
 .nav-dropdown {
   position: relative;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
 }
 
-.nav-dropdown>a {
+.shihab_nav_dropdown_trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.nav-dropdown>a,
+.shihab_nav_tools_link {
   cursor: pointer;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 6px;
+}
+
+.shihab_nav_dropdown_caret {
+  background: transparent;
+  border: none;
+  color: inherit;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  min-height: 28px;
+  padding: 4px 6px;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  line-height: 1;
+  transition: color 0.2s, background-color 0.2s;
+  touch-action: manipulation;
+}
+
+.shihab_nav_dropdown_caret i {
+  transition: transform 0.2s ease;
+}
+
+.shihab_nav_dropdown_caret:hover {
+  color: var(--primary-color);
+  background-color: var(--bg-hover);
+}
+
+.shihab_nav_dropdown_caret:focus-visible,
+.nav-links a:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.nav-dropdown.active .shihab_nav_dropdown_caret i {
+  transform: rotate(180deg);
+}
+
+.nav-dropdown-content a.shihab_nav_dropdown_all {
+  background-color: var(--bg-hover);
+  font-weight: 700 !important;
+  color: var(--primary-color) !important;
 }
 
 .nav-dropdown-content {
@@ -202,11 +253,16 @@ body {
   color: var(--primary-color) !important;
 }
 
-.nav-dropdown:hover .nav-dropdown-content,
-.nav-dropdown:focus-within .nav-dropdown-content,
 .nav-dropdown.active .nav-dropdown-content {
   display: flex;
   flex-direction: column;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .nav-dropdown:hover:not(.shihab_dropdown_dismissed) .nav-dropdown-content {
+    display: flex;
+    flex-direction: column;
+  }
 }
 
 /* Page Header (for inner pages like projects.html) */
@@ -783,10 +839,17 @@ body {
   }
 
   .nav-links > a,
-  .nav-links > .nav-dropdown > a {
+  .nav-links > .nav-dropdown > a,
+  .nav-links > .nav-dropdown .shihab_nav_tools_link {
     padding: 4px 2px;
     display: inline-flex;
     align-items: center;
+  }
+
+  .shihab_nav_dropdown_caret {
+    min-width: 36px;
+    min-height: 36px;
+    padding: 6px 8px;
   }
 
   .nav-dropdown {
@@ -809,10 +872,9 @@ body {
     left: auto;
     max-height: 70vh;
     overflow-y: auto;
+    overscroll-behavior: contain;
   }
 
-  .nav-dropdown:hover .nav-dropdown-content,
-  .nav-dropdown:focus-within .nav-dropdown-content,
   .nav-dropdown.active .nav-dropdown-content {
     display: flex !important;
     flex-direction: column !important;
@@ -1267,6 +1329,7 @@ button {
 .nav-brand,
 .nav-links>a,
 .nav-dropdown>a,
+.shihab_nav_tools_link,
 .nav-dropdown-content a,
 .nav-actions a,
 .nav-actions button,
@@ -1284,6 +1347,7 @@ h2 {
 .nav-brand:hover,
 .nav-links>a:hover,
 .nav-dropdown>a:hover,
+.shihab_nav_tools_link:hover,
 .nav-actions a:hover,
 .nav-actions button:hover,
 .btn:hover,

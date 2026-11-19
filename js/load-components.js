@@ -5,31 +5,34 @@ async function loadSiteComponents() {
     const footerPlaceholder = document.getElementById('site-footer');
 
     // Default basePath logic based on path depth
+    const shihab_rawPath = window.location.pathname.toLowerCase();
+    const shihab_normPath = shihab_rawPath.replace(/\/index\.html$/, '/');
+    const shihab_toolDirs = [
+        'tools',
+        'compressor',
+        'audio-to-text',
+        'tax-calculator',
+        'power-calculator',
+        'age-calculator',
+        'bmi-calculator',
+        'universal-downloader',
+        'advanced-calculator',
+        'currency-converter',
+        'land-calculator',
+        'qr-generator'
+    ];
+    const shihab_matchesDir = (dir) =>
+        shihab_normPath.includes(`/${dir}/`) || shihab_normPath.endsWith(`/${dir}`);
+
     let basePath = './';
     if (headerPlaceholder && headerPlaceholder.getAttribute('data-basepath')) {
         basePath = headerPlaceholder.getAttribute('data-basepath');
-    } else {
-        const path = window.location.pathname;
-        if (
-            path.includes('/front/') ||
-            path.includes('/compressor/') ||
-            path.includes('/audio-to-text/') ||
-            path.includes('/tax-calculator/') ||
-            path.includes('/power-calculator/') ||
-            path.includes('/age-calculator/') ||
-            path.includes('/bmi-calculator/') ||
-            path.includes('/universal-downloader/') ||
-            path.includes('/advanced-calculator/') ||
-            path.includes('/currency-converter/') ||
-            path.includes('/land-calculator/') ||
-            path.includes('/qr-generator/')
-        ) {
-            basePath = '../';
-        }
+    } else if (shihab_normPath.includes('/front/') || shihab_toolDirs.some(shihab_matchesDir)) {
+        basePath = '../';
     }
 
     try {
-        const cacheBuster = '?v=2.7';
+        const cacheBuster = '?v=2.8';
         if (headerPlaceholder) {
             const res = await fetch(basePath + 'components/header.html' + cacheBuster);
             if (res.ok) {
@@ -72,23 +75,89 @@ async function loadSiteComponents() {
         mehedi_initTheme();
     }
 
-    // Initialize nav dropdown toggle for touch and click interaction
+    // Highlight active navigation link based on normalized path
+    const shihab_isToolsRoute = shihab_toolDirs.some(shihab_matchesDir);
+    const shihab_isToolsHub = shihab_matchesDir('tools');
+    let shihab_homeResolvedPath = '/';
+    try {
+        shihab_homeResolvedPath = new URL(basePath, window.location.href).pathname.toLowerCase().replace(/\/index\.html$/, '/');
+    } catch (e) {
+        shihab_homeResolvedPath = '/';
+    }
+
+    if (shihab_isToolsRoute) {
+        const shihab_toolsLink = document.querySelector('.shihab_nav_tools_link');
+        if (shihab_toolsLink) {
+            shihab_toolsLink.classList.add('active');
+            if (shihab_isToolsHub) {
+                shihab_toolsLink.setAttribute('aria-current', 'page');
+            }
+        }
+    } else if (shihab_normPath.includes('/front/projects')) {
+        const shihab_projLink = document.querySelector('.nav-links a[href*="front/projects"]');
+        if (shihab_projLink) {
+            shihab_projLink.classList.add('active');
+            shihab_projLink.setAttribute('aria-current', 'page');
+        }
+    } else if (shihab_normPath === shihab_homeResolvedPath) {
+        const shihab_homeLink = document.querySelector('.nav-links > a:first-child');
+        if (shihab_homeLink) {
+            shihab_homeLink.classList.add('active');
+            shihab_homeLink.setAttribute('aria-current', 'page');
+        }
+    }
+
+    // Initialize nav dropdown toggle for touch, click, hover, and keyboard interaction
     const navDropdown = document.querySelector('.nav-dropdown');
     if (navDropdown) {
-        const toggleBtn = navDropdown.querySelector('.nav-dropdown-toggle') || navDropdown.querySelector('a');
+        const toggleBtn = navDropdown.querySelector('.nav-dropdown-toggle');
+        const shihab_closeDropdown = (restoreFocus, dismissHover) => {
+            const wasActive = navDropdown.classList.contains('active');
+            navDropdown.classList.remove('active');
+            if (dismissHover) {
+                navDropdown.classList.add('shihab_dropdown_dismissed');
+            } else {
+                navDropdown.classList.remove('shihab_dropdown_dismissed');
+            }
+            if (toggleBtn) {
+                toggleBtn.setAttribute('aria-expanded', 'false');
+                if (restoreFocus && wasActive) toggleBtn.focus();
+            }
+        };
+        navDropdown.addEventListener('mouseleave', () => {
+            navDropdown.classList.remove('shihab_dropdown_dismissed');
+        });
+        navDropdown.addEventListener('focusout', (e) => {
+            if (e.relatedTarget && !navDropdown.contains(e.relatedTarget)) {
+                shihab_closeDropdown(false, false);
+            }
+        });
         if (toggleBtn) {
             toggleBtn.addEventListener('click', (e) => {
                 e.preventDefault();
                 e.stopPropagation();
-                navDropdown.classList.toggle('active');
-                const isExpanded = navDropdown.classList.contains('active');
-                toggleBtn.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
+                const isCurrentlyOpen = navDropdown.classList.contains('active');
+                if (isCurrentlyOpen) {
+                    shihab_closeDropdown(false, navDropdown.matches(':hover'));
+                } else {
+                    navDropdown.classList.remove('shihab_dropdown_dismissed');
+                    navDropdown.classList.add('active');
+                    toggleBtn.setAttribute('aria-expanded', 'true');
+                }
             });
         }
         document.addEventListener('click', (e) => {
             if (!navDropdown.contains(e.target)) {
-                navDropdown.classList.remove('active');
-                if (toggleBtn) toggleBtn.setAttribute('aria-expanded', 'false');
+                shihab_closeDropdown(false, false);
+            }
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                const isOpenOrHovered =
+                    navDropdown.classList.contains('active') || navDropdown.matches(':hover');
+                if (isOpenOrHovered) {
+                    shihab_closeDropdown(true, navDropdown.matches(':hover'));
+                }
             }
         });
     }

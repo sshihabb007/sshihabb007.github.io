@@ -1,17 +1,22 @@
-const CACHE_NAME = 'sshihabb007-pwa-v19';
+const CACHE_NAME = 'sshihabb007-pwa-v22';
 const STATIC_ASSETS = [
     './',
     './index.html',
     './manifest.json',
-    './css/style.css',
+    './css/style.css?v=2.8',
     './js/theme.js',
-    './js/load-components.js',
+    './js/load-components.js?v=2.8',
     './js/shihab-security.js',
     './asset/fav.png',
-    './components/header.html',
-    './components/footer.html',
+    './components/header.html?v=2.8',
+    './components/footer.html?v=2.8',
     './front/projects.html',
     './front/contact.html',
+    // Tools Hub
+    './tools/',
+    './tools/index.html',
+    './tools/tools.css?v=1.2',
+    './tools/tools.js?v=1.1',
     // Tools
     './advanced-calculator/',
     './advanced-calculator/index.html',
@@ -94,9 +99,9 @@ self.addEventListener('fetch', (event) => {
         return;
     }
 
-    // Stale-While-Revalidate for CSS/JS/assets
+    // Stale-While-Revalidate for CSS/JS/assets (preserve query string so version bumps bust cache)
     event.respondWith(
-        caches.match(event.request, { ignoreSearch: true }).then((cachedResponse) => {
+        caches.match(event.request).then((cachedResponse) => {
             const networkFetch = fetch(event.request).then((response) => {
                 if (response && response.status === 200 && response.type === 'basic') {
                     const responseClone = response.clone();
@@ -105,7 +110,7 @@ self.addEventListener('fetch', (event) => {
                     });
                 }
                 return response;
-            }).catch(() => {});
+            }).catch(() => cachedResponse || caches.match(event.request, { ignoreSearch: true }));
 
             return cachedResponse || networkFetch;
         })
