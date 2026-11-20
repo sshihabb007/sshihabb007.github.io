@@ -86,6 +86,154 @@
 <div class="project-row" data-aos="fade-up">
             <div class="project-summary" role="button" tabindex="0" aria-expanded="false" onclick="toggleAccordion(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleAccordion(this);}">
                 <div class="col-title">
+                    <h3>MHS Download Manager (v1.0.7)</h3>
+                    <div class="tech-stack">C# (.NET 4.8) • Manifest V3 • Windows x64</div>
+                </div>
+                <div class="col-tags">
+                    <span class="tag tag-blue">C# / .NET 4.8</span>
+                    <span class="tag tag-purple">MANIFEST V3</span>
+                    <span class="tag tag-orange">MCP SERVER</span>
+                </div>
+                <div class="col-type">Desktop App &amp; Extension</div>
+                <div class="col-link">
+                    <a href="https://github.com/sshihabb007/MHS-DOWNLOAD-MANAGER" target="_blank" rel="noopener noreferrer"
+                        onclick="event.stopPropagation();"><i class="fab fa-github"></i> Source code</a>
+                </div>
+                <div class="col-toggle">
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </div>
+            <div class="project-details">
+                <div class="project-details-content">
+                    <h4>Overview</h4>
+                    <p>Clean-room, open-source Windows x64 download accelerator (<code>mdm.exe</code>) and Manifest V3 Chromium/Firefox browser extension suite built in pure C# and vanilla JavaScript. Compiles directly with the inbox Windows <code>.NET Framework 4.8</code> compiler (<code>csc.exe</code>) with zero NuGet packages, zero third-party DLLs, and a built-in lossless ISO-BMFF/Matroska muxer requiring no external <code>ffmpeg.exe</code>. <a href="https://github.com/sshihabb007/MHS-DOWNLOAD-MANAGER/releases/latest" target="_blank" rel="noopener noreferrer" style="color: var(--primary-color); text-decoration: underline;">Download Latest Release</a>.</p>
+                    <br>
+                    <h4>Key Features &amp; Implementation</h4>
+                    <ul>
+                        <li><strong>1–128 Sparse Dynamic Segment Engine:</strong> Pre-allocates unified NTFS sparse <code>.mhs.part</code> files (<code>FSCTL_SET_SPARSE</code>) with 4096-byte aligned dynamic halving, TTFB stall preemption, RFC 9110 ETag + 64-byte resume overlap verification, FTP/FTPS, and CRC32/MD5/SHA-1/SHA-256/SHA-512 checksum checks.</li>
+                        <li><strong>14-Browser Capture &amp; Pure C# Lossless Muxer:</strong> Auto-registers Native Messaging across 9 Chromium and 5 Firefox browsers over an authenticated loopback bridge (<code>127.0.0.1:45779</code>), paired with an outside-corner Download Video pill, Stream Sniffer, InnerTube HD/4K resolver, and pure C# MP4/WebM/MKV muxing.</li>
+                        <li><strong>BitTorrent, Media Suite &amp; Debrid Cloud:</strong> Full BitTorrent/Magnet client (<code>BEP-3/9/10/15/19</code>), managed <code>yt-dlp</code>/<code>ffmpeg</code>/<code>gallery-dl</code> helpers, Real-Debrid/AllDebrid/Premiumize unlocking, and Zip-Slip-safe archive extraction.</li>
+                        <li><strong>Privacy, Remote Web UI &amp; Automation:</strong> DNS-over-HTTPS, local SOCKS5/PAC relay, Network Adapter/VPN Kill-Switch, Windows DPAPI credential vault, mobile LAN QR Remote Dashboard (<code>:8463</code>), <code>--cli</code>, <code>--headless</code> daemon, 15-tool <code>--mcp</code> JSON-RPC server, and SHA-256-verified GitHub Releases auto-updater.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+<!-- Project 2 -->
+<div class="project-row" data-aos="fade-up">
+            <div class="project-summary" role="button" tabindex="0" aria-expanded="false" onclick="toggleAccordion(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleAccordion(this);}">
+                <div class="col-title">
+                    <h3>Driver+ (v1.0.1)</h3>
+                    <div class="tech-stack">C# • Win32 P/Invoke • DirectX WPF • Native PE32+ x64</div>
+                </div>
+                <div class="col-tags">
+                    <span class="tag tag-purple">PE32+ X64</span>
+                    <span class="tag tag-green">WHQL SIGNED</span>
+                    <span class="tag tag-blue">WIN32 API</span>
+                </div>
+                <div class="col-type">Windows Systems Suite</div>
+                <div class="col-link">
+                    <a href="https://github.com/sshihabb007/DriverPlus" target="_blank" rel="noopener noreferrer"
+                        onclick="event.stopPropagation();"><i class="fab fa-github"></i> Source code</a>
+                </div>
+                <div class="col-toggle">
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </div>
+            <div class="project-details">
+                <div class="project-details-content">
+                    <h4>Overview</h4>
+                    <p>Clean-room, native 64-bit (<code>PE32+</code>) official WHQL hardware driver updater, game runtime doctor, rescue center, and Windows 11 HVCI blocker auditor (432 KB portable executable, zero NuGet dependencies, zero background daemons, zero telemetry). Every update is resolved strictly from Windows Update Agent and the live Microsoft Update Catalog. <a href="https://github.com/sshihabb007/DriverPlus/releases/latest" target="_blank" rel="noopener noreferrer" style="color: var(--primary-color); text-decoration: underline;">Download Latest Release</a>.</p>
+                    <br>
+                    <h4>Key Features &amp; Implementation</h4>
+                    <ul>
+                        <li><strong>Native 64-Bit PnP &amp; Ghost Inventory:</strong> Single-pass present and unplugged device enumeration via <code>SetupAPI</code> and <code>CfgMgr32</code> with 4-part OEM <code>SUBSYS</code> specificity ranking and anti-downgrade protection.</li>
+                        <li><strong>4-Stage Cryptographic WHQL Security Gate:</strong> Enforces strict Microsoft HTTPS allowlists, mandatory 40-hex SHA-1 CAB digest verification, <code>WinVerifyTrust</code> Authenticode verification on <code>.cat</code>/<code>.sys</code> files, and atomic installation via <code>newdev.dll!DiInstallDriverW</code>.</li>
+                        <li><strong>14 Game Runtimes &amp; Event ID 1000 Crash DLL Doctor:</strong> Audits Visual C++ 2010–2022, DirectX, .NET 4.8+ / 8 / 9, OpenAL, PhysX, and OpenJDK, mapping faulting application crash DLLs directly to official <code>winget</code> packages.</li>
+                        <li><strong>Rescue Center, 6-Card Fix Toolbox &amp; HVCI Auditor:</strong> System Restore checkpoints, Zip-Slip-guarded <code>.zip</code> + <code>.sha256</code> DriverStore backups, 1-click rollback, air-gapped JSON hardware profiles, Windows 11 Memory Integrity (HVCI) auditing, crash-safe Game Boost, and a hardened <code>127.0.0.1</code> CSP-nonce + CSRF telemetry portal.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+<!-- Project 3 -->
+<div class="project-row" data-aos="fade-up">
+            <div class="project-summary" role="button" tabindex="0" aria-expanded="false" onclick="toggleAccordion(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleAccordion(this);}">
+                <div class="col-title">
+                    <h3>Video Speed Controller — VSC (v1.0.2)</h3>
+                    <div class="tech-stack">JavaScript • Manifest V3 • Shadow DOM • esbuild</div>
+                </div>
+                <div class="col-tags">
+                    <span class="tag tag-pink">MANIFEST V3</span>
+                    <span class="tag tag-blue">SHADOW DOM</span>
+                    <span class="tag tag-green">PRIVACY-FIRST</span>
+                </div>
+                <div class="col-type">Browser Extension</div>
+                <div class="col-link">
+                    <a href="https://github.com/sshihabb007/VSC" target="_blank" rel="noopener noreferrer"
+                        onclick="event.stopPropagation();"><i class="fab fa-github"></i> Source code</a>
+                </div>
+                <div class="col-toggle">
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </div>
+            <div class="project-details">
+                <div class="project-details-content">
+                    <h4>Overview</h4>
+                    <p>Lightweight Manifest V3 HTML5 <code>&lt;video&gt;</code> and <code>&lt;audio&gt;</code> speed controller for Google Chrome and Brave Browser. Engineered for minimal runtime overhead, Shadow DOM isolation, SPA navigation resilience, intelligent playback-rate arbitration, and visual per-site badge positioning with strictly minimal <code>storage</code>-only permission and zero network calls. <a href="https://github.com/sshihabb007/VSC/releases/latest" target="_blank" rel="noopener noreferrer" style="color: var(--primary-color); text-decoration: underline;">Download Latest Release</a>.</p>
+                    <br>
+                    <h4>Key Features &amp; Implementation</h4>
+                    <ul>
+                        <li><strong>Per-Site Controller Positioning Studio:</strong> Configure independent placements for Global Default, YouTube, Facebook, Instagram, X, or custom domains/regexes using 8 perimeter anchors, directional nudges (1/5/10/25px), exact pixel offsets, a 16:9 Live Preview Stage, and live popup tab sync without custom CSS.</li>
+                        <li><strong>Precision Playback &amp; GPU Dragging:</strong> Continuous <code>0.07×</code> to <code>16.00×</code> control with smart <code>1.00×</code> snapping, hover inline buttons, mouse-wheel stepping, double-click preferred speed toggle, and GPU-composited <code>translate3d</code> drag repositioning.</li>
+                        <li><strong>Speed Arbiter &amp; Intent Classifier:</strong> Dedicated YouTube, Facebook, Netflix, and base player handlers defeat hostile site rate-resets without interfering with legitimate user seeks.</li>
+                        <li><strong>Customizable Shortcuts &amp; Bookmarks:</strong> Full keybinding customization (<code>X/C/S/D/Z/G/V/M/J</code> + <code>Ctrl/Alt/Shift/Meta</code> chords, pause, mute, volume, and timestamp markers) verified by automated unit and live Chrome/Brave E2E tests.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+<!-- Project 4 -->
+<div class="project-row" data-aos="fade-up">
+            <div class="project-summary" role="button" tabindex="0" aria-expanded="false" onclick="toggleAccordion(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleAccordion(this);}">
+                <div class="col-title">
+                    <h3>MASTER VPN PRO (v1.3.1)</h3>
+                    <div class="tech-stack">C# / WPF • Chrome &amp; Brave MV3 • Android APK</div>
+                </div>
+                <div class="col-tags">
+                    <span class="tag tag-green">MULTI-PLATFORM</span>
+                    <span class="tag tag-blue">MS-SSTP / IKEV2</span>
+                    <span class="tag tag-pink">SECURITY</span>
+                </div>
+                <div class="col-type">VPN &amp; Privacy Suite</div>
+                <div class="col-link">
+                    <a href="https://github.com/sshihabb007/MASTER-VPN-PRO" target="_blank" rel="noopener noreferrer"
+                        onclick="event.stopPropagation();"><i class="fab fa-github"></i> Source code</a>
+                </div>
+                <div class="col-toggle">
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </div>
+            <div class="project-details">
+                <div class="project-details-content">
+                    <h4>Overview</h4>
+                    <p>Open-source multi-platform VPN and privacy shield ecosystem spanning Windows 10/11 Desktop (Setup Wizard &amp; ~310 KB AnyCPU Portable), Chrome &amp; Brave Manifest V3 Extension (<code>.zip</code> &amp; signed <code>.crx3</code>), and Android 8.0–14+ Signed APK (<code>com.shihab.shieldvpn</code>)—built around 70+ country open relays and private servers with zero telemetry and zero ads. <a href="https://github.com/sshihabb007/MASTER-VPN-PRO/releases/latest" target="_blank" rel="noopener noreferrer" style="color: var(--primary-color); text-decoration: underline;">Download Latest Release</a>.</p>
+                    <br>
+                    <h4>Key Features &amp; Implementation</h4>
+                    <ul>
+                        <li><strong>Unified Dark Bento UI &amp; 3D Fibonacci Globe:</strong> Interactive 3D/Shield/Orbit/2D globe dashboard paired with a 70+ country global relay aggregator (VPN Gate &amp; open feeds) and custom private gateway imports.</li>
+                        <li><strong>Multi-Protocol Layer-3 &amp; Proxy Tunnels:</strong> Supports native <code>MS-SSTP</code>, <code>IKEv2/IPsec</code>, <code>L2TP</code>, <code>PPTP</code>, <code>WireGuard .conf</code>, <code>OpenVPN .ovpn</code> (1-click decoder/exporter), Android <code>VpnService</code> / <code>Ikev2VpnProfile</code>, and fail-closed multi-proxy Chromium PAC + WebRTC leak protection.</li>
+                        <li><strong>Parallel Direct-IP 1-RTT Gateway Race:</strong> Probes gateways directly by IP (28-way TCP + 18-way SSTP on Windows; 16-thread on Android) for fast lowest-latency auto-connect and 1-click dynamic IP rotation.</li>
+                        <li><strong>Zero Plaintext Secrets &amp; Hardened Isolation:</strong> Windows DPAPI credential encryption, origin-locked <code>127.0.0.1:38195</code> Desktop↔Browser companion sync, split-tunneling (routes/domains/Android apps), tunnel-scoped Secure DNS (Cloudflare, AdGuard, Quad9, Google), Kill-Switch Watchdog, and live Cloudflare HTTPS speed &amp; GeoIP leak audit.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Project 5 -->
+<div class="project-row" data-aos="fade-up">
+            <div class="project-summary" role="button" tabindex="0" aria-expanded="false" onclick="toggleAccordion(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleAccordion(this);}">
+                <div class="col-title">
                     <h3>ReactJs Online SmartPhone Shop</h3>
                     <div class="tech-stack">React.js • JavaScript</div>
                 </div>
@@ -122,7 +270,7 @@
             </div>
         </div>
 
-<!-- Project 2 -->
+<!-- Project 6 -->
 <div class="project-row" data-aos="fade-up">
             <div class="project-summary" role="button" tabindex="0" aria-expanded="false" onclick="toggleAccordion(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleAccordion(this);}">
                 <div class="col-title">
@@ -166,43 +314,7 @@
             </div>
         </div>
 
-<!-- Project 3 -->
-<div class="project-row" data-aos="fade-up">
-            <div class="project-summary" role="button" tabindex="0" aria-expanded="false" onclick="toggleAccordion(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleAccordion(this);}">
-                <div class="col-title">
-                    <h3>Agentic AI OpenClaw</h3>
-                    <div class="tech-stack">Python • Agentic AI • OpenClaw</div>
-                </div>
-                <div class="col-tags">
-                    <span class="tag tag-orange">AI AUTOMATION</span>
-                    <span class="tag tag-blue">AGENTIC AI</span>
-                </div>
-                <div class="col-type">AI Agent</div>
-                <div class="col-link">
-                    <a href="https://github.com/sshihabb007/AgenticAI-OpenClaw"
-                        target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation();"><i class="fab fa-github"></i> Source code</a>
-                </div>
-                <div class="col-toggle">
-                    <i class="fas fa-chevron-down"></i>
-                </div>
-            </div>
-            <div class="project-details">
-                <div class="project-details-content">
-                    <h4>Overview</h4>
-                    <p>An advanced automation platform powered by Agentic AI and OpenClaw. This project focuses on building autonomous AI agents capable of performing complex daily tasks such as email management, calendar scheduling, and workflow automations without manual intervention.</p>
-                    <br>
-                    <h4>Key Features & Implementation</h4>
-                    <ul>
-                        <li><strong>Email Automation:</strong> Autonomous reading, drafting, and managing of professional emails using AI.</li>
-                        <li><strong>Calendar Management:</strong> Intelligent agents scheduling, rescheduling, and organizing calendar events dynamically.</li>
-                        <li><strong>Agentic AI Integration:</strong> Utilizing the OpenClaw framework to deploy context-aware, goal-oriented AI agents.</li>
-                        <li><strong>Workflow Efficiency:</strong> Replacing repetitive administrative tasks with robust, continuous AI automation pipelines.</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-<!-- Project 4 -->
+<!-- Project 7 -->
 <div class="project-row" data-aos="fade-up">
             <div class="project-summary" role="button" tabindex="0" aria-expanded="false" onclick="toggleAccordion(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleAccordion(this);}">
                 <div class="col-title">
@@ -238,7 +350,7 @@
             </div>
         </div>
 
-<!-- Project 5 -->
+<!-- Project 8 -->
 <div class="project-row" data-aos="fade-up">
             <div class="project-summary" role="button" tabindex="0" aria-expanded="false" onclick="toggleAccordion(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleAccordion(this);}">
                 <div class="col-title">
@@ -275,7 +387,7 @@
             </div>
         </div>
 
-<!-- Project 6 -->
+<!-- Project 9 -->
 <div class="project-row" data-aos="fade-up">
             <div class="project-summary" role="button" tabindex="0" aria-expanded="false" onclick="toggleAccordion(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleAccordion(this);}">
                 <div class="col-title">
@@ -311,7 +423,7 @@
             </div>
         </div>
 
-<!-- Project 7 -->
+<!-- Project 10 -->
 <div class="project-row" data-aos="fade-up">
             <div class="project-summary" role="button" tabindex="0" aria-expanded="false" onclick="toggleAccordion(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleAccordion(this);}">
                 <div class="col-title">
@@ -348,7 +460,7 @@
             </div>
         </div>
 
-<!-- Project 8 -->
+<!-- Project 11 -->
 <div class="project-row" data-aos="fade-up">
             <div class="project-summary" role="button" tabindex="0" aria-expanded="false" onclick="toggleAccordion(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleAccordion(this);}">
                 <div class="col-title">
@@ -384,7 +496,7 @@
             </div>
         </div>
 
-<!-- Project 9 -->
+<!-- Project 12 -->
 <div class="project-row" data-aos="fade-up">
             <div class="project-summary" role="button" tabindex="0" aria-expanded="false" onclick="toggleAccordion(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleAccordion(this);}">
                 <div class="col-title">
@@ -421,7 +533,7 @@
             </div>
         </div>
 
-<!-- Project 10 -->
+<!-- Project 13 -->
 <div class="project-row" data-aos="fade-up">
             <div class="project-summary" role="button" tabindex="0" aria-expanded="false" onclick="toggleAccordion(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleAccordion(this);}">
                 <div class="col-title">
@@ -458,7 +570,7 @@
             </div>
         </div>
 
-<!-- Project 11 -->
+<!-- Project 14 -->
 <div class="project-row" data-aos="fade-up">
             <div class="project-summary" role="button" tabindex="0" aria-expanded="false" onclick="toggleAccordion(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleAccordion(this);}">
                 <div class="col-title">
@@ -495,46 +607,7 @@
             </div>
         </div>
 
-<!-- Project 12 -->
-<div class="project-row" data-aos="fade-up">
-            <div class="project-summary" role="button" tabindex="0" aria-expanded="false" onclick="toggleAccordion(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleAccordion(this);}">
-                <div class="col-title">
-                    <h3>WAI APAC Awards Rasa Chatbot</h3>
-                    <div class="tech-stack">Python • Rasa 2.1.2 • TensorFlow</div>
-                </div>
-                <div class="col-tags">
-                    <span class="tag tag-orange">AI</span>
-                    <span class="tag tag-blue">CHATBOT</span>
-                </div>
-                <div class="col-type">Virtual Assistant</div>
-                <div class="col-link">
-                    <a href="https://github.com/sshihabb007/AI-CHATBOT-PROJECT" target="_blank" rel="noopener noreferrer"
-                        onclick="event.stopPropagation();"><i class="fab fa-github"></i> Source code</a>
-                </div>
-                <div class="col-toggle">
-                    <i class="fas fa-chevron-down"></i>
-                </div>
-            </div>
-            <div class="project-details">
-                <div class="project-details-content">
-                    <h4>Overview</h4>
-                    <p>A conversational AI assistant (chatbot) built using the open-source Rasa framework. It is
-                        designed to answer frequently asked questions and assist users regarding the Women in AI (WAI)
-                        APAC Awards 2023.</p>
-                    <br>
-                    <h4>Key Features & Implementation</h4>
-                    <ul>
-                        <li>Understands and manages a wide array of intents: Application Deadlines, Fees, Judging
-                            Process, and Location Restrictions.</li>
-                        <li>NLU Pipeline utilizing CountVectorsFeaturizer, DIETClassifier, and FallbackClassifier.</li>
-                        <li>Dialogue Management using TEDPolicy, MemoizationPolicy, and RulePolicy.</li>
-                        <li>Trained and built with Python 3.7.13, Tensorflow 2.3.4, and Scikit-Learn 0.23.2.</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-<!-- Project 13 -->
+<!-- Project 15 -->
 <div class="project-row" data-aos="fade-up">
             <div class="project-summary" role="button" tabindex="0" aria-expanded="false" onclick="toggleAccordion(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleAccordion(this);}">
                 <div class="col-title">
@@ -571,7 +644,7 @@
             </div>
         </div>
 
-<!-- Project 14 -->
+<!-- Project 16 -->
 <div class="project-row" data-aos="fade-up">
             <div class="project-summary" role="button" tabindex="0" aria-expanded="false" onclick="toggleAccordion(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleAccordion(this);}">
                 <div class="col-title">
@@ -609,7 +682,7 @@
             </div>
         </div>
 
-<!-- Project 15 -->
+<!-- Project 17 -->
 <div class="project-row" data-aos="fade-up">
             <div class="project-summary" role="button" tabindex="0" aria-expanded="false" onclick="toggleAccordion(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleAccordion(this);}">
                 <div class="col-title">
@@ -645,7 +718,7 @@
             </div>
         </div>
 
-<!-- Project 16 -->
+<!-- Project 18 -->
 <div class="project-row" data-aos="fade-up">
             <div class="project-summary" role="button" tabindex="0" aria-expanded="false" onclick="toggleAccordion(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleAccordion(this);}">
                 <div class="col-title">
@@ -683,7 +756,7 @@
             </div>
         </div>
 
-<!-- Project 17 -->
+<!-- Project 19 -->
 <div class="project-row" data-aos="fade-up">
             <div class="project-summary" role="button" tabindex="0" aria-expanded="false" onclick="toggleAccordion(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleAccordion(this);}">
                 <div class="col-title">
@@ -719,7 +792,7 @@
             </div>
         </div>
 
-<!-- Project 18 -->
+<!-- Project 20 -->
 <div class="project-row" data-aos="fade-up">
             <div class="project-summary" role="button" tabindex="0" aria-expanded="false" onclick="toggleAccordion(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleAccordion(this);}">
                 <div class="col-title">
@@ -755,7 +828,7 @@
             </div>
         </div>
 
-<!-- Project 19 -->
+<!-- Project 21 -->
 <div class="project-row" data-aos="fade-up">
             <div class="project-summary" role="button" tabindex="0" aria-expanded="false" onclick="toggleAccordion(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleAccordion(this);}">
                 <div class="col-title">
@@ -792,7 +865,7 @@
             </div>
         </div>
 
-<!-- Project 20 -->
+<!-- Project 22 -->
 <div class="project-row" data-aos="fade-up">
             <div class="project-summary" role="button" tabindex="0" aria-expanded="false" onclick="toggleAccordion(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleAccordion(this);}">
                 <div class="col-title">
@@ -833,7 +906,7 @@
             </div>
         </div>
 
-<!-- Project 21 -->
+<!-- Project 23 -->
 <div class="project-row" data-aos="fade-up">
             <div class="project-summary" role="button" tabindex="0" aria-expanded="false" onclick="toggleAccordion(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleAccordion(this);}">
                 <div class="col-title">
@@ -876,7 +949,7 @@
             </div>
         </div>
 
-<!-- Project 22 -->
+<!-- Project 24 -->
 <div class="project-row" data-aos="fade-up">
             <div class="project-summary" role="button" tabindex="0" aria-expanded="false" onclick="toggleAccordion(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleAccordion(this);}">
                 <div class="col-title">
@@ -916,7 +989,7 @@
             </div>
         </div>
 
-<!-- Project 23 -->
+<!-- Project 25 -->
 <div class="project-row" data-aos="fade-up">
             <div class="project-summary" role="button" tabindex="0" aria-expanded="false" onclick="toggleAccordion(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleAccordion(this);}">
                 <div class="col-title">
@@ -984,7 +1057,7 @@
             </div>
         </div>
 
-<!-- Project 24 -->
+<!-- Project 26 -->
 <div class="project-row" data-aos="fade-up">
             <div class="project-summary" role="button" tabindex="0" aria-expanded="false" onclick="toggleAccordion(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleAccordion(this);}">
                 <div class="col-title">
@@ -1026,7 +1099,7 @@
             </div>
         </div>
 
-<!-- Project 25 -->
+<!-- Project 27 -->
 <div class="project-row" data-aos="fade-up">
             <div class="project-summary" role="button" tabindex="0" aria-expanded="false" onclick="toggleAccordion(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleAccordion(this);}">
                 <div class="col-title">
