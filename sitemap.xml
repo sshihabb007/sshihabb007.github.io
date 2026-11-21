@@ -2,77 +2,62 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
         <loc>https://sshihabb007.github.io/</loc>
-        <changefreq>weekly</changefreq>
-        <priority>1.0</priority>
-    </url>
-    <url>
-        <loc>https://sshihabb007.github.io/front/projects</loc>
-        <changefreq>monthly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://sshihabb007.github.io/front/contact</loc>
-        <changefreq>yearly</changefreq>
-        <priority>0.5</priority>
+        <lastmod>2026-11-21</lastmod>
     </url>
     <url>
         <loc>https://sshihabb007.github.io/tools/</loc>
-        <changefreq>weekly</changefreq>
-        <priority>0.9</priority>
+        <lastmod>2026-11-21</lastmod>
     </url>
     <url>
-        <loc>https://sshihabb007.github.io/advanced-calculator/</loc>
-        <changefreq>monthly</changefreq>
-        <priority>0.8</priority>
+        <loc>https://sshihabb007.github.io/front/projects</loc>
+        <lastmod>2026-11-21</lastmod>
     </url>
     <url>
-        <loc>https://sshihabb007.github.io/compressor/</loc>
-        <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
-    </url>
-    <url>
-        <loc>https://sshihabb007.github.io/audio-to-text/</loc>
-        <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
+        <loc>https://sshihabb007.github.io/front/contact</loc>
+        <lastmod>2026-11-21</lastmod>
     </url>
     <url>
         <loc>https://sshihabb007.github.io/tax-calculator/</loc>
-        <changefreq>monthly</changefreq>
-        <priority>0.9</priority>
-    </url>
-    <url>
-        <loc>https://sshihabb007.github.io/power-calculator/</loc>
-        <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
-    </url>
-    <url>
-        <loc>https://sshihabb007.github.io/age-calculator/</loc>
-        <changefreq>monthly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://sshihabb007.github.io/bmi-calculator/</loc>
-        <changefreq>monthly</changefreq>
-        <priority>0.8</priority>
+        <lastmod>2026-11-21</lastmod>
     </url>
     <url>
         <loc>https://sshihabb007.github.io/land-calculator/</loc>
-        <changefreq>monthly</changefreq>
-        <priority>0.9</priority>
+        <lastmod>2026-11-21</lastmod>
     </url>
     <url>
         <loc>https://sshihabb007.github.io/currency-converter/</loc>
-        <changefreq>daily</changefreq>
-        <priority>0.9</priority>
+        <lastmod>2026-11-21</lastmod>
+    </url>
+    <url>
+        <loc>https://sshihabb007.github.io/advanced-calculator/</loc>
+        <lastmod>2026-11-21</lastmod>
     </url>
     <url>
         <loc>https://sshihabb007.github.io/qr-generator/</loc>
-        <changefreq>monthly</changefreq>
-        <priority>0.8</priority>
+        <lastmod>2026-11-21</lastmod>
+    </url>
+    <url>
+        <loc>https://sshihabb007.github.io/audio-to-text/</loc>
+        <lastmod>2026-11-21</lastmod>
+    </url>
+    <url>
+        <loc>https://sshihabb007.github.io/compressor/</loc>
+        <lastmod>2026-11-21</lastmod>
+    </url>
+    <url>
+        <loc>https://sshihabb007.github.io/power-calculator/</loc>
+        <lastmod>2026-11-21</lastmod>
+    </url>
+    <url>
+        <loc>https://sshihabb007.github.io/age-calculator/</loc>
+        <lastmod>2026-11-21</lastmod>
+    </url>
+    <url>
+        <loc>https://sshihabb007.github.io/bmi-calculator/</loc>
+        <lastmod>2026-11-21</lastmod>
     </url>
     <url>
         <loc>https://sshihabb007.github.io/universal-downloader/</loc>
-        <changefreq>monthly</changefreq>
-        <priority>0.8</priority>
+        <lastmod>2026-11-21</lastmod>
     </url>
 </urlset>

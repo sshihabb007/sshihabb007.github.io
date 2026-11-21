@@ -1,4 +1,4 @@
-const CACHE_NAME = 'sshihabb007-pwa-v24';
+const CACHE_NAME = 'sshihabb007-pwa-v25';
 const STATIC_ASSETS = [
     './',
     './index.html',
@@ -12,13 +12,14 @@ const STATIC_ASSETS = [
     './js/home-ui.js?v=1.1',
     './asset/fav.png',
     './asset/Shihab.jpg',
+    './asset/og-card.jpg',
     './asset/aiub-logo.png',
     './asset/ssac-crest.svg',
     './asset/gemini-sparkle.svg',
     './components/header.html?v=2.8',
     './components/footer.html?v=2.8',
-    './front/projects.html',
-    './front/contact.html',
+    './front/projects',
+    './front/contact',
     // Tools Hub
     './tools/',
     './tools/index.html',
@@ -90,10 +91,10 @@ self.addEventListener('fetch', (event) => {
         requestUrl.pathname.endsWith('.wav') ||
         requestUrl.pathname.endsWith('.pdf')) return;
 
-    // Network-first for HTML pages (always fresh, ignore query string for cache matching;
-    // versioned /components/ fragments fall through to Stale-While-Revalidate for instant header paint)
+    // Network-first for HTML pages and extensionless navigations (e.g. /front/projects, /front/contact);
+    // versioned /components/ fragments fall through to Stale-While-Revalidate for instant header paint
     if (!requestUrl.pathname.includes('/components/') &&
-        (requestUrl.pathname.endsWith('.html') || requestUrl.pathname.endsWith('/'))) {
+        (event.request.mode === 'navigate' || requestUrl.pathname.endsWith('.html') || requestUrl.pathname.endsWith('/'))) {
         event.respondWith(
             fetch(event.request)
                 .then((response) => {

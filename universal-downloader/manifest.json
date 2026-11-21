@@ -2,7 +2,7 @@
   "name": "Universal Downloader | Mehedi Hasan Shihab",
   "short_name": "Downloader Pro",
   "id": "/universal-downloader/",
-  "start_url": "./index.html",
+  "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait-primary",

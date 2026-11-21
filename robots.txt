@@ -1,3 +1,8 @@
 User-agent: *
 Allow: /
+Disallow: /asset/shihabCV.pdf
+Disallow: /DESIGN.md
+Disallow: /*/README.md
+Disallow: /universal-downloader/cloudflare-worker.js
+
 Sitemap: https://sshihabb007.github.io/sitemap.xml

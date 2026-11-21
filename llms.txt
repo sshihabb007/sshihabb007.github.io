@@ -1,0 +1,48 @@
+# Mehedi Hasan Shihab (`sshihabb007`)
+
+> Official portfolio, software engineering profile, open-source desktop & browser applications, and 11 free browser-based web utilities by **Mehedi Hasan Shihab**, Senior Software Engineer at Bangladesh Education and Research Institute (BERI) and Remote Web Developer at MAC Technology Australia Pty Ltd.
+
+## Identity & Profile
+- **Full Name:** Mehedi Hasan Shihab (handle: `sshihabb007`)
+- **Roles:** Senior Software Engineer at [BERI](https://www.beri.com.bd/) (Mar 2022–Present); Remote Web Developer at [MAC Technology Australia Pty Ltd.](https://mactechnology.com.au/) (Nov 2022–Present); formerly Officer, IT at i - Global Services (Sep 2019–Mar 2020)
+- **Education:** M.Sc. in Computer Science (CGPA 3.77/4.00) & B.Sc. in Computer Science & Engineering (CGPA 3.65/4.00), [American International University-Bangladesh (AIUB)](https://www.aiub.edu/)
+- **Location:** Dhaka, Bangladesh
+- **Contact:** sshihabb007@gmail.com
+- **Verified Profiles:**
+  - Website: https://sshihabb007.github.io/
+  - GitHub: https://github.com/sshihabb007
+  - LinkedIn: https://www.linkedin.com/in/mehedi-hasan-shihab
+  - Google Credentials Wallet (5 Verified Certifications): https://edu.google.accredible.com/profile/mehedihasanshihab922213/wallet
+  - Facebook: https://www.facebook.com/sshihabb007/
+
+## Core Pages
+- [Home Portfolio](https://sshihabb007.github.io/): Full 9-section overview of experience, education, 44 technical skills, services, 31 projects, 11 live tools, and 5 Google certifications.
+- [Tools & Open-Source Catalog](https://sshihabb007.github.io/tools/): Complete showcase of 4 flagship open-source suites and 11 free browser utilities.
+- [Notable Projects Archive](https://sshihabb007.github.io/front/projects): Detailed technical specifications for 27+ software, AI, WordPress, and cybersecurity projects.
+- [Contact Me](https://sshihabb007.github.io/front/contact): Direct email and verified social links for software engineering, AI, and consulting inquiries.
+
+## Flagship Open-Source Software (MIT)
+- [MHS Download Manager](https://github.com/sshihabb007/MHS-DOWNLOAD-MANAGER): Clean-room Windows x64 download accelerator (`C# .NET 4.8`), 14-browser Manifest V3 extension, pure C# lossless MP4/WebM/MKV muxer, BitTorrent/Debrid, and 15-tool MCP server.
+- [Driver+](https://github.com/sshihabb007/DriverPlus): Native 64-bit Windows 10/11 official WHQL driver updater (432 KB portable, zero telemetry), 14 Game Runtimes & Event ID 1000 Crash DLL Doctor, Rescue Center, and HVCI auditor.
+- [Video Speed Controller — VSC](https://github.com/sshihabb007/VSC): Lightweight Manifest V3 HTML5 video/audio speed controller for Chrome and Brave with Shadow DOM isolation and per-site positioning studio.
+- [MASTER VPN PRO](https://github.com/sshihabb007/MASTER-VPN-PRO): Multi-platform open-source VPN and privacy shield across Windows Desktop, Chrome/Brave MV3 Extension, and signed Android APK.
+
+## 11 Free Interactive Web Tools
+- [Bangladesh Income Tax Calculator 2025–2026](https://sshihabb007.github.io/tax-calculator/): NBR e-Return progressive slabs, investment rebate optimizer, IT-10BB, and wealth surcharge calculator.
+- [Bangladesh Land Measurement Calculator](https://sshihabb007.github.io/land-calculator/): 8-unit converter for Decimal, Katha, Bigha, Acre, Hectare, SqFt, and Gunter's Chain surveys.
+- [Live Currency Converter Pro](https://sshihabb007.github.io/currency-converter/): Real-time exchange rate converter across 160+ currencies with offline fallback.
+- [Advanced Scientific & Graphing Calculator](https://sshihabb007.github.io/advanced-calculator/): Symbolic algebra, calculus, MathQuill LaTeX input, graphing, and physics constants.
+- [Free Custom QR Code Generator](https://sshihabb007.github.io/qr-generator/): 14-type custom logo, gradient, and vector PNG/SVG/PDF/EPS QR creator.
+- [ScribeAI — Audio to Text Converter](https://sshihabb007.github.io/audio-to-text/): Private browser-based AI audio transcription for MP3, WAV, and M4A files.
+- [Image & Audio Converter](https://sshihabb007.github.io/compressor/): Client-side FFmpeg.wasm image compressor and video-to-audio converter (PNG, JPG, WEBP, MP3, WAV, AAC).
+- [PC Power & Electricity Bill Calculator](https://sshihabb007.github.io/power-calculator/): PC wattage estimator, UPS VA advisor, and Bangladesh electricity tariff calculator.
+- [Exact Age Calculator Pro](https://sshihabb007.github.io/age-calculator/): Exact chronological age, birthday countdown, generation, and zodiac milestones.
+- [BMI Calculator Pro](https://sshihabb007.github.io/bmi-calculator/): Interactive Metric/Imperial Body Mass Index gauge and ideal weight range calculator.
+- [Universal Video & Audio Downloader](https://sshihabb007.github.io/universal-downloader/): Ad-free lossless stream extractor interface for online media platforms.
+
+## Verified Google Certifications
+- Gemini Certified Educator (Google for Education)
+- Gemini Certified Faculty (Google for Education)
+- Gemini Certified University Student (Google for Education)
+- Google Certified Educator Level 2 (Google for Education)
+- Google Certified Educator Level 1 (Google for Education)
