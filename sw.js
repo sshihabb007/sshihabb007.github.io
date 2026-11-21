@@ -1,13 +1,20 @@
-const CACHE_NAME = 'sshihabb007-pwa-v22';
+const CACHE_NAME = 'sshihabb007-pwa-v24';
 const STATIC_ASSETS = [
     './',
     './index.html',
     './manifest.json',
     './css/style.css?v=2.8',
+    './css/home-structure.css?v=1.1',
     './js/theme.js',
     './js/load-components.js?v=2.8',
     './js/shihab-security.js',
+    './js/home-data.js?v=1.1',
+    './js/home-ui.js?v=1.1',
     './asset/fav.png',
+    './asset/Shihab.jpg',
+    './asset/aiub-logo.png',
+    './asset/ssac-crest.svg',
+    './asset/gemini-sparkle.svg',
     './components/header.html?v=2.8',
     './components/footer.html?v=2.8',
     './front/projects.html',
@@ -83,8 +90,10 @@ self.addEventListener('fetch', (event) => {
         requestUrl.pathname.endsWith('.wav') ||
         requestUrl.pathname.endsWith('.pdf')) return;
 
-    // Network-first for HTML pages (always fresh, ignore query string for cache matching)
-    if (requestUrl.pathname.endsWith('.html') || requestUrl.pathname.endsWith('/')) {
+    // Network-first for HTML pages (always fresh, ignore query string for cache matching;
+    // versioned /components/ fragments fall through to Stale-While-Revalidate for instant header paint)
+    if (!requestUrl.pathname.includes('/components/') &&
+        (requestUrl.pathname.endsWith('.html') || requestUrl.pathname.endsWith('/'))) {
         event.respondWith(
             fetch(event.request)
                 .then((response) => {

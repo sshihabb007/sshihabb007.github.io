@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <defs>
+    <linearGradient id="ssacBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#065f46" />
+      <stop offset="55%" stop-color="#047857" />
+      <stop offset="100%" stop-color="#0f766e" />
+    </linearGradient>
+    <linearGradient id="ssacGold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#fde68a" />
+      <stop offset="100%" stop-color="#f59e0b" />
+    </linearGradient>
+  </defs>
+  <circle cx="60" cy="60" r="58" fill="url(#ssacBg)" stroke="url(#ssacGold)" stroke-width="4" />
+  <circle cx="60" cy="60" r="49" fill="none" stroke="#a7f3d0" stroke-width="1.4" stroke-dasharray="3 3" opacity="0.65" />
+  <!-- Open Book & Torch -->
+  <path d="M34 66 C44 62, 54 64, 60 69 C66 64, 76 62, 86 66 L86 46 C76 42, 66 44, 60 49 C54 44, 44 42, 34 46 Z" fill="#ecfdf5" stroke="#fde68a" stroke-width="2" stroke-linejoin="round" />
+  <line x1="60" y1="49" x2="60" y2="69" stroke="#047857" stroke-width="2" />
+  <path d="M60 22 C65 29, 66 34, 60 39 C54 34, 55 29, 60 22 Z" fill="url(#ssacGold)" />
+  <text x="60" y="91" text-anchor="middle" font-family="Syne, Arial, sans-serif" font-weight="800" font-size="16" letter-spacing="2" fill="#ffffff">SSAC</text>
+  <text x="60" y="103" text-anchor="middle" font-family="Arial, sans-serif" font-weight="700" font-size="7.5" letter-spacing="1.2" fill="#fde68a">GAZIPUR</text>
+</svg>
+
